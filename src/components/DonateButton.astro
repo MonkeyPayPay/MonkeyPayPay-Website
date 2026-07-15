@@ -1,0 +1,23 @@
+---
+import { site, donateReady } from '../data/site';
+import HeartIcon from './HeartIcon.astro';
+
+interface Props {
+  variant?: 'primary' | 'ghost';
+  class?: string;
+}
+
+const { variant = 'primary', class: cls = '' } = Astro.props;
+
+// Never render a broken link: until a real donation URL is set, the button
+// opens a friendly email instead.
+const href = donateReady
+  ? site.donate.url
+  : `mailto:${site.contactEmail}?subject=${encodeURIComponent('Supporting Paisley')}`;
+const target = donateReady ? '_blank' : undefined;
+const rel = donateReady ? 'noopener' : undefined;
+---
+
+<a class={`btn btn--${variant} btn--donate ${cls}`} href={href} target={target} rel={rel} data-magnetic>
+  <HeartIcon /> {site.donate.label}
+</a>

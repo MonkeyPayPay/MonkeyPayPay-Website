@@ -1,0 +1,76 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import DonateButton from '../components/DonateButton.astro';
+import { site } from '../data/site';
+---
+
+<BaseLayout
+  title="For Paisley"
+  description="The story behind MonkeyPayPay — a dad building apps to give his daughter Paisley the best life possible."
+>
+  <section class="story">
+    <div class="story__banner" aria-hidden="true"></div>
+
+    <div class="container story__inner">
+      <p class="story__eyebrow reveal">The story behind the name</p>
+      <h1 class="story__title reveal">For Paisley</h1>
+
+      <div class="story__body">
+        <p class="reveal">
+          MonkeyPayPay isn’t a company name I dreamed up. It’s her. Paisley — my
+          daughter — the little one I call <em>Monkey</em>, and <em>Pay&nbsp;Pay</em>.
+          She just took her first wobbling steps across the living-room floor, and
+          somehow she’s already the reason for everything you see here.
+        </p>
+
+        <p class="reveal">
+          From the moment I found out I was going to be a father, something in me
+          shifted. I made myself a promise — quietly, the way you make the
+          promises that matter most — that I would do everything in my power to
+          give her the best life I possibly could.
+        </p>
+
+        <p class="reveal">
+          The world she’s growing into isn’t a cheap one, and I don’t expect it to
+          get any easier. So I started building. Every app on this site is a small
+          attempt to earn a little extra — money that goes toward her education,
+          her childhood, and whatever she falls in love with along the way. Maybe
+          that’s dance, or gymnastics. Maybe sports, or music, or the arts.
+          Whatever Paisley reaches for, I want to be able to say <em>yes</em>.
+        </p>
+
+        <blockquote class="story__quote reveal">
+          Whatever she reaches for, I want to be able to say yes.
+        </blockquote>
+
+        <p class="reveal">
+          If you download something and it makes your day a little better, that
+          means the world to me. And if you never spend a cent — if you simply
+          came here to read this — thank you. Truly. Thank you for being here.
+        </p>
+
+        <p class="reveal">
+          To every family, and especially to the dads pouring themselves into that
+          same quiet promise: I see you. This one’s for you, too.
+        </p>
+
+        <p class="story__sign reveal">— A dad, building for his Monkey.</p>
+      </div>
+
+      <aside class="story__support reveal" id="support">
+        <h2 class="story__support-title">Help write Paisley’s next chapter</h2>
+        <p>
+          Enjoying the apps, or just want to cheer us on? Anything at all helps —
+          and even sharing this page means a lot.
+        </p>
+        <div class="story__support-actions">
+          <DonateButton />
+          <a class="btn btn--ghost" href="/#apps">Browse the apps</a>
+        </div>
+        <p class="story__support-note">
+          Questions or just want to say hi? <a href={`mailto:${site.contactEmail}`}>{site.contactEmail}</a>
+        </p>
+      </aside>
+    </div>
+  </section>
+</BaseLayout>

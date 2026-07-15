@@ -1,6 +1,7 @@
 ---
 import type { App } from '../data/apps';
 import PlayIcon from './PlayIcon.astro';
+import AppleIcon from './AppleIcon.astro';
 
 interface Props {
   app: App;
@@ -40,9 +41,22 @@ const shots = app.screenshots.slice(0, 4);
   }
 
   <div class="card__foot">
-    <a class="btn btn--play" href={app.playUrl} target="_blank" rel="noopener">
-      <PlayIcon /> Get it on Google Play
-    </a>
+    <div class="card__stores">
+      <a class="btn btn--store" href={app.playUrl} target="_blank" rel="noopener">
+        <PlayIcon /> Google Play
+      </a>
+      {
+        app.appStoreUrl ? (
+          <a class="btn btn--store" href={app.appStoreUrl} target="_blank" rel="noopener">
+            <AppleIcon /> App Store
+          </a>
+        ) : (
+          <span class="chip chip--soon" title="Coming soon to the App Store">
+            <AppleIcon /> App Store · soon
+          </span>
+        )
+      }
+    </div>
     <a class="card__more" href={`/apps/${app.slug}`}>Details →</a>
   </div>
 </article>

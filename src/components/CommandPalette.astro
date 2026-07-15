@@ -9,7 +9,8 @@ interface Item {
 
 const items: Item[] = [
   { label: 'Home', href: '/' },
-  { label: 'About', href: '/about' },
+  { label: 'Paisley’s Story', href: '/story' },
+  { label: 'Support Paisley', href: '/story#support' },
   ...apps.map((a) => ({
     label: a.name,
     sub: categoryName(a.category),

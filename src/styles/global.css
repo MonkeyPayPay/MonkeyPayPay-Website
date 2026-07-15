@@ -173,13 +173,35 @@ kbd {
   border-color: var(--border);
 }
 .btn--ghost:hover { border-color: var(--accent); }
-.btn--play {
+.btn--play,
+.btn--store {
   background: var(--surface-2);
   color: var(--text);
   border-color: var(--border);
 }
-.btn--play:hover { border-color: var(--accent); }
+.btn--play:hover,
+.btn--store:hover { border-color: var(--accent); }
+.btn--store { padding: 0.6rem 1rem; font-size: 0.82rem; }
+.btn--donate.btn--ghost {
+  color: var(--accent);
+  border-color: color-mix(in oklab, var(--accent) 50%, var(--border));
+}
 .btn svg { width: 1.05em; height: 1.05em; }
+
+/* Store "coming soon" chip */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.55rem 0.9rem;
+  border-radius: var(--radius-pill);
+  font-size: 0.82rem;
+  font-weight: 600;
+  border: 1px dashed var(--border);
+  color: var(--muted);
+  white-space: nowrap;
+}
+.chip svg { width: 0.95em; height: 0.95em; }
 
 /* ---- Nav ------------------------------------------------------------------ */
 .nav {
@@ -430,23 +452,36 @@ kbd {
 }
 .card__foot {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
+  flex-direction: column;
+  gap: 0.75rem;
   margin-top: auto;
-  flex-wrap: wrap;
 }
-.card__more { color: var(--muted); text-decoration: none; font-size: var(--fs-sm); font-weight: 500; }
+.card__stores { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+.card__more { color: var(--muted); text-decoration: none; font-size: var(--fs-sm); font-weight: 500; align-self: flex-start; }
 .card__more:hover { color: var(--accent); }
 
 /* ---- App detail page ------------------------------------------------------ */
-.app { padding-block: clamp(2rem, 6vw, 4rem) var(--space-section); }
+.app { padding-block: 0 var(--space-section); }
+.app__splash {
+  width: 100%;
+  max-height: 340px;
+  overflow: hidden;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 2rem;
+}
+.app__splash img {
+  width: 100%;
+  max-height: 340px;
+  object-fit: cover;
+  display: block;
+}
+.app__stores { display: flex; gap: 0.6rem; flex-wrap: wrap; align-items: center; }
 .app__back,
 .legal .app__back {
   display: inline-block;
   color: var(--muted);
   text-decoration: none;
-  margin-bottom: 2rem;
+  margin: 2rem 0;
   font-size: var(--fs-sm);
 }
 .app__back:hover { color: var(--accent); }
@@ -573,6 +608,82 @@ kbd {
 .cmdk__item.is-active { background: var(--surface-2); }
 .cmdk__item-sub { color: var(--muted); font-size: var(--fs-sm); }
 .cmdk__empty { padding: 1.2rem 1.3rem; color: var(--muted); margin: 0; }
+
+/* ---- Story page (For Paisley) --------------------------------------------- */
+.story { padding-bottom: var(--space-section); }
+.story__banner {
+  height: clamp(140px, 22vh, 240px);
+  background:
+    radial-gradient(55% 130% at 18% 0%, color-mix(in oklab, var(--accent) 48%, transparent), transparent 70%),
+    radial-gradient(55% 130% at 85% 8%, color-mix(in oklab, var(--accent-2) 42%, transparent), transparent 70%);
+  border-bottom: 1px solid var(--border);
+}
+.story__inner { max-width: 44rem; }
+.story__eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-size: 0.8rem;
+  color: var(--accent-2);
+  font-weight: 600;
+  margin-top: 2.75rem;
+  margin-bottom: 0.25rem;
+}
+.story__title {
+  font-size: var(--fs-display);
+  margin: 0 0 1.75rem;
+  background: var(--accent-grad);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.story__body p {
+  font-size: var(--fs-lead);
+  color: var(--text);
+  line-height: 1.8;
+  margin-bottom: 1.4rem;
+}
+.story__body em { font-style: normal; font-weight: 600; color: var(--accent-2); }
+.story__quote {
+  margin: 2.25rem 0;
+  padding: 0.25rem 0 0.25rem 1.4rem;
+  border-left: 3px solid var(--accent);
+  font-family: var(--font-display);
+  font-size: var(--fs-h3);
+  font-style: italic;
+  color: var(--text);
+}
+.story__sign { color: var(--muted); font-style: italic; margin-top: 2rem; }
+.story__support {
+  margin-top: 3rem;
+  padding: clamp(1.5rem, 4vw, 2.25rem);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  box-shadow: var(--shadow);
+  scroll-margin-top: 6rem;
+}
+.story__support-title { font-size: var(--fs-h3); margin-bottom: 0.5rem; }
+.story__support p { color: var(--muted); margin: 0; }
+.story__support-actions { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1.5rem 0 1rem; }
+.story__support-note { font-size: var(--fs-sm); }
+.story__support-note a { color: var(--accent); }
+
+/* ---- Homepage story teaser ------------------------------------------------ */
+.teaser {
+  padding-block: var(--space-section);
+  border-top: 1px solid var(--border);
+}
+.teaser__inner { max-width: 44rem; margin-inline: auto; text-align: center; }
+.teaser__eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-size: 0.8rem;
+  color: var(--accent-2);
+  font-weight: 600;
+}
+.teaser__title { font-size: var(--fs-h2); }
+.teaser__text { color: var(--muted); font-size: var(--fs-lead); }
+.teaser__actions { display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap; margin-top: 1.5rem; }
 
 /* ---- Reduced motion ------------------------------------------------------- */
 @media (prefers-reduced-motion: reduce) {

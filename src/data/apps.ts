@@ -29,8 +29,12 @@ export interface App {
   description: string;
   /** App icon: path under /public or a full URL. */
   icon: string;
+  /** Wide "splash" / hero banner shown on the app page. Optional. */
+  splash?: string;
   /** The Google Play listing URL. */
   playUrl: string;
+  /** Apple App Store URL. Leave "" to show a "coming soon" placeholder. */
+  appStoreUrl?: string;
   /** 2–4 screenshots look best. */
   screenshots: Screenshot[];
   /** Date shown on the auto-generated legal pages (YYYY-MM-DD). */
@@ -63,7 +67,9 @@ export const apps: App[] = [
     description:
       'A clean, adaptive workout tracker with guided sessions, streaks, and progress you can actually feel.',
     icon: '/placeholders/icon.svg',
+    splash: '/placeholders/splash.svg',
     playUrl: 'https://play.google.com/store/apps/details?id=com.example.pulsefit',
+    appStoreUrl: '', // ← add your App Store link when the iOS version is live
     screenshots: [
       { src: '/placeholders/screenshot.svg', alt: 'Pulse Fit home screen' },
       { src: '/placeholders/screenshot.svg', alt: 'Pulse Fit guided workout' },
@@ -79,7 +85,9 @@ export const apps: App[] = [
     description:
       'A cozy incremental game about building a village of curious monkeys, one tap at a time.',
     icon: '/placeholders/icon.svg',
+    splash: '/placeholders/splash.svg',
     playUrl: 'https://play.google.com/store/apps/details?id=com.example.tapquest',
+    appStoreUrl: '',
     screenshots: [
       { src: '/placeholders/screenshot.svg', alt: 'Tap Quest village' },
       { src: '/placeholders/screenshot.svg', alt: 'Tap Quest upgrades screen' },
@@ -94,7 +102,9 @@ export const apps: App[] = [
     description:
       'Beautiful home-screen widgets for weather, calendar, and to-dos — glanceable, customizable, and fast.',
     icon: '/placeholders/icon.svg',
+    splash: '/placeholders/splash.svg',
     playUrl: 'https://play.google.com/store/apps/details?id=com.example.glance',
+    appStoreUrl: '',
     screenshots: [
       { src: '/placeholders/screenshot.svg', alt: 'Glance widgets on a home screen' },
       { src: '/placeholders/screenshot.svg', alt: 'Glance widget customization' },
