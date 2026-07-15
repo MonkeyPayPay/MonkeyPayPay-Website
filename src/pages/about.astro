@@ -1,0 +1,26 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { site } from '../data/site';
+---
+
+<BaseLayout title="About" description={`About ${site.name}`}>
+  <section class="prose container">
+    <h1 class="reveal">About {site.name}</h1>
+    <p class="reveal">
+      {site.name} is an independent studio building a small family of mobile apps
+      across fitness, games, widgets, and everyday utilities. This site is the
+      hub — one calm place to find everything we make and jump straight to it on
+      Google Play.
+    </p>
+    <p class="reveal">
+      Our approach is simple: build focused apps that do one thing well, respect
+      your attention, and feel good to use. No dark patterns, no clutter — just
+      tools and toys worth keeping on your home screen.
+    </p>
+    <h2 class="reveal">Get in touch</h2>
+    <p class="reveal">
+      Have a question, a bug, or an idea? Email us at
+      <a href={`mailto:${site.contactEmail}`}>{site.contactEmail}</a>.
+    </p>
+  </section>
+</BaseLayout>

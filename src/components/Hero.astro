@@ -1,0 +1,19 @@
+---
+import { site } from '../data/site';
+---
+
+<section class="hero">
+  <div class="hero__mesh" aria-hidden="true"></div>
+  <div class="hero__inner container">
+    <p class="hero__eyebrow reveal">{site.tagline}</p>
+    <h1 class="hero__title reveal">
+      <span class="hero__title-grad">{site.name}</span>
+    </h1>
+    <p class="hero__lead reveal">{site.description}</p>
+    <div class="hero__actions reveal">
+      <a class="btn btn--primary" href="#apps" data-magnetic>Explore the apps</a>
+      <a class="btn btn--ghost" href="/about">Our story</a>
+    </div>
+  </div>
+  <a class="hero__scroll" href="#apps" aria-label="Scroll to apps">↓</a>
+</section>

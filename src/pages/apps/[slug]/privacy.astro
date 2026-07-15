@@ -1,0 +1,18 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Legal from '../../../components/Legal.astro';
+import { apps, getApp } from '../../../data/apps';
+
+export function getStaticPaths() {
+  return apps.map((a) => ({ params: { slug: a.slug } }));
+}
+
+const app = getApp(Astro.params.slug as string);
+if (!app) {
+  return Astro.redirect('/404');
+}
+---
+
+<BaseLayout title={`${app.name} Privacy Policy`} description={`Privacy Policy for ${app.name}.`}>
+  <Legal app={app} kind="privacy" />
+</BaseLayout>

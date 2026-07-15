@@ -1,26 +1,20 @@
-# This repository IS the WordPress theme (repo root = theme root).
-# WordPress core, config, and uploads must never be committed here.
-
-/wp-admin/
-/wp-includes/
-/wp-content/uploads/
-wp-config.php
-wp-config-sample.php
+# Build output
+dist/
+.astro/
 
 # Dependencies
-/node_modules/
-/vendor/
+node_modules/
 
-# Build output
-/build/
-/dist/
-*.map
+# Environment
+.env
+.env.production
+.env.*.local
+
+# Vercel
+.vercel/
 
 # OS / editor cruft
 .DS_Store
 Thumbs.db
 *.log
-
-# Environment
-.env
-.env.*
+npm-debug.log*

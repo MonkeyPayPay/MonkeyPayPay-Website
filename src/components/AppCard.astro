@@ -1,0 +1,48 @@
+---
+import type { App } from '../data/apps';
+import PlayIcon from './PlayIcon.astro';
+
+interface Props {
+  app: App;
+}
+
+const { app } = Astro.props;
+const shots = app.screenshots.slice(0, 4);
+---
+
+<article class="card reveal" data-category={app.category}>
+  <div class="card__head">
+    <a
+      class="card__icon"
+      href={app.playUrl}
+      target="_blank"
+      rel="noopener"
+      aria-label={`${app.name} on Google Play`}
+    >
+      <img src={app.icon} alt={`${app.name} icon`} width="72" height="72" loading="lazy" />
+    </a>
+    <div class="card__heading">
+      <h3 class="card__name"><a href={`/apps/${app.slug}`}>{app.name}</a></h3>
+      <p class="card__tagline">{app.tagline}</p>
+    </div>
+  </div>
+
+  <p class="card__desc">{app.description}</p>
+
+  {
+    shots.length > 0 && (
+      <div class="card__shots" aria-label={`${app.name} screenshots`}>
+        {shots.map((s) => (
+          <img class="card__shot" src={s.src} alt={s.alt} loading="lazy" />
+        ))}
+      </div>
+    )
+  }
+
+  <div class="card__foot">
+    <a class="btn btn--play" href={app.playUrl} target="_blank" rel="noopener">
+      <PlayIcon /> Get it on Google Play
+    </a>
+    <a class="card__more" href={`/apps/${app.slug}`}>Details →</a>
+  </div>
+</article>

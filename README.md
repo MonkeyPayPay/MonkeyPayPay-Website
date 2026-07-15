@@ -1,167 +1,109 @@
-# MonkeyPayPay — Custom WordPress Theme
+# MonkeyPayPay.com
 
-This repository **is** the MonkeyPayPay WordPress theme. The repo root is the
-theme root, so the whole repo drops straight into
-`wp-content/themes/monkeypaypay/` on a WordPress install.
+A premium, fast, accessible hub site for the MonkeyPayPay family of Google Play
+apps. Built with **[Astro](https://astro.build)** — static, dependency-light,
+and deployed free on Vercel/Netlify.
 
-It's a hand-built classic theme — plain PHP templates, CSS, and vanilla JS. No
-build step, no framework, nothing to compile. Edit a file, refresh the page.
-
-**What the site does:** it's a directory of the owner's Google Play apps,
-grouped by category (Fitness, Games, Widgets, …). Each app shows an icon, a
-"View on Google Play" link, a short description, and screenshots. Apps are
-managed entirely from the WordPress dashboard — no code needed to add one.
-
-## Adding an app (no code)
-
-In the WordPress dashboard:
-
-1. **Apps → Add New**.
-2. **Title** — the app's name.
-3. **Category** (right sidebar) — tick one or more (Fitness, Games, Widgets…).
-   Defaults are created for you; add your own anytime under *Apps → Categories*.
-4. **Featured image** (right sidebar) — upload the **app icon**.
-5. **Excerpt** — the **short description** shown under the app.
-   (If you don't see the Excerpt box, enable it under the ⋮ menu → Preferences → Panels.)
-6. **Content area** — add a **Gallery block** with your **screenshots**.
-7. **App Details box** — paste the **Google Play URL**.
-8. **Publish.** It appears on the homepage under its category automatically.
+Design goals (from the brief): editorial typography, a fluid CSS-Grid layout,
+a dark-first palette with an electric accent gradient, restrained futuristic
+motion (scroll reveals, magnetic hover, animated gradient mesh, view
+transitions, a ⌘K command palette), and WCAG-AA accessibility with green Core
+Web Vitals.
 
 ---
 
-## What's in here
+## Add or edit an app — one file
 
-```
-.
-├── style.css              Theme header + design tokens (CSS custom properties)
-├── functions.php          Loads the files in /inc
-├── inc/
-│   ├── setup.php           Theme supports, menus, widget areas
-│   ├── enqueue.php         Loads CSS/JS
-│   ├── template-tags.php   Small reusable output helpers
-│   └── post-types.php      "App" post type, category taxonomy, Play-URL field
-├── header.php             Site header + opening markup
-├── footer.php             Site footer + closing markup
-├── front-page.php         Homepage — apps grouped by category
-├── archive-mpp_app.php    /apps — all apps
-├── taxonomy-mpp_app_category.php  One category's apps
-├── single-mpp_app.php     Single app detail page
-├── index.php              Fallback list view (blog, archives)
-├── page.php               Single pages
-├── single.php             Single blog posts
-├── 404.php                Not-found page
-├── searchform.php         Search form markup
-├── template-parts/
-│   ├── app-card.php        One app's card (icon, link, description, shots)
-│   ├── content.php         Generic post partial
-│   └── content-none.php    "Nothing found" partial
-└── assets/
-    ├── css/main.css        Main stylesheet
-    └── js/main.js          Responsive menu toggle
+Everything on the site is driven by **`src/data/apps.ts`**. Add an object to the
+`apps` array and it automatically gets:
+
+- a card on the homepage under its category,
+- a detail page at `/apps/<slug>`,
+- auto-generated **Privacy** and **Terms** pages at `/apps/<slug>/privacy` and `/terms`,
+- an entry in the ⌘K command palette and the footer.
+
+```ts
+{
+  slug: 'my-app',                 // lowercase, hyphens — used in the URL
+  name: 'My App',
+  category: 'fitness',            // must match a slug in `categories`
+  tagline: 'One punchy line.',
+  description: 'A sentence or two.',
+  icon: '/apps/my-app/icon.png',  // put the file in public/apps/my-app/
+  playUrl: 'https://play.google.com/store/apps/details?id=...',
+  screenshots: [
+    { src: '/apps/my-app/1.png', alt: 'Home screen' },
+    { src: '/apps/my-app/2.png', alt: 'Settings' },
+  ],
+  legalLastUpdated: '2026-01-01',
+}
 ```
 
----
+Put image files under **`public/`** (e.g. `public/apps/my-app/icon.png`) and
+reference them with a leading slash (`/apps/my-app/icon.png`). Brand settings
+(name, tagline, contact email, socials) live in **`src/data/site.ts`**.
 
-## The big picture: how the pieces connect
-
-You have a domain. To get from there to a live, custom, GitHub-versioned site,
-four things have to be in place:
-
-1. **Hosting** — a server that runs WordPress (PHP + MySQL). Your domain points
-   at it. *This is the current missing piece.*
-2. **WordPress** — installed on that host (most hosts do this in one click).
-3. **This theme** — deployed into `wp-content/themes/` and activated.
-4. **A deploy path** — how code from GitHub reaches the live site.
-
-Claude (this session) sits alongside all of it: connected to your GitHub repo,
-writing and reviewing the theme code with you.
+> The Privacy/Terms pages are a plain-language **starter template** in
+> `src/components/Legal.astro` — review and adapt them before publishing; Google
+> Play requires an accurate privacy policy per app.
 
 ---
 
-## Step 1 — Pick a host (needed before anything goes live)
+## Project structure
 
-WordPress can't run on a domain alone; it needs hosting. For a custom-coded
-theme you want SSH/SFTP access and, ideally, Git-based deploys. Good options:
-
-| Host        | Why it fits | Rough cost |
-|-------------|-------------|-----------|
-| **Cloudways** | Simple Git deployment built in, SSH, staging | ~$11+/mo |
-| **Kinsta**    | Managed, fast, SSH + Git, great staging | ~$35+/mo |
-| **WP Engine** | `git push` deploy workflow, strong tooling | ~$20+/mo |
-| **SiteGround / DreamHost** | Budget-friendly, SFTP deploy | ~$3–8/mo |
-
-If you're just getting started and cost matters, SiteGround or DreamHost are
-fine — we'd deploy over SFTP. If you want the cleanest GitHub → site pipeline,
-Cloudways or WP Engine are worth it.
-
-Once you choose a host, you'll point your domain's DNS (A record / nameservers)
-at it — the host gives you exact values. Tell me who you picked and I'll walk
-you through the DNS records and WordPress install.
+```
+src/
+├── data/            apps.ts (source of truth) + site.ts (brand settings)
+├── layouts/         BaseLayout.astro (head, nav, footer, view transitions)
+├── components/      Hero, Directory, AppCard, Nav, Footer, CommandPalette, …
+├── pages/
+│   ├── index.astro          Home (hero + directory)
+│   ├── about.astro
+│   ├── 404.astro
+│   └── apps/[slug]/          index, privacy, terms  (generated per app)
+├── scripts/         command.ts, filters.ts, interactions.ts (client JS)
+└── styles/          global.css (design tokens + all styling)
+public/              favicon, placeholder art, and your app images
+```
 
 ---
 
-## Step 2 — Develop locally (recommended while we build)
+## Editing & preview
 
-You don't need the live site to work on the theme. Run WordPress on your own
-machine and point it at this repo:
-
-- **[Local](https://localwp.com/)** (by WP Engine) — easiest, one-click WP site.
-- **[Studio](https://developer.wordpress.com/studio/)** (by WordPress.com) — free, fast.
-- **[`@wordpress/env`](https://developer.wordpress.org/block-editor/reference-guides/packages/packages-env/)** — Docker-based, CLI.
-
-Then symlink or clone this repo into that site's themes folder:
+You don't need to run anything locally — every push to GitHub triggers a
+**Vercel preview deployment** with a shareable URL (see below). If you *do* want
+to run it on your machine:
 
 ```bash
-# from your local WordPress site's wp-content/themes directory
-git clone <this-repo-url> monkeypaypay
+npm install
+npm run dev      # http://localhost:4321
+npm run build    # production build into dist/
+npm run preview  # preview the production build
 ```
 
-Activate **MonkeyPayPay** under *Appearance → Themes*, and you're editing live.
+Requires Node 18.20+, 20.3+, or 22+.
 
 ---
 
-## Step 3 — Connect GitHub to the live site (deploy)
+## Deploying (free) on Vercel
 
-Pick whichever matches your host. All of these use this repo as the source.
+1. Go to **[vercel.com](https://vercel.com)** → sign in with GitHub.
+2. **Add New → Project** → import **MonkeyPayPay/MonkeyPayPay-Website**.
+3. Vercel auto-detects Astro — no configuration needed. Click **Deploy**.
+4. Every push to the branch gets its own preview URL; the production branch is
+   published to your domain.
 
-- **Host-native Git** (Cloudways/Kinsta/WP Engine): add this repo in the host
-  dashboard; `git push` deploys automatically. Cleanest option.
-- **[WP Pusher](https://wppusher.com/)** (any host): a WordPress plugin that
-  pulls this repo's theme on each push. No server config needed.
-- **GitHub Actions → SFTP** (any host): a workflow that uploads the theme on
-  every push to `main`. I can generate this once you have host credentials —
-  we'd store them as encrypted GitHub Secrets, never in the repo.
-
----
-
-## Step 4 — Claude stays in the loop
-
-This session is already connected to your GitHub repo, so from here I can:
-
-- build out pages, templates, and styles as you describe them,
-- open pull requests you review before anything merges,
-- wire up the deploy workflow when your host is ready.
-
-You review, I drive.
+Point your domain at the site under **Vercel → Project → Settings → Domains**
+(Vercel shows the exact DNS records to add at your registrar).
 
 ---
 
-## Conventions
+## Tech notes
 
-- **WordPress Coding Standards** — tabs for PHP/JS/CSS (see `.editorconfig`).
-- All output is escaped (`esc_html`, `esc_url`, `esc_attr`) and text is
-  translation-ready via the `monkeypaypay` text domain.
-- Design tokens (colors, spacing, radius) live as CSS custom properties in
-  `style.css` — change them there to restyle the whole site.
-
----
-
-## Current status
-
-✅ Starter theme scaffolded and version-controlled
-⬜ Host chosen and WordPress installed
-⬜ Domain DNS pointed at host
-⬜ Deploy pipeline (GitHub → live site) configured
-
-**Next:** tell me which host you want to use (or ask me to recommend one for
-your budget), and we'll get WordPress live and this theme deployed.
+- **No CSS framework** — a hand-built token system (`global.css`) gives full
+  control over the fluid type scale and dark/light theming, and keeps the
+  payload tiny for Core Web Vitals. (Honors the brief's fluid-grid/type goal.)
+- **Motion** uses the native View Transitions API and small vanilla scripts,
+  all gated behind `prefers-reduced-motion`.
+- **Fonts** are self-hosted variable fonts (Space Grotesk + Inter) via
+  Fontsource — no external requests.

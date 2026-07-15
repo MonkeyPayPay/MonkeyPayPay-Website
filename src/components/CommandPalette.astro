@@ -1,0 +1,64 @@
+---
+import { apps, categoryName } from '../data/apps';
+
+interface Item {
+  label: string;
+  sub?: string;
+  href: string;
+}
+
+const items: Item[] = [
+  { label: 'Home', href: '/' },
+  { label: 'About', href: '/about' },
+  ...apps.map((a) => ({
+    label: a.name,
+    sub: categoryName(a.category),
+    href: `/apps/${a.slug}`,
+  })),
+];
+---
+
+<div class="cmdk" data-command hidden>
+  <div class="cmdk__backdrop" data-command-close></div>
+  <div class="cmdk__panel" role="dialog" aria-modal="true" aria-label="Search">
+    <input
+      class="cmdk__input"
+      type="text"
+      placeholder="Search apps and pages…"
+      data-command-input
+      aria-label="Search apps and pages"
+      autocomplete="off"
+      spellcheck="false"
+    />
+    <ul class="cmdk__list" data-command-list>
+      {
+        items.map((it) => (
+          <li>
+            <a
+              class="cmdk__item"
+              href={it.href}
+              data-command-item
+              data-label={`${it.label} ${it.sub ?? ''}`.toLowerCase()}
+            >
+              <span class="cmdk__item-label">{it.label}</span>
+              {it.sub && <span class="cmdk__item-sub">{it.sub}</span>}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+    <p class="cmdk__empty" data-command-empty hidden>No matches.</p>
+  </div>
+</div>
+
+<script>
+  import { initCommandPalette } from '../scripts/command';
+  interface CmdInitWindow extends Window {
+    __mppCmdInit?: boolean;
+  }
+  const cw = window as CmdInitWindow;
+  if (!cw.__mppCmdInit) {
+    cw.__mppCmdInit = true;
+    document.addEventListener('astro:page-load', initCommandPalette);
+  }
+</script>

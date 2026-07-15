@@ -1,0 +1,129 @@
+---
+// Auto-generated Privacy Policy / Terms of Service for an app.
+//
+// NOTE: This is a reasonable, plain-language STARTER template — not legal
+// advice. Review it (and adapt the data-collection specifics to what your app
+// actually does) before publishing. Google Play requires an accurate privacy
+// policy for each app.
+import { site } from '../data/site';
+import type { App } from '../data/apps';
+
+interface Props {
+  app: App;
+  kind: 'privacy' | 'terms';
+}
+
+const { app, kind } = Astro.props;
+const updated = app.legalLastUpdated ?? '2026-01-01';
+const title = kind === 'privacy' ? 'Privacy Policy' : 'Terms of Service';
+---
+
+<article class="prose legal container">
+  <a class="app__back" href={`/apps/${app.slug}`}>← {app.name}</a>
+  <h1>{app.name} — {title}</h1>
+  <p class="legal__meta">Last updated: {updated}</p>
+
+  {
+    kind === 'privacy' ? (
+      <>
+        <p>
+          This Privacy Policy describes how {site.developer} (“we”, “us”) handles
+          information in connection with the <strong>{app.name}</strong> mobile
+          application (the “App”). By using the App you agree to this policy.
+        </p>
+
+        <h2>Information we collect</h2>
+        <p>
+          {app.name} is designed to collect as little as possible. Depending on
+          the features you use, we may process: information you choose to enter
+          in the App; basic device and diagnostic data used to keep the App
+          stable; and anonymous, aggregated usage statistics. We do not sell your
+          personal information.
+        </p>
+
+        <h2>How we use information</h2>
+        <p>
+          We use the limited information above to operate and improve the App,
+          fix problems, and respond to support requests. We do not use it to
+          build advertising profiles.
+        </p>
+
+        <h2>Data sharing</h2>
+        <p>
+          We share information only with service providers that help us run the
+          App (for example, crash reporting or analytics), and only as needed to
+          provide those services. We may disclose information if required by law.
+        </p>
+
+        <h2>Data retention & your choices</h2>
+        <p>
+          You can stop all collection by uninstalling the App. To request access
+          to or deletion of any data associated with you, contact us at the
+          address below.
+        </p>
+
+        <h2>Children’s privacy</h2>
+        <p>
+          The App is not directed to children under 13, and we do not knowingly
+          collect personal information from them.
+        </p>
+
+        <h2>Changes</h2>
+        <p>
+          We may update this policy from time to time. Material changes will be
+          reflected by updating the “Last updated” date above.
+        </p>
+      </>
+    ) : (
+      <>
+        <p>
+          These Terms of Service (“Terms”) govern your use of the{' '}
+          <strong>{app.name}</strong> mobile application (the “App”) provided by{' '}
+          {site.developer}. By downloading or using the App you agree to these
+          Terms.
+        </p>
+
+        <h2>License</h2>
+        <p>
+          We grant you a personal, non-exclusive, non-transferable, revocable
+          license to use the App for your own lawful, non-commercial purposes,
+          subject to these Terms and the Google Play Terms of Service.
+        </p>
+
+        <h2>Acceptable use</h2>
+        <p>
+          You agree not to misuse the App, including by reverse-engineering it,
+          interfering with its operation, or using it to violate any law or the
+          rights of others.
+        </p>
+
+        <h2>Intellectual property</h2>
+        <p>
+          The App, its content, and its branding are owned by {site.developer}
+          and are protected by applicable intellectual-property laws. These Terms
+          do not grant you any rights to our trademarks.
+        </p>
+
+        <h2>Disclaimer & limitation of liability</h2>
+        <p>
+          The App is provided “as is” without warranties of any kind. To the
+          fullest extent permitted by law, {site.developer} is not liable for any
+          indirect or consequential damages arising from your use of the App.
+        </p>
+
+        <h2>Changes & termination</h2>
+        <p>
+          We may update the App or these Terms at any time, and may suspend or
+          end access if you breach them. Continued use after changes means you
+          accept the updated Terms.
+        </p>
+      </>
+    )
+  }
+
+  <hr />
+  <p class="legal__note">
+    Questions about this {title.toLowerCase()}? Contact{' '}
+    <a href={`mailto:${site.contactEmail}`}>{site.contactEmail}</a>.
+  </p>
+</article>

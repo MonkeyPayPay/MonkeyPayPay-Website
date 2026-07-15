@@ -1,0 +1,65 @@
+---
+import { usedCategories, appsByCategory } from '../data/apps';
+import AppCard from './AppCard.astro';
+
+const cats = usedCategories();
+---
+
+<section class="directory" id="apps">
+  <div class="container">
+    <header class="directory__head reveal">
+      <h2 class="directory__title">The apps</h2>
+      <p class="directory__sub">
+        Browse by category, or press <kbd>⌘K</kbd> to jump to any app.
+      </p>
+    </header>
+
+    {
+      cats.length > 0 && (
+        <div class="filters" role="tablist" aria-label="Filter apps by category">
+          <button class="filter is-active" type="button" data-filter="all" role="tab" aria-selected="true">
+            All
+          </button>
+          {cats.map((c) => (
+            <button class="filter" type="button" data-filter={c.slug} role="tab" aria-selected="false">
+              {c.name}
+            </button>
+          ))}
+        </div>
+      )
+    }
+
+    <div class="directory__groups">
+      {
+        cats.map((c) => (
+          <section class="group" data-group={c.slug} id={`category-${c.slug}`}>
+            <h3 class="group__title">{c.name}</h3>
+            {c.blurb && <p class="group__blurb">{c.blurb}</p>}
+            <div class="grid">
+              {appsByCategory(c.slug).map((app) => (
+                <AppCard app={app} />
+              ))}
+            </div>
+          </section>
+        ))
+      }
+      {
+        cats.length === 0 && (
+          <p class="directory__sub">No apps yet — add your first one in <code>src/data/apps.ts</code>.</p>
+        )
+      }
+    </div>
+  </div>
+</section>
+
+<script>
+  import { initFilters } from '../scripts/filters';
+  interface FilterWindow extends Window {
+    __mppFilters?: boolean;
+  }
+  const fw = window as FilterWindow;
+  if (!fw.__mppFilters) {
+    fw.__mppFilters = true;
+    document.addEventListener('astro:page-load', initFilters);
+  }
+</script>

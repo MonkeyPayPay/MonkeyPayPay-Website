@@ -1,0 +1,51 @@
+---
+import ThemeToggle from './ThemeToggle.astro';
+import { site } from '../data/site';
+
+const links = [
+  { href: '/#apps', label: 'Apps' },
+  { href: '/about', label: 'About' },
+];
+---
+
+<header class="nav" data-nav>
+  <div class="nav__inner container">
+    <a class="nav__brand" href="/" aria-label={`${site.name} home`}>
+      <span class="nav__brand-mark" aria-hidden="true"></span>
+      <span class="nav__brand-text">{site.name}</span>
+    </a>
+
+    <nav class="nav__links" aria-label="Primary">
+      {links.map((l) => <a class="nav__link" href={l.href}>{l.label}</a>)}
+    </nav>
+
+    <div class="nav__actions">
+      <button
+        class="nav__search"
+        type="button"
+        data-command-open
+        aria-label="Search apps (Control or Command + K)"
+      >
+        <span class="nav__search-label">Search</span>
+        <kbd class="nav__kbd">⌘K</kbd>
+      </button>
+      <ThemeToggle />
+    </div>
+  </div>
+</header>
+
+<script>
+  interface NavWindow extends Window {
+    __mppNav?: boolean;
+  }
+  const nw = window as NavWindow;
+  const onScroll = () => {
+    const nav = document.querySelector('[data-nav]');
+    if (nav) nav.classList.toggle('is-scrolled', window.scrollY > 12);
+  };
+  if (!nw.__mppNav) {
+    nw.__mppNav = true;
+    window.addEventListener('scroll', onScroll, { passive: true });
+    document.addEventListener('astro:page-load', onScroll);
+  }
+</script>

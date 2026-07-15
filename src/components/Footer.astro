@@ -1,0 +1,61 @@
+---
+import { site } from '../data/site';
+import { apps } from '../data/apps';
+
+const year = new Date().getFullYear();
+---
+
+<footer class="footer">
+  <div class="container footer__inner">
+    <div class="footer__brand">
+      <span class="footer__name">{site.name}</span>
+      <p class="footer__tag">{site.tagline}</p>
+    </div>
+
+    <nav class="footer__col" aria-label="App legal pages">
+      <h4>Legal</h4>
+      <ul>
+        {
+          apps.map((a) => (
+            <li>
+              <a href={`/apps/${a.slug}/privacy`}>{a.name} — Privacy</a>
+            </li>
+          ))
+        }
+        {
+          apps.map((a) => (
+            <li>
+              <a href={`/apps/${a.slug}/terms`}>{a.name} — Terms</a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <nav class="footer__col" aria-label="Site">
+      <h4>Site</h4>
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/about">About</a></li>
+        <li><a href={`mailto:${site.contactEmail}`}>Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+
+  <div class="container footer__bar">
+    <p>© {year} {site.developer}. All rights reserved.</p>
+    {
+      site.social.length > 0 && (
+        <ul class="footer__social">
+          {site.social.map((s) => (
+            <li>
+              <a href={s.href} target="_blank" rel="noopener">
+                {s.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      )
+    }
+  </div>
+</footer>
