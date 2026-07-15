@@ -16,3 +16,4 @@ define( 'MONKEYPAYPAY_URI', get_template_directory_uri() );
 require_once MONKEYPAYPAY_DIR . '/inc/setup.php';
 require_once MONKEYPAYPAY_DIR . '/inc/enqueue.php';
 require_once MONKEYPAYPAY_DIR . '/inc/template-tags.php';
+require_once MONKEYPAYPAY_DIR . '/inc/post-types.php';

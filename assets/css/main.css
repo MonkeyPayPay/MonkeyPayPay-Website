@@ -334,3 +334,136 @@ h3 {
 	font-size: 0.9rem;
 	margin: 0;
 }
+
+/* ---------- App directory ---------- */
+
+.app-directory {
+	padding-block: 3rem;
+}
+
+.app-category {
+	margin-bottom: 3.5rem;
+}
+
+.app-category__title {
+	font-size: clamp(1.5rem, 4vw, 2rem);
+	border-bottom: 2px solid var(--mpp-color-border);
+	padding-bottom: 0.5rem;
+}
+
+.app-category__description {
+	color: var(--mpp-color-muted);
+	margin-top: -0.25rem;
+}
+
+.app-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr));
+	gap: 1.5rem;
+}
+
+.app-card {
+	border: 1px solid var(--mpp-color-border);
+	border-radius: var(--mpp-radius);
+	padding: 1.25rem;
+	background: var(--mpp-color-bg);
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+	box-shadow: 0 1px 2px rgba(22, 22, 42, 0.04);
+}
+
+.app-card__head {
+	display: flex;
+	gap: 1rem;
+	align-items: flex-start;
+}
+
+.app-card__icon img {
+	width: 64px;
+	height: 64px;
+	border-radius: 16px;
+	object-fit: cover;
+	display: block;
+}
+
+.app-card__heading {
+	flex: 1;
+	min-width: 0;
+}
+
+.app-card__title {
+	margin: 0 0 0.5rem;
+	font-size: 1.2rem;
+}
+
+.app-card__title a {
+	text-decoration: none;
+	color: inherit;
+}
+
+.app-card__title a:hover {
+	color: var(--mpp-color-primary);
+}
+
+.app-card__cta {
+	padding: 0.4rem 0.9rem;
+	font-size: 0.9rem;
+}
+
+.app-card__description {
+	margin: 0;
+	color: var(--mpp-color-muted);
+}
+
+.app-card__screenshots img {
+	border-radius: 8px;
+}
+
+.app-card__screenshots .wp-block-gallery,
+.app-card__screenshots figure {
+	margin: 0;
+}
+
+.app-directory__empty {
+	text-align: center;
+	padding: 3rem 1rem;
+	color: var(--mpp-color-muted);
+}
+
+/* ---------- Single app ---------- */
+
+.app-single__header {
+	display: flex;
+	gap: 1.5rem;
+	align-items: flex-start;
+	flex-wrap: wrap;
+	margin-bottom: 2rem;
+}
+
+.app-single__icon img {
+	width: 96px;
+	height: 96px;
+	border-radius: 22px;
+	object-fit: cover;
+	display: block;
+}
+
+.app-single__intro {
+	flex: 1;
+	min-width: 0;
+}
+
+.app-single__cats {
+	font-size: 0.9rem;
+	color: var(--mpp-color-muted);
+	margin: 0 0 0.75rem;
+}
+
+.app-single__description {
+	color: var(--mpp-color-muted);
+}
+
+.app-single__back {
+	margin-top: 2rem;
+}

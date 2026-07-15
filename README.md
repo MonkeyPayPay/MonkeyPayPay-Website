@@ -7,6 +7,26 @@ theme root, so the whole repo drops straight into
 It's a hand-built classic theme — plain PHP templates, CSS, and vanilla JS. No
 build step, no framework, nothing to compile. Edit a file, refresh the page.
 
+**What the site does:** it's a directory of the owner's Google Play apps,
+grouped by category (Fitness, Games, Widgets, …). Each app shows an icon, a
+"View on Google Play" link, a short description, and screenshots. Apps are
+managed entirely from the WordPress dashboard — no code needed to add one.
+
+## Adding an app (no code)
+
+In the WordPress dashboard:
+
+1. **Apps → Add New**.
+2. **Title** — the app's name.
+3. **Category** (right sidebar) — tick one or more (Fitness, Games, Widgets…).
+   Defaults are created for you; add your own anytime under *Apps → Categories*.
+4. **Featured image** (right sidebar) — upload the **app icon**.
+5. **Excerpt** — the **short description** shown under the app.
+   (If you don't see the Excerpt box, enable it under the ⋮ menu → Preferences → Panels.)
+6. **Content area** — add a **Gallery block** with your **screenshots**.
+7. **App Details box** — paste the **Google Play URL**.
+8. **Publish.** It appears on the homepage under its category automatically.
+
 ---
 
 ## What's in here
@@ -18,16 +38,23 @@ build step, no framework, nothing to compile. Edit a file, refresh the page.
 ├── inc/
 │   ├── setup.php           Theme supports, menus, widget areas
 │   ├── enqueue.php         Loads CSS/JS
-│   └── template-tags.php   Small reusable output helpers
+│   ├── template-tags.php   Small reusable output helpers
+│   └── post-types.php      "App" post type, category taxonomy, Play-URL field
 ├── header.php             Site header + opening markup
 ├── footer.php             Site footer + closing markup
-├── front-page.php         Homepage (hero + optional static page content)
+├── front-page.php         Homepage — apps grouped by category
+├── archive-mpp_app.php    /apps — all apps
+├── taxonomy-mpp_app_category.php  One category's apps
+├── single-mpp_app.php     Single app detail page
 ├── index.php              Fallback list view (blog, archives)
 ├── page.php               Single pages
 ├── single.php             Single blog posts
 ├── 404.php                Not-found page
 ├── searchform.php         Search form markup
-├── template-parts/        Reusable content partials
+├── template-parts/
+│   ├── app-card.php        One app's card (icon, link, description, shots)
+│   ├── content.php         Generic post partial
+│   └── content-none.php    "Nothing found" partial
 └── assets/
     ├── css/main.css        Main stylesheet
     └── js/main.js          Responsive menu toggle
