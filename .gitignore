@@ -1,0 +1,26 @@
+# This repository IS the WordPress theme (repo root = theme root).
+# WordPress core, config, and uploads must never be committed here.
+
+/wp-admin/
+/wp-includes/
+/wp-content/uploads/
+wp-config.php
+wp-config-sample.php
+
+# Dependencies
+/node_modules/
+/vendor/
+
+# Build output
+/build/
+/dist/
+*.map
+
+# OS / editor cruft
+.DS_Store
+Thumbs.db
+*.log
+
+# Environment
+.env
+.env.*
