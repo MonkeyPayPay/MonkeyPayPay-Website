@@ -2,6 +2,7 @@
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import PlayIcon from '../../../components/PlayIcon.astro';
 import AppleIcon from '../../../components/AppleIcon.astro';
+import WebIcon from '../../../components/WebIcon.astro';
 import { apps, getApp, categoryName } from '../../../data/apps';
 
 export function getStaticPaths() {
@@ -46,6 +47,17 @@ if (!app) {
               ) : (
                 <span class="chip chip--soon" title="Coming soon to the App Store">
                   <AppleIcon /> App Store · coming soon
+                </span>
+              )
+            }
+            {
+              app.webAppUrl ? (
+                <a class="btn btn--store" href={app.webAppUrl} target="_blank" rel="noopener">
+                  <WebIcon /> Open the web app
+                </a>
+              ) : (
+                <span class="chip chip--soon" title="Web app coming soon">
+                  <WebIcon /> Web app · coming soon
                 </span>
               )
             }

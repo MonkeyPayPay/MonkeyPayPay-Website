@@ -35,6 +35,8 @@ export interface App {
   playUrl: string;
   /** Apple App Store URL. Leave "" to show a "coming soon" placeholder. */
   appStoreUrl?: string;
+  /** Web app / PWA URL (opens in a browser). Leave "" for a "coming soon" placeholder. */
+  webAppUrl?: string;
   /** 2–4 screenshots look best. */
   screenshots: Screenshot[];
   /** Date shown on the auto-generated legal pages (YYYY-MM-DD). */
@@ -70,6 +72,7 @@ export const apps: App[] = [
     splash: '/placeholders/splash.svg',
     playUrl: 'https://play.google.com/store/apps/details?id=com.example.pulsefit',
     appStoreUrl: '', // ← add your App Store link when the iOS version is live
+    webAppUrl: '', // ← add the browser/PWA link if this app has one
     screenshots: [
       { src: '/placeholders/screenshot.svg', alt: 'Pulse Fit home screen' },
       { src: '/placeholders/screenshot.svg', alt: 'Pulse Fit guided workout' },
@@ -88,6 +91,7 @@ export const apps: App[] = [
     splash: '/placeholders/splash.svg',
     playUrl: 'https://play.google.com/store/apps/details?id=com.example.tapquest',
     appStoreUrl: '',
+    webAppUrl: '',
     screenshots: [
       { src: '/placeholders/screenshot.svg', alt: 'Tap Quest village' },
       { src: '/placeholders/screenshot.svg', alt: 'Tap Quest upgrades screen' },
@@ -105,6 +109,7 @@ export const apps: App[] = [
     splash: '/placeholders/splash.svg',
     playUrl: 'https://play.google.com/store/apps/details?id=com.example.glance',
     appStoreUrl: '',
+    webAppUrl: '',
     screenshots: [
       { src: '/placeholders/screenshot.svg', alt: 'Glance widgets on a home screen' },
       { src: '/placeholders/screenshot.svg', alt: 'Glance widget customization' },

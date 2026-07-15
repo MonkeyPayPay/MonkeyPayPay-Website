@@ -30,7 +30,10 @@ Everything on the site is driven by **`src/data/apps.ts`**. Add an object to the
   tagline: 'One punchy line.',
   description: 'A sentence or two.',
   icon: '/apps/my-app/icon.png',  // put the file in public/apps/my-app/
+  splash: '/apps/my-app/splash.png', // wide banner on the app page (optional)
   playUrl: 'https://play.google.com/store/apps/details?id=...',
+  appStoreUrl: '',                // Apple App Store link — "" shows "coming soon"
+  webAppUrl: '',                  // browser/PWA link — "" shows "coming soon"
   screenshots: [
     { src: '/apps/my-app/1.png', alt: 'Home screen' },
     { src: '/apps/my-app/2.png', alt: 'Settings' },

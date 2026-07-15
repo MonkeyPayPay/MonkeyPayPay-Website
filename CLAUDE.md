@@ -54,5 +54,7 @@ docs live in `README.md`.)
 4. **Story copy review.** `/story` wording is Claude's edit of the owner's words
    (includes invented detail "first wobbling steps across the living-room floor").
    Confirm details with the owner and adjust.
-5. **Splash art + App Store** are placeholders (`/placeholders/splash.svg`,
-   "App Store · coming soon" chips) until real assets/links arrive.
+5. **Splash art, App Store, and Web app** are placeholders (`/placeholders/splash.svg`,
+   "App Store · coming soon" / "Web app · coming soon" chips) until real
+   assets/links arrive. Each app supports `playUrl`, `appStoreUrl`, and
+   `webAppUrl` — set any to a real URL to turn its chip into a live button.

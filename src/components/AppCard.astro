@@ -2,6 +2,7 @@
 import type { App } from '../data/apps';
 import PlayIcon from './PlayIcon.astro';
 import AppleIcon from './AppleIcon.astro';
+import WebIcon from './WebIcon.astro';
 
 interface Props {
   app: App;
@@ -53,6 +54,17 @@ const shots = app.screenshots.slice(0, 4);
         ) : (
           <span class="chip chip--soon" title="Coming soon to the App Store">
             <AppleIcon /> App Store · soon
+          </span>
+        )
+      }
+      {
+        app.webAppUrl ? (
+          <a class="btn btn--store" href={app.webAppUrl} target="_blank" rel="noopener">
+            <WebIcon /> Web app
+          </a>
+        ) : (
+          <span class="chip chip--soon" title="Web app coming soon">
+            <WebIcon /> Web · soon
           </span>
         )
       }
