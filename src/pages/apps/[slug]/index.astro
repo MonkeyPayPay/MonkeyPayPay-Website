@@ -36,9 +36,17 @@ if (!app) {
           <h1 class="app__name">{app.name}</h1>
           <p class="app__tagline">{app.tagline}</p>
           <div class="app__stores">
-            <a class="btn btn--primary" href={app.playUrl} target="_blank" rel="noopener" data-magnetic>
-              <PlayIcon /> Get it on Google Play
-            </a>
+            {
+              app.playUrl ? (
+                <a class="btn btn--primary" href={app.playUrl} target="_blank" rel="noopener" data-magnetic>
+                  <PlayIcon /> Get it on Google Play
+                </a>
+              ) : (
+                <span class="chip chip--soon" title="Coming soon to Google Play">
+                  <PlayIcon /> Google Play · coming soon
+                </span>
+              )
+            }
             {
               app.appStoreUrl ? (
                 <a class="btn btn--store" href={app.appStoreUrl} target="_blank" rel="noopener">

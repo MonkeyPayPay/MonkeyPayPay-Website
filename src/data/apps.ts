@@ -31,8 +31,8 @@ export interface App {
   icon: string;
   /** Wide "splash" / hero banner shown on the app page. Optional. */
   splash?: string;
-  /** The Google Play listing URL. */
-  playUrl: string;
+  /** The Google Play listing URL. Leave "" for a "coming soon" placeholder. */
+  playUrl?: string;
   /** Apple App Store URL. Leave "" to show a "coming soon" placeholder. */
   appStoreUrl?: string;
   /** Web app / PWA URL (opens in a browser). Leave "" for a "coming soon" placeholder. */
@@ -62,23 +62,24 @@ export const categories: Category[] = [
 
 export const apps: App[] = [
   {
-    slug: 'pulse-fit',
-    name: 'Pulse Fit',
+    slug: 'spinfit',
+    name: 'SpinFit',
     category: 'fitness',
-    tagline: 'Workouts that adapt to you.',
+    // TODO(owner): confirm SpinFit's tagline / description / art before launch.
+    tagline: 'Ride. Track. Repeat.',
     description:
-      'A clean, adaptive workout tracker with guided sessions, streaks, and progress you can actually feel.',
-    icon: '/placeholders/icon.svg',
-    splash: '/placeholders/splash.svg',
-    playUrl: 'https://play.google.com/store/apps/details?id=com.example.pulsefit',
-    appStoreUrl: '', // ← add your App Store link when the iOS version is live
-    webAppUrl: '', // ← add the browser/PWA link if this app has one
+      'SpinFit turns any ride into a smart studio — guided indoor-cycling sessions, live stats, and streaks that keep you coming back.',
+    icon: '/placeholders/icon.svg', // ← replace with /apps/spinfit/icon.png
+    splash: '/placeholders/splash.svg', // ← replace with your splash art
+    playUrl: '', // ← paste the Google Play link once SpinFit is published
+    appStoreUrl: '', // ← add when the iOS version ships
+    webAppUrl: '', // ← add if SpinFit has a browser/PWA version
     screenshots: [
-      { src: '/placeholders/screenshot.svg', alt: 'Pulse Fit home screen' },
-      { src: '/placeholders/screenshot.svg', alt: 'Pulse Fit guided workout' },
-      { src: '/placeholders/screenshot.svg', alt: 'Pulse Fit progress charts' },
+      { src: '/placeholders/screenshot.svg', alt: 'SpinFit screenshot' },
+      { src: '/placeholders/screenshot.svg', alt: 'SpinFit screenshot' },
+      { src: '/placeholders/screenshot.svg', alt: 'SpinFit screenshot' },
     ],
-    legalLastUpdated: '2026-01-01',
+    legalLastUpdated: '2026-07-16',
   },
   {
     slug: 'tap-quest',

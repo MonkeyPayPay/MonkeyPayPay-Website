@@ -16,10 +16,9 @@ const shots = app.screenshots.slice(0, 4);
   <div class="card__head">
     <a
       class="card__icon"
-      href={app.playUrl}
-      target="_blank"
-      rel="noopener"
-      aria-label={`${app.name} on Google Play`}
+      href={app.playUrl || `/apps/${app.slug}`}
+      {...(app.playUrl ? { target: '_blank', rel: 'noopener' } : {})}
+      aria-label={app.playUrl ? `${app.name} on Google Play` : `${app.name} details`}
     >
       <img src={app.icon} alt={`${app.name} icon`} width="72" height="72" loading="lazy" />
     </a>
@@ -43,9 +42,17 @@ const shots = app.screenshots.slice(0, 4);
 
   <div class="card__foot">
     <div class="card__stores">
-      <a class="btn btn--store" href={app.playUrl} target="_blank" rel="noopener">
-        <PlayIcon /> Google Play
-      </a>
+      {
+        app.playUrl ? (
+          <a class="btn btn--store" href={app.playUrl} target="_blank" rel="noopener">
+            <PlayIcon /> Google Play
+          </a>
+        ) : (
+          <span class="chip chip--soon" title="Coming soon to Google Play">
+            <PlayIcon /> Google Play · soon
+          </span>
+        )
+      }
       {
         app.appStoreUrl ? (
           <a class="btn btn--store" href={app.appStoreUrl} target="_blank" rel="noopener">
