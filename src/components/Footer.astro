@@ -12,20 +12,24 @@ const year = new Date().getFullYear();
       <p class="footer__tag">{site.tagline}</p>
     </div>
 
-    <nav class="footer__col" aria-label="App legal pages">
+    <nav class="footer__col footer__col--legal" aria-label="App legal pages">
       <h4>Legal</h4>
-      <ul>
+      <ul class="footer__legal">
+        <li class="footer__legal-head" aria-hidden="true">
+          <span></span>
+          <span>Privacy</span>
+          <span>Terms</span>
+        </li>
         {
           apps.map((a) => (
-            <li>
-              <a href={`/apps/${a.slug}/privacy`}>{a.name} — Privacy</a>
-            </li>
-          ))
-        }
-        {
-          apps.map((a) => (
-            <li>
-              <a href={`/apps/${a.slug}/terms`}>{a.name} — Terms</a>
+            <li class="footer__legal-row">
+              <span class="footer__legal-app">{a.name}</span>
+              <a href={`/apps/${a.slug}/privacy`}>
+                Privacy<span class="screen-reader-text"> policy for {a.name}</span>
+              </a>
+              <a href={`/apps/${a.slug}/terms`}>
+                Terms<span class="screen-reader-text"> of service for {a.name}</span>
+              </a>
             </li>
           ))
         }

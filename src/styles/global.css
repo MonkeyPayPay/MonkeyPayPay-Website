@@ -134,6 +134,18 @@ kbd {
 }
 .skip-link:focus { left: 0; }
 
+.screen-reader-text {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 /* ---- Scroll reveal -------------------------------------------------------- */
 .reveal {
   opacity: 0;
@@ -528,6 +540,28 @@ kbd {
 .footer__col ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.5rem; }
 .footer__col a { color: var(--muted); text-decoration: none; font-size: var(--fs-sm); }
 .footer__col a:hover { color: var(--accent); }
+
+/* Legal: one row per app, aligned Privacy / Terms columns */
+.footer__legal { display: grid; gap: 0.55rem; }
+.footer__legal-head,
+.footer__legal-row {
+  display: grid;
+  grid-template-columns: 1fr 4.5rem 4.5rem;
+  gap: 0.5rem 0.75rem;
+  align-items: baseline;
+}
+.footer__legal-head {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  opacity: 0.65;
+  padding-bottom: 0.35rem;
+  border-bottom: 1px solid var(--border);
+}
+.footer__legal-head span:not(:first-child) { text-align: right; }
+.footer__legal-app { color: var(--text); font-size: var(--fs-sm); font-weight: 500; }
+.footer__legal-row a { text-align: right; }
 .footer__bar {
   display: flex;
   align-items: center;
