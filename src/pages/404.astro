@@ -3,9 +3,19 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
 <BaseLayout title="Page not found" description="This page could not be found.">
-  <section class="prose container" style="text-align:center; min-height: 40vh;">
-    <h1 class="reveal">404</h1>
-    <p class="reveal">That page wandered off. Let’s get you back to the apps.</p>
-    <p class="reveal"><a class="btn btn--primary" href="/">Back home</a></p>
+  <section class="notfound container">
+    <img
+      class="notfound__mascot reveal"
+      src="/brand/mascot.webp"
+      alt=""
+      width="240"
+      height="240"
+      loading="eager"
+    />
+    <h1 class="notfound__title reveal">404</h1>
+    <p class="notfound__text reveal">
+      Looks like this page skipped leg day and wandered off. Let’s get you back.
+    </p>
+    <p class="reveal"><a class="btn btn--primary" href="/" data-magnetic>Back home</a></p>
   </section>
 </BaseLayout>

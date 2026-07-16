@@ -98,42 +98,6 @@ export const apps: App[] = [
       // contactEmail: 'support@spinfit.app', // ← enable once that inbox is live
     },
   },
-  {
-    slug: 'tap-quest',
-    name: 'Tap Quest',
-    category: 'games',
-    tagline: 'A tiny idle adventure.',
-    description:
-      'A cozy incremental game about building a village of curious monkeys, one tap at a time.',
-    icon: '/placeholders/icon.svg',
-    splash: '/placeholders/splash.svg',
-    playUrl: 'https://play.google.com/store/apps/details?id=com.example.tapquest',
-    appStoreUrl: '',
-    webAppUrl: '',
-    screenshots: [
-      { src: '/placeholders/screenshot.svg', alt: 'Tap Quest village' },
-      { src: '/placeholders/screenshot.svg', alt: 'Tap Quest upgrades screen' },
-    ],
-    legalLastUpdated: '2026-01-01',
-  },
-  {
-    slug: 'glance',
-    name: 'Glance',
-    category: 'widgets',
-    tagline: 'Your day, at a glance.',
-    description:
-      'Beautiful home-screen widgets for weather, calendar, and to-dos — glanceable, customizable, and fast.',
-    icon: '/placeholders/icon.svg',
-    splash: '/placeholders/splash.svg',
-    playUrl: 'https://play.google.com/store/apps/details?id=com.example.glance',
-    appStoreUrl: '',
-    webAppUrl: '',
-    screenshots: [
-      { src: '/placeholders/screenshot.svg', alt: 'Glance widgets on a home screen' },
-      { src: '/placeholders/screenshot.svg', alt: 'Glance widget customization' },
-    ],
-    legalLastUpdated: '2026-01-01',
-  },
 ];
 
 // ── Helpers ──────────────────────────────────────────────────────────────────

@@ -5,6 +5,6 @@
       <stop offset="1" stop-color="#00e6a8"/>
     </linearGradient>
   </defs>
-  <rect width="64" height="64" rx="16" fill="url(#g)"/>
-  <text x="50%" y="53%" text-anchor="middle" dominant-baseline="middle" font-family="system-ui, sans-serif" font-size="34" font-weight="700" fill="#0b0b12">M</text>
+  <rect width="64" height="64" rx="15" fill="url(#g)"/>
+  <text x="50%" y="53%" text-anchor="middle" dominant-baseline="central" font-family="'Space Grotesk', 'Segoe UI', system-ui, sans-serif" font-size="42" font-weight="700" fill="#ffffff">M</text>
 </svg>

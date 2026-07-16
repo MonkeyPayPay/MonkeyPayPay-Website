@@ -54,19 +54,23 @@ docs live in `README.md`.)
      **`monkeypaypay/micro-workout-roulette`** (Expo/React Native; gamified
      2-min-workout roulette; local-only storage, no account, RevenueCat for
      "SpinFit Pro" $3.99/mo, on-device reminders). Real brand art is in
-     `public/apps/spinfit/` (icon.webp, banner.webp = splash, plus mascot.webp,
-     wordmark.webp, logo-mark.webp saved for later use). Still PENDING: real
-     in-app screenshots (screenshots array is currently empty) and the Google
-     Play URL at launch (buttons show "coming soon"). Store copy lives in that
-     repo's `store-listing/`.
-   - **Tap Quest / Glance** are still placeholder samples — replace or remove.
+     `public/apps/spinfit/` (icon.webp, banner.webp = splash, plus wordmark.webp,
+     logo-mark.webp saved for later use). The mascot was background-removed to a
+     transparent `public/brand/mascot.webp` and is featured on the 404 page.
+     Still PENDING: real in-app screenshots (screenshots array is currently
+     empty) and the Google Play URL at launch (buttons show "coming soon").
+     Store copy lives in that repo's `store-listing/`.
+   - **Tap Quest / Glance** samples were removed; SpinFit is currently the only
+     app. Add real apps as they launch (pull details/art from each repo).
+   - Favicon is a branded gradient "M" (`public/favicon.svg`) with a matching
+     `public/apple-touch-icon.png`.
    - Per-app legal is tailored via the `legal` field (dataModel 'local-only',
      usesSubscriptions, usesNotifications, contactEmail) → `Legal.astro`.
    - **Contact email:** `support@monkeypaypay.com` site-wide (site.ts), used by
      the footer, story page, and every app's legal pages.
-4. **Story copy review.** `/story` wording is Claude's edit of the owner's words
-   (includes invented detail "first wobbling steps across the living-room floor").
-   Confirm details with the owner and adjust.
+4. **Story copy.** `/story` wording is Claude's edit of the owner's words. Owner
+   already reviewed once (removed the pull quote, changed "living room" →
+   "family room"). Adjust further if they ask.
 5. **Splash art, App Store, and Web app** are placeholders (`/placeholders/splash.svg`,
    "App Store · coming soon" / "Web app · coming soon" chips) until real
    assets/links arrive. Each app supports `playUrl`, `appStoreUrl`, and
