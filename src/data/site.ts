@@ -26,7 +26,7 @@ export const site = {
    */
   donate: {
     label: 'Support Paisley',
-    url: '', // e.g. 'https://www.paypal.me/yourhandle' or 'https://ko-fi.com/yourhandle'
+    url: 'https://www.paypal.com/ncp/payment/RX7XKC9W7XGWL', // PayPal "Support Paisley" (customer-set amount)
   },
   /** Add or remove as you like; delete all to hide the social row. */
   social: [

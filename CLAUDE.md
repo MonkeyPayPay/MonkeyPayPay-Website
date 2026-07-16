@@ -43,10 +43,11 @@ docs live in `README.md`.)
    wouldn't let them select `monkeypaypay.com`). Retry on **desktop** Vercel:
    add `www.monkeypaypay.com`, 308 redirect → `monkeypaypay.com` (or just connect
    it to Production — both are fine). Not urgent.
-2. **PayPal donate link — PENDING.** Owner will use **PayPal** ("Support Paisley"
-   button). When they send their `https://paypal.me/...` link, set
-   `site.donate.url` in `src/data/site.ts` and push. Until then the button safely
-   opens a mailto.
+2. **PayPal donate link — DONE.** `site.donate.url` is set to the PayPal
+   business "Support Paisley" payment link (customer-set amount):
+   `https://www.paypal.com/ncp/payment/RX7XKC9W7XGWL`. The Support Paisley
+   button (story page, homepage teaser, footer) now opens it in a new tab.
+   A matching QR code was also provided by the owner if we ever want to show it.
 3. **Apps.** `src/data/apps.ts`:
    - **SpinFit** (fitness, slug `spinfit`) is the owner's first real app — real
      copy + accurate legal pulled from the app repo
