@@ -47,10 +47,20 @@ docs live in `README.md`.)
    button). When they send their `https://paypal.me/...` link, set
    `site.donate.url` in `src/data/site.ts` and push. Until then the button safely
    opens a mailto.
-3. **Replace sample apps.** `src/data/apps.ts` still holds 3 placeholder apps
-   (Pulse Fit / Tap Quest / Glance). Swap for the owner's real apps: Play Store
-   URLs, icons, screenshots, splash art (`public/apps/<slug>/...`), and
-   `appStoreUrl` when iOS versions ship.
+3. **Apps.** `src/data/apps.ts`:
+   - **SpinFit** (fitness, slug `spinfit`) is the owner's first real app — real
+     copy + accurate legal pulled from the app repo
+     **`monkeypaypay/micro-workout-roulette`** (Expo/React Native; gamified
+     2-min-workout roulette; local-only storage, no account, RevenueCat for
+     "SpinFit Pro" $3.99/mo, on-device reminders). Still PENDING: real icon,
+     screenshots, splash art, and the Google Play URL at launch (currently
+     "coming soon"). Store copy lives in that repo's `store-listing/`.
+   - **Tap Quest / Glance** are still placeholder samples — replace or remove.
+   - Per-app legal is tailored via the `legal` field (dataModel 'local-only',
+     usesSubscriptions, usesNotifications, contactEmail) → `Legal.astro`.
+   - **Decide contact email:** legal/footer use `hello@monkeypaypay.com`
+     (site.ts); SpinFit's store listing uses `support@spinfit.app`. Confirm
+     which inbox is real and standardize.
 4. **Story copy review.** `/story` wording is Claude's edit of the owner's words
    (includes invented detail "first wobbling steps across the living-room floor").
    Confirm details with the owner and adjust.

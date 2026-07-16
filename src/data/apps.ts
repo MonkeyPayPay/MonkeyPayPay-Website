@@ -41,6 +41,21 @@ export interface App {
   screenshots: Screenshot[];
   /** Date shown on the auto-generated legal pages (YYYY-MM-DD). */
   legalLastUpdated?: string;
+  /** Tailors the auto-generated Privacy + Terms pages to this app's reality. */
+  legal?: {
+    /**
+     * 'local-only' = no account, nothing collected or transmitted off-device
+     * (renders an accurate "Data Not Collected"-style policy). 'standard' =
+     * the generic template. Defaults to 'standard' when omitted.
+     */
+    dataModel?: 'local-only' | 'standard';
+    /** App offers in-app purchases / subscriptions (adds billing sections). */
+    usesSubscriptions?: boolean;
+    /** App schedules on-device notifications (adds a notifications section). */
+    usesNotifications?: boolean;
+    /** Overrides the site-wide contact email for this app's legal pages. */
+    contactEmail?: string;
+  };
 }
 
 export interface Category {
@@ -65,21 +80,27 @@ export const apps: App[] = [
     slug: 'spinfit',
     name: 'SpinFit',
     category: 'fitness',
-    // TODO(owner): confirm SpinFit's tagline / description / art before launch.
-    tagline: 'Ride. Track. Repeat.',
+    tagline: 'Spin. Sweat. Two minutes at a time.',
     description:
-      'SpinFit turns any ride into a smart studio — guided indoor-cycling sessions, live stats, and streaks that keep you coming back.',
+      'Turn exercise into a game: flick the wheel, land on a random 2-minute move, and knock it out with an on-screen coach and countdown. Earn XP, level up, and build a streak — 48 bodyweight exercises, three difficulty tiers, and a quiet mode for apartments. No gym, no equipment, no account.',
     icon: '/placeholders/icon.svg', // ← replace with /apps/spinfit/icon.png
     splash: '/placeholders/splash.svg', // ← replace with your splash art
     playUrl: '', // ← paste the Google Play link once SpinFit is published
     appStoreUrl: '', // ← add when the iOS version ships
-    webAppUrl: '', // ← add if SpinFit has a browser/PWA version
+    webAppUrl: '', // ← SpinFit is a native app; leave blank (shows "coming soon")
     screenshots: [
-      { src: '/placeholders/screenshot.svg', alt: 'SpinFit screenshot' },
-      { src: '/placeholders/screenshot.svg', alt: 'SpinFit screenshot' },
-      { src: '/placeholders/screenshot.svg', alt: 'SpinFit screenshot' },
+      { src: '/placeholders/screenshot.svg', alt: 'The SpinFit wheel mid-spin' },
+      { src: '/placeholders/screenshot.svg', alt: 'Exercise intro with an animated demo' },
+      { src: '/placeholders/screenshot.svg', alt: 'Countdown timer with coaching cues' },
+      { src: '/placeholders/screenshot.svg', alt: 'Profile with streak and stats' },
     ],
     legalLastUpdated: '2026-07-16',
+    legal: {
+      dataModel: 'local-only',
+      usesSubscriptions: true, // SpinFit Pro (RevenueCat), $3.99/mo
+      usesNotifications: true, // on-device daily reminders
+      // contactEmail: 'support@spinfit.app', // ← enable once that inbox is live
+    },
   },
   {
     slug: 'tap-quest',
