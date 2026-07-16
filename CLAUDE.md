@@ -52,9 +52,12 @@ docs live in `README.md`.)
      copy + accurate legal pulled from the app repo
      **`monkeypaypay/micro-workout-roulette`** (Expo/React Native; gamified
      2-min-workout roulette; local-only storage, no account, RevenueCat for
-     "SpinFit Pro" $3.99/mo, on-device reminders). Still PENDING: real icon,
-     screenshots, splash art, and the Google Play URL at launch (currently
-     "coming soon"). Store copy lives in that repo's `store-listing/`.
+     "SpinFit Pro" $3.99/mo, on-device reminders). Real brand art is in
+     `public/apps/spinfit/` (icon.webp, banner.webp = splash, plus mascot.webp,
+     wordmark.webp, logo-mark.webp saved for later use). Still PENDING: real
+     in-app screenshots (screenshots array is currently empty) and the Google
+     Play URL at launch (buttons show "coming soon"). Store copy lives in that
+     repo's `store-listing/`.
    - **Tap Quest / Glance** are still placeholder samples — replace or remove.
    - Per-app legal is tailored via the `legal` field (dataModel 'local-only',
      usesSubscriptions, usesNotifications, contactEmail) → `Legal.astro`.

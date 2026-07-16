@@ -83,17 +83,13 @@ export const apps: App[] = [
     tagline: 'Spin. Sweat. Two minutes at a time.',
     description:
       'Turn exercise into a game: flick the wheel, land on a random 2-minute move, and knock it out with an on-screen coach and countdown. Earn XP, level up, and build a streak — 48 bodyweight exercises, three difficulty tiers, and a quiet mode for apartments. No gym, no equipment, no account.',
-    icon: '/placeholders/icon.svg', // ← replace with /apps/spinfit/icon.png
-    splash: '/placeholders/splash.svg', // ← replace with your splash art
+    icon: '/apps/spinfit/icon.webp',
+    splash: '/apps/spinfit/banner.webp',
     playUrl: '', // ← paste the Google Play link once SpinFit is published
     appStoreUrl: '', // ← add when the iOS version ships
     webAppUrl: '', // ← SpinFit is a native app; leave blank (shows "coming soon")
-    screenshots: [
-      { src: '/placeholders/screenshot.svg', alt: 'The SpinFit wheel mid-spin' },
-      { src: '/placeholders/screenshot.svg', alt: 'Exercise intro with an animated demo' },
-      { src: '/placeholders/screenshot.svg', alt: 'Countdown timer with coaching cues' },
-      { src: '/placeholders/screenshot.svg', alt: 'Profile with streak and stats' },
-    ],
+    // Real in-app screenshots go here when ready (public/apps/spinfit/1.png …).
+    screenshots: [],
     legalLastUpdated: '2026-07-16',
     legal: {
       dataModel: 'local-only',

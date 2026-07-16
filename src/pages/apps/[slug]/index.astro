@@ -18,16 +18,16 @@ if (!app) {
 
 <BaseLayout title={app.name} description={app.description}>
   <article class="app">
-    {
-      app.splash && (
-        <div class="app__splash">
-          <img src={app.splash} alt={`${app.name} splash art`} />
-        </div>
-      )
-    }
-
     <div class="container">
       <a class="app__back" href="/#apps">← All apps</a>
+
+      {
+        app.splash && (
+          <div class="app__hero">
+            <img src={app.splash} alt={`${app.name} artwork`} />
+          </div>
+        )
+      }
 
       <header class="app__header reveal">
         <img class="app__icon" src={app.icon} alt={`${app.name} icon`} width="96" height="96" />
