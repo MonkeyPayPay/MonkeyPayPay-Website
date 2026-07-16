@@ -61,9 +61,8 @@ docs live in `README.md`.)
    - **Tap Quest / Glance** are still placeholder samples — replace or remove.
    - Per-app legal is tailored via the `legal` field (dataModel 'local-only',
      usesSubscriptions, usesNotifications, contactEmail) → `Legal.astro`.
-   - **Decide contact email:** legal/footer use `hello@monkeypaypay.com`
-     (site.ts); SpinFit's store listing uses `support@spinfit.app`. Confirm
-     which inbox is real and standardize.
+   - **Contact email:** `support@monkeypaypay.com` site-wide (site.ts), used by
+     the footer, story page, and every app's legal pages.
 4. **Story copy review.** `/story` wording is Claude's edit of the owner's words
    (includes invented detail "first wobbling steps across the living-room floor").
    Confirm details with the owner and adjust.

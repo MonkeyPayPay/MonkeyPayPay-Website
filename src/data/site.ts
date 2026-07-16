@@ -17,7 +17,7 @@ export const site = {
   /** Legal entity / developer name used in the auto-generated legal pages. */
   developer: 'MonkeyPayPay',
   /** Contact address shown in the footer and legal pages. */
-  contactEmail: 'hello@monkeypaypay.com',
+  contactEmail: 'support@monkeypaypay.com',
   /**
    * "Support Paisley" donation link.
    * Paste your PayPal.me / Ko-fi / Buy Me a Coffee URL below. Until you add a
