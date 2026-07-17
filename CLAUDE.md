@@ -62,15 +62,17 @@ docs live in `README.md`.)
      Store copy lives in that repo's `store-listing/`.
    - **Tap Quest / Glance** samples were removed; SpinFit is currently the only
      app. Add real apps as they launch (pull details/art from each repo).
-   - Favicon is a branded gradient "M" (`public/favicon.svg`) with a matching
-     `public/apple-touch-icon.png`.
+   - Favicon/app icon is the monkey head (`public/favicon-16.png`,
+     `favicon-32.png`, `apple-touch-icon.png`). Social share card is
+     `public/og-image.png` (1200×630, monkey + wordmark) wired via og:image.
    - **Brand mascot:** a cartoon monkey in a pink tutu (the MonkeyPayPay
      character — ties to Paisley + dance). Owner generates poses via GPT from a
-     reference image; they arrive with a baked-in checkerboard bg, so remove it
-     with a border flood-fill (sharp raw buffer, key light-neutral pixels) →
-     transparent webp in `public/brand/`. `monkey-wave.webp` = homepage hero;
-     `monkey-ballet.webp` = Paisley's Story page (float-right, sparkles kept).
-     Planned poses still to add: 404, social/OG image, favicon.
+     reference image; they arrive with a baked-in checkerboard bg. Removal
+     recipe: border flood-fill keying light-neutral pixels (sharp raw buffer),
+     PLUS clear enclosed pockets with area ≥ 280 (protects eye catchlights/teeth
+     which are smaller). Poses in `public/brand/`: `monkey-wave.webp` = hero,
+     `monkey-ballet.webp` = story page, `monkey-404.webp` = 404 page,
+     `monkey-apps.webp` = saved/unused (crowded the homepage next to the hero).
    - Per-app legal is tailored via the `legal` field (dataModel 'local-only',
      usesSubscriptions, usesNotifications, contactEmail) → `Legal.astro`.
    - **Contact email:** `support@monkeypaypay.com` site-wide (site.ts), used by
