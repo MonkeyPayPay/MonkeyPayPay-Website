@@ -71,7 +71,8 @@ docs live in `README.md`.)
      recipe: border flood-fill keying light-neutral pixels (sharp raw buffer),
      PLUS clear enclosed pockets with area ≥ 280 (protects eye catchlights/teeth
      which are smaller). Poses in `public/brand/`: `monkey-wave.webp` = hero,
-     `monkey-ballet.webp` = story page, `monkey-404.webp` = 404 page,
+     `monkey-ballet.webp` = story page (top), `monkey-404.webp` = 404 page,
+     `monkey-celebrate.webp` = story support card (by the donate button),
      `monkey-apps.webp` = saved/unused (crowded the homepage next to the hero).
    - Per-app legal is tailored via the `legal` field (dataModel 'local-only',
      usesSubscriptions, usesNotifications, contactEmail) → `Legal.astro`.
