@@ -64,6 +64,12 @@ docs live in `README.md`.)
      app. Add real apps as they launch (pull details/art from each repo).
    - Favicon is a branded gradient "M" (`public/favicon.svg`) with a matching
      `public/apple-touch-icon.png`.
+   - **Brand mascot:** a cartoon monkey in a pink tutu (the MonkeyPayPay
+     character — ties to Paisley + dance). Owner generates poses via GPT from a
+     reference image; they arrive with a baked-in checkerboard bg, so remove it
+     with a border flood-fill (sharp raw buffer, key light-neutral pixels) →
+     transparent webp in `public/brand/`. `monkey-wave.webp` is featured in the
+     homepage hero. Planned poses: story (ballet), 404, social/OG, favicon.
    - Per-app legal is tailored via the `legal` field (dataModel 'local-only',
      usesSubscriptions, usesNotifications, contactEmail) → `Legal.astro`.
    - **Contact email:** `support@monkeypaypay.com` site-wide (site.ts), used by

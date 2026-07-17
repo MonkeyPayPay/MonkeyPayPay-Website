@@ -364,9 +364,21 @@ kbd {
   justify-content: center;
   flex-wrap: wrap;
 }
+.hero__mascot {
+  width: clamp(150px, 22vw, 240px);
+  height: auto;
+  display: block;
+  margin: 2.5rem auto 0;
+  filter: drop-shadow(0 24px 45px rgba(124, 92, 255, 0.3));
+  animation: float 4.5s ease-in-out infinite;
+}
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
 .hero__scroll {
   display: inline-block;
-  margin-top: 3rem;
+  margin-top: 1.5rem;
   color: var(--muted);
   text-decoration: none;
   font-size: 1.4rem;
