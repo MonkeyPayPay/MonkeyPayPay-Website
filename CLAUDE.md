@@ -68,8 +68,9 @@ docs live in `README.md`.)
      character — ties to Paisley + dance). Owner generates poses via GPT from a
      reference image; they arrive with a baked-in checkerboard bg, so remove it
      with a border flood-fill (sharp raw buffer, key light-neutral pixels) →
-     transparent webp in `public/brand/`. `monkey-wave.webp` is featured in the
-     homepage hero. Planned poses: story (ballet), 404, social/OG, favicon.
+     transparent webp in `public/brand/`. `monkey-wave.webp` = homepage hero;
+     `monkey-ballet.webp` = Paisley's Story page (float-right, sparkles kept).
+     Planned poses still to add: 404, social/OG image, favicon.
    - Per-app legal is tailored via the `legal` field (dataModel 'local-only',
      usesSubscriptions, usesNotifications, contactEmail) → `Legal.astro`.
    - **Contact email:** `support@monkeypaypay.com` site-wide (site.ts), used by

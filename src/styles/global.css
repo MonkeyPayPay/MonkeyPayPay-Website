@@ -678,6 +678,18 @@ kbd {
   background-clip: text;
   color: transparent;
 }
+.story__mascot {
+  float: right;
+  width: clamp(150px, 32vw, 240px);
+  height: auto;
+  margin: 0 0 1rem 1.5rem;
+  shape-outside: circle(50%);
+  filter: drop-shadow(0 20px 40px rgba(124, 92, 255, 0.28));
+  animation: float 5s ease-in-out infinite;
+}
+@media (max-width: 560px) {
+  .story__mascot { float: none; display: block; margin: 0.5rem auto 1.5rem; }
+}
 .story__body p {
   font-size: var(--fs-lead);
   color: var(--text);
