@@ -909,6 +909,12 @@ kbd {
 .prog__story-heading { font-size: var(--fs-h3); margin: 0 0 1rem; }
 .prog__story p { color: var(--muted); line-height: 1.8; margin-bottom: 1rem; }
 .prog__story p:last-child { margin-bottom: 0; }
+.prog__story-signoff {
+  margin-top: 1.5rem !important;
+  font-family: var(--font-display);
+  font-style: italic;
+  color: var(--text) !important;
+}
 
 /* ---- Reduced motion ------------------------------------------------------- */
 @media (prefers-reduced-motion: reduce) {

@@ -68,6 +68,7 @@ const statusLabel = {
             {program.story.body.map((para) => (
               <p>{para}</p>
             ))}
+            {program.story.signoff && <p class="prog__story-signoff">{program.story.signoff}</p>}
           </aside>
         )
       }

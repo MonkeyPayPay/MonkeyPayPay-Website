@@ -41,7 +41,7 @@ export interface Program {
   /** Longer paragraphs for the detail page. */
   overview?: string[];
   /** Founder / credibility story shown as a callout on the detail page. */
-  story?: { heading: string; body: string[] };
+  story?: { heading: string; body: string[]; signoff?: string };
   /** Full module/feature breakdown for the detail page. */
   modules?: ProgramModule[];
   /** Pricing tiers for the detail page. */
@@ -83,6 +83,7 @@ export const programs: Program[] = [
         'So I know the frustration firsthand: seven systems that don’t talk to each other, invoices re-keyed by hand, an 86 the floor hears about too late, labor that blows past budget before anyone notices. The software was supposed to make it easier — mostly it just added another login.',
         'Mise is my answer to all of it — everything I ever wished I’d had, in one connected place, running in real time. I built it to solve the exact problems I lived with for years, from someone who’s actually run the shift. And it does.',
       ],
+      signoff: '— Jordan O’Brien, founder of Mise',
     },
     modules: [
       { name: 'Inventory', desc: 'Live depletion from POS sales, plate & recipe costing, waste log, variance counts, and auto-86 at zero stock.' },
