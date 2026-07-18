@@ -1,0 +1,94 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const lines = [
+  {
+    name: 'bASS SWIM',
+    label: 'Fitness core',
+    desc: 'Minimal cuts and sculpting fits engineered for training — clean, gym-to-beach essentials in premium compression fabric that stays put through every rep and every wave.',
+  },
+  {
+    name: 'American RiverRapps™',
+    label: 'Style line',
+    desc: 'The fashion side of the house: textures, prints, reversibles, and limited drops for the days the look leads.',
+  },
+];
+
+const highlights = [
+  'Sports-bra-level support with removable molded cups',
+  'Premium technical fabrics (Carvico, Eurojersey, Lycra® XTRA LIFE™)',
+  'Anti-slip, anti-roll construction that never shifts',
+  'Inclusive, athlete-fit sizing (XS–2XL)',
+  'Designed and engineered in America',
+];
+---
+
+<BaseLayout
+  title="bASS SWIM"
+  description="bASS SWIM — fitness-first American swimwear for women who train. A premium athletic swimwear brand, and a sister venture in the MonkeyPayPay family."
+>
+  <section class="page-hero">
+    <div class="container">
+      <p class="page-hero__eyebrow reveal">A sister venture</p>
+      <h1 class="page-hero__title reveal">bASS SWIM</h1>
+      <p class="page-hero__lead reveal">
+        Fitness-first American swimwear for women who train — premium, technical,
+        and built to move from the water to the weight room.
+      </p>
+      <div class="prog__actions reveal">
+        <span class="chip chip--soon">Shop · coming soon</span>
+        <span class="program__status program__status--in-development">In development</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="container prog">
+    <section class="prog__overview reveal">
+      <p>
+        The first truly premium American-designed athletic swimwear brand — the
+        sculpting fit of a sports bra, the luxury feel of Alo, and technical
+        construction made to outperform the field. Built for women who train in
+        the water and on land.
+      </p>
+    </section>
+
+    <section class="prog__section reveal">
+      <h2 class="prog__h2">Two lines, one house</h2>
+      <div class="prog__modules">
+        {
+          lines.map((l) => (
+            <div class="prog__module">
+              <p class="prog__cat">{l.label}</p>
+              <h3>{l.name}</h3>
+              <p>{l.desc}</p>
+            </div>
+          ))
+        }
+      </div>
+    </section>
+
+    <section class="prog__section reveal">
+      <h2 class="prog__h2">What makes it different</h2>
+      <ul class="program__highlights bass__highlights">
+        {highlights.map((h) => <li>{h}</li>)}
+      </ul>
+    </section>
+
+    <aside class="prog__story reveal">
+      <h2 class="prog__story-heading">A family venture</h2>
+      <p>
+        bASS SWIM is my wife’s project — her brand, her vision — and a sister
+        venture in the MonkeyPayPay family. We’re building it with the same care
+        as everything else here.
+      </p>
+    </aside>
+
+    <section class="prog__cta reveal">
+      <h2 class="prog__h2">Want first access?</h2>
+      <p class="prog__note">
+        The shop is on the way. Check back soon for the launch collection.
+      </p>
+      <span class="chip chip--soon">Shop · coming soon</span>
+    </section>
+  </div>
+</BaseLayout>

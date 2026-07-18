@@ -862,6 +862,7 @@ kbd {
 .program__highlights { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.5rem; }
 .program__highlights li { position: relative; padding-left: 1.5rem; color: var(--text); font-size: var(--fs-sm); }
 .program__highlights li::before { content: "✓"; position: absolute; left: 0; color: var(--accent-2); font-weight: 700; }
+.bass__highlights { grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr)); gap: 0.75rem 1.5rem; margin-top: 1.5rem; }
 .program__foot { margin-top: auto; display: flex; gap: 0.6rem; flex-wrap: wrap; align-items: center; }
 
 /* ---- Program detail page --------------------------------------------------- */

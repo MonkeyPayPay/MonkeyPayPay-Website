@@ -24,12 +24,25 @@ docs live in `README.md`.)
     business software grouped by category (linked in nav/footer/⌘K). First
     entry: **Mise**, a restaurant operating system (repo
     `monkeypaypay/reservation-scheduling-app`), status `in-development`. Add
-    more programs/categories here as they come. Each program has a detail page
+    more programs/categories here as they come.
+  - `src/pages/bass-swim.astro` — the **bASS SWIM** section (`/bass-swim`, in
+    nav/footer/⌘K): the owner's wife's premium fitness swimwear brand (repo
+    `monkeypaypay/bikini-app-store`, project name `bass-swim`; two lines —
+    bASS SWIM fitness core + American RiverRapps™). Standalone page (not under
+    Software), status in-development, "Shop · coming soon". Set a shop URL when
+    the store deploys. Content is inline in the page (single brand).
+  - **Detail-page infra:** Each program has a detail page
     at `/software/<slug>` (overview, modules, pricing) via
     `src/pages/software/[slug].astro`. Demo is wired to `program.demoUrl` —
     empty → "Interactive demo · coming soon"; set it (once the Mise app is
-    deployed) → live "Try the demo" button. The Mise app itself (React+Express,
-    seeded "Harbor & Vine" demo) still needs hosting to power that demo.
+    deployed) → live "Try the demo" button. The Mise detail page also has a
+    founder story ("Built by an operator…", signed "Jordan O'Brien, founder of
+    Mise") via `program.story`.
+    - **NEXT for Mise (deferred, logged for later):** (a) deploy the Mise app
+      (React + Express/WebSocket, seeded "Harbor & Vine" demo) to a host that
+      supports WebSockets — Render/Railway/Fly — then set `program.demoUrl` to
+      flip the "Try the demo" button live; (b) add a real Mise logo (currently a
+      gradient "M" monogram).
 - **Deploy:** push to branch `claude/wordpress-github-setup-mup411` → **Vercel**
   auto-builds and deploys. The owner reviews via the Vercel preview/production URL.
 - **Owner is non-technical** ("Claude drives, I review"). Keep guidance concrete;
