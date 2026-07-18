@@ -1,0 +1,49 @@
+---
+import type { Program } from '../data/programs';
+
+interface Props {
+  program: Program;
+}
+
+const { program } = Astro.props;
+const statusLabel = {
+  'in-development': 'In development',
+  beta: 'Beta',
+  live: 'Live',
+}[program.status];
+---
+
+<article class="program reveal">
+  <div class="program__head">
+    <span class="program__mark" aria-hidden="true">{program.name.charAt(0)}</span>
+    <div class="program__heading">
+      <h3 class="program__name">{program.name}</h3>
+      <p class="program__tagline">{program.tagline}</p>
+    </div>
+    <span class={`program__status program__status--${program.status}`}>{statusLabel}</span>
+  </div>
+
+  <p class="program__desc">{program.description}</p>
+
+  {
+    program.highlights && program.highlights.length > 0 && (
+      <ul class="program__highlights">
+        {program.highlights.map((h) => (
+          <li>{h}</li>
+        ))}
+      </ul>
+    )
+  }
+
+  <div class="program__foot">
+    {
+      program.url ? (
+        <a class="btn btn--primary" href={program.url} target="_blank" rel="noopener">
+          Learn more
+        </a>
+      ) : (
+        <span class="chip chip--soon">Coming soon</span>
+      )
+    }
+  </div>
+</article>

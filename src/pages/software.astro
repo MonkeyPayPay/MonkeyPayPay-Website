@@ -1,0 +1,48 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ProgramCard from '../components/ProgramCard.astro';
+import { programs, programCategories } from '../data/programs';
+
+const usedCategories = programCategories.filter((c) =>
+  programs.some((p) => p.category === c.slug),
+);
+---
+
+<BaseLayout
+  title="Software"
+  description="Business software ventures by MonkeyPayPay — starting with Mise, a restaurant operating system."
+>
+  <section class="page-hero">
+    <div class="container">
+      <p class="page-hero__eyebrow reveal">Beyond the apps</p>
+      <h1 class="page-hero__title reveal">Software</h1>
+      <p class="page-hero__lead reveal">
+        A growing set of software I’m building for real-world operations — bigger,
+        purpose-built tools across a range of industries. Here’s what’s in the works.
+      </p>
+    </div>
+  </section>
+
+  <div class="container software">
+    {
+      usedCategories.map((cat) => (
+        <section class="software__group">
+          <h2 class="software__cat">{cat.name}</h2>
+          {cat.blurb && <p class="software__blurb">{cat.blurb}</p>}
+          <div class="software__grid">
+            {programs
+              .filter((p) => p.category === cat.slug)
+              .map((p) => (
+                <ProgramCard program={p} />
+              ))}
+          </div>
+        </section>
+      ))
+    }
+    {
+      usedCategories.length === 0 && (
+        <p class="page-hero__lead">Nothing here yet — check back soon.</p>
+      )
+    }
+  </div>
+</BaseLayout>

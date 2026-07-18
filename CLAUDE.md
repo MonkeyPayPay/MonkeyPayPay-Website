@@ -20,6 +20,11 @@ docs live in `README.md`.)
     creates its card, detail page, auto-generated Privacy + Terms pages, ⌘K
     entry, and footer links).
   - `src/data/site.ts` — brand settings + `donate` config.
+  - `src/data/programs.ts` — the **Software** section (`/software` page): non-app
+    business software grouped by category (linked in nav/footer/⌘K). First
+    entry: **Mise**, a restaurant operating system (repo
+    `monkeypaypay/reservation-scheduling-app`), status `in-development`. Add
+    more programs/categories here as they come.
 - **Deploy:** push to branch `claude/wordpress-github-setup-mup411` → **Vercel**
   auto-builds and deploys. The owner reviews via the Vercel preview/production URL.
 - **Owner is non-technical** ("Claude drives, I review"). Keep guidance concrete;
