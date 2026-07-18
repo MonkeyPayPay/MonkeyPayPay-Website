@@ -24,7 +24,12 @@ docs live in `README.md`.)
     business software grouped by category (linked in nav/footer/⌘K). First
     entry: **Mise**, a restaurant operating system (repo
     `monkeypaypay/reservation-scheduling-app`), status `in-development`. Add
-    more programs/categories here as they come.
+    more programs/categories here as they come. Each program has a detail page
+    at `/software/<slug>` (overview, modules, pricing) via
+    `src/pages/software/[slug].astro`. Demo is wired to `program.demoUrl` —
+    empty → "Interactive demo · coming soon"; set it (once the Mise app is
+    deployed) → live "Try the demo" button. The Mise app itself (React+Express,
+    seeded "Harbor & Vine" demo) still needs hosting to power that demo.
 - **Deploy:** push to branch `claude/wordpress-github-setup-mup411` → **Vercel**
   auto-builds and deploys. The owner reviews via the Vercel preview/production URL.
 - **Owner is non-technical** ("Claude drives, I review"). Keep guidance concrete;

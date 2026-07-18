@@ -36,13 +36,14 @@ const statusLabel = {
   }
 
   <div class="program__foot">
+    <a class="btn btn--primary" href={`/software/${program.slug}`}>Explore {program.name}</a>
     {
-      program.url ? (
-        <a class="btn btn--primary" href={program.url} target="_blank" rel="noopener">
-          Learn more
+      program.demoUrl ? (
+        <a class="btn btn--store" href={program.demoUrl} target="_blank" rel="noopener">
+          Try the demo
         </a>
       ) : (
-        <span class="chip chip--soon">Coming soon</span>
+        <span class="chip chip--soon">Demo coming soon</span>
       )
     }
   </div>

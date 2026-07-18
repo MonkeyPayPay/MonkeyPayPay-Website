@@ -1,0 +1,122 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { programs, getProgram, programCategoryName } from '../../data/programs';
+
+export function getStaticPaths() {
+  return programs.map((p) => ({ params: { slug: p.slug } }));
+}
+
+const program = getProgram(Astro.params.slug as string);
+if (!program) {
+  return Astro.redirect('/404');
+}
+
+const statusLabel = {
+  'in-development': 'In development',
+  beta: 'Beta',
+  live: 'Live',
+}[program.status];
+---
+
+<BaseLayout title={program.name} description={program.description}>
+  <article class="prog">
+    <div class="container">
+      <a class="app__back" href="/software">← Software</a>
+
+      <header class="prog__header reveal">
+        <span class="program__mark prog__mark" aria-hidden="true">{program.name.charAt(0)}</span>
+        <div>
+          <p class="prog__cat">{programCategoryName(program.category)}</p>
+          <h1 class="prog__name">{program.name}</h1>
+          <p class="prog__tagline">{program.tagline}</p>
+          <div class="prog__actions">
+            {
+              program.url && (
+                <a class="btn btn--primary" href={program.url} target="_blank" rel="noopener" data-magnetic>
+                  Visit site
+                </a>
+              )
+            }
+            {
+              program.demoUrl ? (
+                <a class="btn btn--primary" href={program.demoUrl} target="_blank" rel="noopener" data-magnetic>
+                  Try the live demo
+                </a>
+              ) : (
+                <span class="chip chip--soon">Interactive demo · coming soon</span>
+              )
+            }
+            <span class={`program__status program__status--${program.status}`}>{statusLabel}</span>
+          </div>
+        </div>
+      </header>
+
+      {
+        program.overview && (
+          <section class="prog__overview reveal">
+            {program.overview.map((para) => (
+              <p>{para}</p>
+            ))}
+          </section>
+        )
+      }
+
+      {
+        program.modules && program.modules.length > 0 && (
+          <section class="prog__section reveal">
+            <h2 class="prog__h2">One platform, every module</h2>
+            <div class="prog__modules">
+              {program.modules.map((m) => (
+                <div class="prog__module">
+                  <h3>{m.name}</h3>
+                  <p>{m.desc}</p>
+                </div>
+              ))}
+            </div>
+          </section>
+        )
+      }
+
+      {
+        program.pricing && program.pricing.length > 0 && (
+          <section class="prog__section reveal">
+            <h2 class="prog__h2">Pricing</h2>
+            <p class="prog__note">Per location, per month. 14-day free trial, unlimited staff accounts, no per-cover fees.</p>
+            <div class="prog__tiers">
+              {program.pricing.map((t) => (
+                <div class="prog__tier">
+                  <h3 class="prog__tier-name">{t.name}</h3>
+                  <p class="prog__tier-price">{t.price}</p>
+                  <p class="prog__tier-for">{t.for}</p>
+                </div>
+              ))}
+            </div>
+          </section>
+        )
+      }
+
+      <section class="prog__cta reveal">
+        <h2 class="prog__h2">Want a closer look?</h2>
+        <p class="prog__note">
+          {
+            program.demoUrl
+              ? 'Jump into a fully seeded demo restaurant and try every module hands-on.'
+              : 'A hands-on demo — a fully seeded demo restaurant where you can try every module — is on the way. Check back soon.'
+          }
+        </p>
+        <div class="prog__actions">
+          {
+            program.demoUrl ? (
+              <a class="btn btn--primary" href={program.demoUrl} target="_blank" rel="noopener" data-magnetic>
+                Try the live demo
+              </a>
+            ) : (
+              <span class="chip chip--soon">Interactive demo · coming soon</span>
+            )
+          }
+          <a class="btn btn--ghost" href="/software">← All software</a>
+        </div>
+      </section>
+    </div>
+  </article>
+</BaseLayout>

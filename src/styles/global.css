@@ -862,7 +862,40 @@ kbd {
 .program__highlights { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.5rem; }
 .program__highlights li { position: relative; padding-left: 1.5rem; color: var(--text); font-size: var(--fs-sm); }
 .program__highlights li::before { content: "✓"; position: absolute; left: 0; color: var(--accent-2); font-weight: 700; }
-.program__foot { margin-top: auto; }
+.program__foot { margin-top: auto; display: flex; gap: 0.6rem; flex-wrap: wrap; align-items: center; }
+
+/* ---- Program detail page --------------------------------------------------- */
+.prog { padding-block: clamp(1.5rem, 4vw, 3rem) var(--space-section); }
+.prog__header { display: flex; gap: 1.5rem; align-items: flex-start; flex-wrap: wrap; margin: 0 0 2.5rem; }
+.prog__mark { width: 72px; height: 72px; border-radius: 18px; font-size: 2.1rem; }
+.prog__cat { text-transform: uppercase; letter-spacing: 0.12em; font-size: 0.75rem; color: var(--accent-2); margin: 0 0 0.3rem; }
+.prog__name { font-size: var(--fs-h1); margin: 0 0 0.3rem; }
+.prog__tagline { color: var(--muted); font-size: var(--fs-lead); margin: 0 0 1rem; }
+.prog__actions { display: flex; gap: 0.75rem; flex-wrap: wrap; align-items: center; }
+.prog__overview { max-width: 68ch; margin-bottom: 3rem; }
+.prog__overview p { font-size: var(--fs-lead); color: var(--text); line-height: 1.8; margin-bottom: 1.2rem; }
+.prog__section { margin-bottom: 3.5rem; }
+.prog__h2 { font-size: var(--fs-h2); }
+.prog__note { color: var(--muted); max-width: 60ch; }
+.prog__modules { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr)); gap: 1.25rem; margin-top: 1.5rem; }
+.prog__module { border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); padding: 1.25rem; }
+.prog__module h3 { font-size: var(--fs-h3); margin: 0 0 0.4rem; }
+.prog__module p { color: var(--muted); margin: 0; font-size: var(--fs-sm); }
+.prog__tiers { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 220px), 1fr)); gap: 1.25rem; margin-top: 1.5rem; }
+.prog__tier { border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); padding: 1.5rem; text-align: center; }
+.prog__tier-name { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin: 0 0 0.5rem; }
+.prog__tier-price {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0 0 0.5rem;
+  background: var(--accent-grad);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.prog__tier-for { color: var(--muted); font-size: var(--fs-sm); margin: 0; }
+.prog__cta { border-top: 1px solid var(--border); padding-top: 2.5rem; }
 
 /* ---- Reduced motion ------------------------------------------------------- */
 @media (prefers-reduced-motion: reduce) {
