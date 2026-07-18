@@ -897,6 +897,19 @@ kbd {
 .prog__tier-for { color: var(--muted); font-size: var(--fs-sm); margin: 0; }
 .prog__cta { border-top: 1px solid var(--border); padding-top: 2.5rem; }
 
+.prog__story {
+  margin: 0 0 3.5rem;
+  padding: clamp(1.5rem, 4vw, 2.5rem);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--accent);
+  border-radius: var(--radius);
+  background: var(--surface);
+  max-width: 72ch;
+}
+.prog__story-heading { font-size: var(--fs-h3); margin: 0 0 1rem; }
+.prog__story p { color: var(--muted); line-height: 1.8; margin-bottom: 1rem; }
+.prog__story p:last-child { margin-bottom: 0; }
+
 /* ---- Reduced motion ------------------------------------------------------- */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }

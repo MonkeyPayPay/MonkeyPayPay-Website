@@ -40,6 +40,8 @@ export interface Program {
   highlights?: string[];
   /** Longer paragraphs for the detail page. */
   overview?: string[];
+  /** Founder / credibility story shown as a callout on the detail page. */
+  story?: { heading: string; body: string[] };
   /** Full module/feature breakdown for the detail page. */
   modules?: ProgramModule[];
   /** Pricing tiers for the detail page. */
@@ -74,6 +76,14 @@ export const programs: Program[] = [
       'Most restaurants run on seven tabs and seven subscriptions — a POS back office, a reservations tool, a scheduler, procurement, accounting, checklists, and a group chat — none of which talk to each other. Mise replaces the whole stack with one platform, one login, and one source of truth.',
       'Everything is connected. A single closed check on your POS flows straight into Mise: it adds to today’s sales and P&L, depletes inventory through recipe costing (auto-86’ing a dish the instant an ingredient hits zero), posts that 86 to the kitchen channel, and updates the guest’s profile — all in real time, with no nightly exports and no re-keying invoices.',
     ],
+    story: {
+      heading: 'Built by an operator, because I lived the problem',
+      body: [
+        'I’ve worked nearly every role in this industry — from the host stand to Director of Operations of a multi-million-dollar restaurant company. I’ve seated guests, run the line, built the schedules, counted inventory long after close, and answered for the P&L.',
+        'So I know the frustration firsthand: seven systems that don’t talk to each other, invoices re-keyed by hand, an 86 the floor hears about too late, labor that blows past budget before anyone notices. The software was supposed to make it easier — mostly it just added another login.',
+        'Mise is my answer to all of it — everything I ever wished I’d had, in one connected place, running in real time. I built it to solve the exact problems I lived with for years, from someone who’s actually run the shift. And it does.',
+      ],
+    },
     modules: [
       { name: 'Inventory', desc: 'Live depletion from POS sales, plate & recipe costing, waste log, variance counts, and auto-86 at zero stock.' },
       { name: 'Reservations & Guests', desc: 'Table-availability engine, waitlist with quotes, and a guest CRM that builds itself — visits, lifetime spend, allergies, VIP tags.' },

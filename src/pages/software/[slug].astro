@@ -62,6 +62,17 @@ const statusLabel = {
       }
 
       {
+        program.story && (
+          <aside class="prog__story reveal">
+            <h2 class="prog__story-heading">{program.story.heading}</h2>
+            {program.story.body.map((para) => (
+              <p>{para}</p>
+            ))}
+          </aside>
+        )
+      }
+
+      {
         program.modules && program.modules.length > 0 && (
           <section class="prog__section reveal">
             <h2 class="prog__h2">One platform, every module</h2>
