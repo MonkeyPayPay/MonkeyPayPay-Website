@@ -88,6 +88,17 @@ docs live in `README.md`.)
     deployed) → live "Try the demo" button. The Mise detail page also has a
     founder story ("Built by an operator…", signed "Jordan O'Brien, founder of
     Mise") via `program.story`.
+    - **Mise screenshots (DONE):** the detail page has an "A look inside"
+      gallery (`program.screenshots[]` in programs.ts → `.prog__shots` grid on
+      `[slug].astro`). 16 real product screenshots live in
+      `public/software/mise/screens/` (webp, resized to 1600w from the app's
+      `docs/publicity/` "event package" in repo
+      `monkeypaypay/reservation-scheduling-app`, branch
+      `claude/restaurant-management-saas-gp1its`). The page copy + modules were
+      also expanded to cover the newer platform (private events & catering/BEO,
+      online orders, guest marketing, menu engineering, multi-location P&L,
+      bilingual public booking widget). Pricing unchanged (Prep/Service/Prime/
+      Enterprise). To refresh: re-pull that branch's `docs/publicity/*.png`.
     - **NEXT for Mise (deferred, logged for later):** (a) deploy the Mise app
       (React + Express/WebSocket, seeded "Harbor & Vine" demo) to a host that
       supports WebSockets — Render/Railway/Fly — then set `program.demoUrl` to
