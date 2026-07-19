@@ -21,10 +21,13 @@ docs live in `README.md`.)
     entry, and footer links).
   - `src/data/site.ts` — brand settings + `donate` config.
   - `src/data/programs.ts` — the **Software** section (`/software` page): non-app
-    business software grouped by category (linked in nav/footer/⌘K). First
-    entry: **Mise**, a restaurant operating system (repo
-    `monkeypaypay/reservation-scheduling-app`), status `in-development`. Add
-    more programs/categories here as they come.
+    business/dev software grouped by category (linked in nav/footer/⌘K).
+    Categories: **Restaurant** → **Mise**, a restaurant OS (repo
+    `monkeypaypay/reservation-scheduling-app`); **Developer Tools** →
+    **Prometheus**, an experimental programming language where whole classes of
+    bugs are unrepresentable (repo `monkeypaypay/new-code`, README brands it
+    "Prometheus"; owner calls it "Project Prometheus"). Both `in-development`.
+    Add more programs/categories here as they come.
   - **bASS SWIM — the wife's brand (its own world, split from MonkeyPayPay).**
     Reached from the main site via a distinct **pink brand chip pinned far
     right** in `Nav.astro` (in `nav__actions`, `.nav__bass`) — deliberately off
@@ -108,7 +111,7 @@ docs live in `README.md`.)
   auto-builds and deploys. The owner reviews via the Vercel preview/production URL.
 - **Owner is non-technical** ("Claude drives, I review"). Keep guidance concrete;
   prefer doing the work and pushing over asking them to edit code.
-- Build check: `npm run build` (must stay green; currently 12 pages, 0 vulns).
+- Build check: `npm run build` (must stay green; currently 42 pages, 0 vulns).
 - The WordPress theme this started as is preserved in git history at commit
   `258612b` (superseded by the Astro rebuild).
 
@@ -144,8 +147,27 @@ docs live in `README.md`.)
      Still PENDING: real in-app screenshots (screenshots array is currently
      empty) and the Google Play URL at launch (buttons show "coming soon").
      Store copy lives in that repo's `store-listing/`.
-   - **Tap Quest / Glance** samples were removed; SpinFit is currently the only
-     app. Add real apps as they launch (pull details/art from each repo).
+   - **Tap Quest / Glance** samples were removed. **Full app lineup** (all
+     `in-development`, all buttons "coming soon" until store/web URLs are set;
+     icons pulled from each repo's `assets/icon.png` → `public/apps/<slug>/icon.webp`,
+     256²):
+     - *Health & Fitness:* **SpinFit** (`micro-workout-roulette`), **Quitline**
+       (`quit-anything` — quit tracker), **Roastline** (`habit-tracker-` — habit
+       + water tracker), **Forge** (`mens-health-app` — men's health, a **web
+       app**; set `webAppUrl` when deployed), **Lyra** (`health-fitness-` — AI
+       women's cycle fitness, a **Next.js web SaaS**; `webAppUrl` when live,
+       legal dataModel 'standard').
+     - *Games:* **All In Trivia** (`point-wagering-trivia`), **Chainlink**
+       (`daily-puzzle` — daily word puzzle), **Empire Table** (`restaurant-tycoon`
+       — idle tycoon), **EVOLVE** (`evolve` — bare Unity project, no art/README
+       yet → **placeholder gradient "E" icon**, minimal copy).
+     - *Productivity:* **Just One** (`one-task-only` — one-task-at-a-time to-do).
+     - *Utilities:* **Fate** (`decision-spinner` — spin wheel / coin / dice).
+     - Legal per app inferred from each README (local-only vs 'standard' when it
+       has ads/accounts; subscriptions/notifications flags set accordingly).
+       PENDING for all: real screenshots (arrays empty) + launch URLs. **Lyra vs
+       Forge placement:** put on Apps/Health&Fitness as (web) apps; move to
+       Software if the owner prefers.
    - Favicon/app icon is the monkey head (`public/favicon-16.png`,
      `favicon-32.png`, `apple-touch-icon.png`). Social share card is
      `public/og-image.png` (1200×630, monkey + wordmark) wired via og:image.

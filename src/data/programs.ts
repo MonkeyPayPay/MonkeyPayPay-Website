@@ -58,6 +58,7 @@ export interface Program {
 
 export const programCategories: ProgramCategory[] = [
   { slug: 'restaurant', name: 'Restaurant' },
+  { slug: 'developer', name: 'Developer Tools' },
   // Future categories go here (retail, healthcare, logistics, …).
 ];
 
@@ -131,6 +132,28 @@ export const programs: Program[] = [
       { src: '/software/mise/screens/16-multi-location-portfolio.webp', alt: 'Multi-location portfolio', caption: 'The portfolio: every location’s P&L side by side, plus the consolidated line and budget pace.' },
       { src: '/software/mise/screens/17-haccp-checklists.webp', alt: 'HACCP checklists', caption: 'Opening/closing/HACCP checklists with temperature capture and instant out-of-range alerts.' },
       { src: '/software/mise/screens/25-public-booking-widget.webp', alt: 'Public booking widget', caption: 'An embeddable, fee-free booking widget — real-time availability, deposits and waitlist, fully bilingual.' },
+    ],
+  },
+  {
+    slug: 'prometheus',
+    name: 'Prometheus',
+    category: 'developer',
+    tagline: 'A language where whole classes of bugs can’t exist.',
+    description:
+      'An experimental programming language designed so that entire categories of software failure — memory corruption, data races, null, hidden side effects, missing cases — are unrepresentable by construction rather than merely discouraged.',
+    status: 'in-development',
+    highlights: [
+      'No null, no shared mutable state, no manual memory',
+      'Object-capability effects — a function’s type proves what it can touch',
+      'Total pattern matching, checked at compile time',
+      'Full type inference; annotations optional',
+      'Executable specifications (checks) built into the language',
+      'Deterministic parallelism by construction',
+    ],
+    overview: [
+      'Prometheus is built around a small number of load-bearing ideas, each chosen because it deletes a category of bugs rather than merely discouraging it. Pure value semantics remove memory corruption, dangling pointers, and leaks. No shared mutable state means data races and deadlocks simply can’t be written, and parallelism stays deterministic. An object-capability model makes side effects require an unforgeable capability value — so a function’s signature proves exactly what it can touch, closing the door on hidden effects and supply-chain “phone home.”',
+      'On top of that: pattern matches are checked for totality at compile time (no missing-case bugs), `null` doesn’t exist (partial operations return an ordinary Option type), and full Hindley–Milner-style inference keeps annotations optional. Executable specifications — `check` — are a language construct that doubles as living documentation, and machine-readable `intent` metadata keeps docs from going stale.',
+      'Status: v0.3 “Hearth” is in progress — adding property-based checks and a language server on top of the earlier modules, capabilities, and playground. It’s a personal research project exploring how much safety a language can guarantee before you ever run it.',
     ],
   },
 ];

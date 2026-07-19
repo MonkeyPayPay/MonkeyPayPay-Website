@@ -98,6 +98,164 @@ export const apps: App[] = [
       // contactEmail: 'support@spinfit.app', // ← enable once that inbox is live
     },
   },
+
+  // ── Health & Fitness ────────────────────────────────────────────────────────
+  {
+    slug: 'quitline',
+    name: 'Quitline',
+    category: 'fitness',
+    tagline: 'Quit anything. Watch it add up.',
+    description:
+      'A calm quit-anything tracker — vaping, alcohol, sugar, doomscrolling, gambling, or anything custom. Live counters for days clean, money saved and time reclaimed; a milestone ladder from your first hour to two years; a craving panic button with a 60-second breathing exercise; compassionate relapse handling that keeps your lifetime stats; and home-screen widgets. Everything stays on your device.',
+    icon: '/apps/quitline/icon.webp',
+    playUrl: '',
+    appStoreUrl: '',
+    webAppUrl: '',
+    screenshots: [],
+    legalLastUpdated: '2026-07-19',
+    legal: { dataModel: 'local-only', usesSubscriptions: true, usesNotifications: true },
+  },
+  {
+    slug: 'roastline',
+    name: 'Roastline',
+    category: 'fitness',
+    tagline: 'Build streaks. Get roasted into showing up.',
+    description:
+      'A habit and water tracker that actually keeps you honest — one-tap logging with a satisfying progress ring, streaks with freeze tokens so one bad day won’t nuke weeks of work, and a coach you choose (Gentle, Sarcastic, or Brutal) that calls you out when you slip. Shareable streak cards, full dark mode, local-first with no account.',
+    icon: '/apps/roastline/icon.webp',
+    playUrl: '',
+    appStoreUrl: '',
+    webAppUrl: '',
+    screenshots: [],
+    legalLastUpdated: '2026-07-19',
+    legal: { dataModel: 'local-only', usesSubscriptions: true, usesNotifications: true },
+  },
+  {
+    slug: 'forge',
+    name: 'Forge',
+    category: 'fitness',
+    tagline: 'Every part of men’s health, one dashboard.',
+    description:
+      'A fitness and health app built for men: strength programs and a smart workout generator that reads your equipment and recovery, macro and TDEE tracking with barcode scanning, body metrics with age-aware screening reminders, a progress-photo gallery, and a daily mind check-in. Everything is stored on your device — no account, no server.',
+    icon: '/apps/forge/icon.webp',
+    playUrl: '',
+    appStoreUrl: '',
+    webAppUrl: '', // Forge is a web app — set this to the live URL once deployed
+    screenshots: [],
+    legalLastUpdated: '2026-07-19',
+    legal: { dataModel: 'local-only', usesSubscriptions: true, usesNotifications: true },
+  },
+  {
+    slug: 'lyra',
+    name: 'Lyra',
+    category: 'fitness',
+    tagline: 'AI fitness built for the female cycle.',
+    description:
+      'An AI fitness coach designed around women’s hormonal reality — training and nutrition that adapt to each phase of the 28-day cycle, instead of a generic program built for male physiology. Gets smarter every cycle. In active development.',
+    icon: '/apps/lyra/icon.webp',
+    playUrl: '',
+    appStoreUrl: '',
+    webAppUrl: '', // Lyra is a web app / SaaS — set this to the live URL once deployed
+    screenshots: [],
+    legalLastUpdated: '2026-07-19',
+    legal: { dataModel: 'standard', usesSubscriptions: true, usesNotifications: true },
+  },
+
+  // ── Games ─────────────────────────────────────────────────────────────────
+  {
+    slug: 'all-in-trivia',
+    name: 'All In Trivia',
+    category: 'games',
+    tagline: 'Wager your points. Trust your gut.',
+    description:
+      'A trivia game where you bet your points on your confidence — answer right to multiply your wager, wrong to lose it, and try not to go bust. 2,040 questions across 12 categories, a globally-shared daily challenge, an escalating endless mode, and lifelines earned by streaks (never bought). Fully offline, no account.',
+    icon: '/apps/all-in-trivia/icon.webp',
+    playUrl: '',
+    appStoreUrl: '',
+    webAppUrl: '',
+    screenshots: [],
+    legalLastUpdated: '2026-07-19',
+    legal: { dataModel: 'standard', usesSubscriptions: true, usesNotifications: false },
+  },
+  {
+    slug: 'chainlink',
+    name: 'Chainlink',
+    category: 'games',
+    tagline: 'One word chains into the next.',
+    description:
+      'A daily word puzzle for everyone on earth: fill each link with a real word that starts and ends on the given letters, threading your words into a chain. One shared puzzle a day, two years of puzzles shipped, spoiler-free result sharing, and endless practice — deterministic and fully offline, no account.',
+    icon: '/apps/chainlink/icon.webp',
+    playUrl: '',
+    appStoreUrl: '',
+    webAppUrl: '',
+    screenshots: [],
+    legalLastUpdated: '2026-07-19',
+    legal: { dataModel: 'local-only', usesSubscriptions: true, usesNotifications: true },
+  },
+  {
+    slug: 'empire-table',
+    name: 'Empire Table',
+    category: 'games',
+    tagline: 'From food cart to restaurant empire.',
+    description:
+      'An idle restaurant tycoon: hire crew, balance food and labor cost, price your menu, survive health inspections and viral reviews, then sell the business to prestige for permanent industry reputation. Warm illustrated art, juicy number-and-haptic feedback, and offline earnings that pile up while you’re away.',
+    icon: '/apps/empire-table/icon.webp',
+    playUrl: '',
+    appStoreUrl: '',
+    webAppUrl: '',
+    screenshots: [],
+    legalLastUpdated: '2026-07-19',
+    legal: { dataModel: 'standard', usesSubscriptions: true, usesNotifications: false },
+  },
+  {
+    slug: 'evolve',
+    name: 'EVOLVE',
+    category: 'games',
+    tagline: 'A new game, in the making.',
+    description:
+      'An original game in early development, built in Unity. Still taking shape — more to come soon.',
+    icon: '/apps/evolve/icon.webp',
+    playUrl: '',
+    appStoreUrl: '',
+    webAppUrl: '',
+    screenshots: [],
+    legalLastUpdated: '2026-07-19',
+    legal: { dataModel: 'standard' },
+  },
+
+  // ── Productivity ────────────────────────────────────────────────────────────
+  {
+    slug: 'just-one',
+    name: 'Just One',
+    category: 'productivity',
+    tagline: 'One task at a time. That’s it.',
+    description:
+      'An anti-overwhelm to-do app that shows exactly one task at a time. Brain-dump everything into a hidden backlog; the home screen shows only your single current task in large, calm typography. Finish it with a swipe and the next one appears — Things 3 meets a meditation app. Local-first, no account.',
+    icon: '/apps/just-one/icon.webp',
+    playUrl: '',
+    appStoreUrl: '',
+    webAppUrl: '',
+    screenshots: [],
+    legalLastUpdated: '2026-07-19',
+    legal: { dataModel: 'local-only', usesSubscriptions: true, usesNotifications: true },
+  },
+
+  // ── Utilities ───────────────────────────────────────────────────────────────
+  {
+    slug: 'fate',
+    name: 'Fate',
+    category: 'utilities',
+    tagline: 'Let fate settle it.',
+    description:
+      'A physics-driven decision maker: build custom spin wheels (with optional weighting), flip coins, roll dice, and let fate end every “you decide” standoff. Tuned spins with haptic ticks and a dramatic confetti reveal, a group mode where everyone adds an option, preset templates, and shareable result cards.',
+    icon: '/apps/fate/icon.webp',
+    playUrl: '',
+    appStoreUrl: '',
+    webAppUrl: '',
+    screenshots: [],
+    legalLastUpdated: '2026-07-19',
+    legal: { dataModel: 'standard', usesSubscriptions: true, usesNotifications: false },
+  },
 ];
 
 // ── Helpers ──────────────────────────────────────────────────────────────────
