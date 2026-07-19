@@ -56,6 +56,18 @@ docs live in `README.md`.)
       `riverrapps-wordmark.webp` (saved). bASS favicons: `bass-favicon-32/64.png`,
       `bass-apple-touch.png`. Fonts: `@fontsource-variable/playfair-display`
       (bASS), `@fontsource-variable/bitter` + `@fontsource/pacifico` (RiverRapps).
+    - **RiverRapps art is RECOLORED red-white-blue** (per owner: "make the river
+      blue, keep overall red/white/blue"). The RR logos were AI-art in
+      magenta+silver; recolored in-place by HSL hue-rotating only the saturated
+      (magenta) pixels while preserving each pixel's S+L (keeps the metallic
+      shading) — silver/white highlights (S≤0.15) untouched. `riverrapps-lockup`:
+      **spatial split** — the river "R" → river blue (hue 208), the bottom
+      "RAPPS" wordmark (y≥515 of 578) → true red (hue 357), "RIVER" stays silver.
+      `rr-monogram` → blue river. `riverrapps-heart` → red (footer accent).
+      The RR theme also swapped its warm-yellow "sun" glows for soft blue
+      sky/water glows + a faint red wash so the whole page reads red/white/blue.
+      (Recolor was a throwaway `_recolor.mjs` HSL script; magenta originals are
+      in git history if ever needed.)
     - Status in-development, "Shop · coming soon" everywhere. Set shop URLs when
       the store deploys. Old single 50/50 combined page (`.bass-split`/`.bass-line`
       CSS) is superseded — those styles linger unused in global.css.
