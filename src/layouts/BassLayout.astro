@@ -1,0 +1,84 @@
+---
+import '@fontsource-variable/inter';
+import '@fontsource-variable/playfair-display';
+import '../styles/global.css';
+import { ClientRouter } from 'astro:transitions';
+import { site } from '../data/site';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { title, description } = Astro.props;
+const pageTitle = title ? `${title} · bASS SWIM` : 'bASS SWIM — fitness-first American swimwear';
+const pageDesc =
+  description ?? 'bASS SWIM — fitness-first American swimwear for women who train. Two lines, one house: bASS SWIM and American RiverRapps.';
+const canonical = new URL(Astro.url.pathname, site.url).href;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/brand/bass-favicon-32.png" />
+    <link rel="apple-touch-icon" href="/brand/bass-apple-touch.png" />
+    <link rel="canonical" href={canonical} />
+    <title>{pageTitle}</title>
+    <meta name="description" content={pageDesc} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={pageDesc} />
+    <meta property="og:type" content="website" />
+    <meta name="theme-color" content="#0a0a0a" />
+    <ClientRouter />
+  </head>
+  <body class="bass-theme">
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header class="bass-nav" data-nav>
+      <div class="container bass-nav__inner">
+        <a class="bass-nav__brand" href="/bass-swim" aria-label="bASS SWIM home">
+          <img src="/brand/bass-wordmark.webp" alt="bASS SWIM" />
+        </a>
+        <nav class="bass-nav__links" aria-label="Primary">
+          <a href="/bass-swim#lines">The lines</a>
+          <a class="bass-nav__back" href="/">MonkeyPayPay ↗</a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main">
+      <slot />
+    </main>
+
+    <footer class="bass-footer">
+      <div class="container bass-footer__inner">
+        <img class="bass-footer__mark" src="/brand/bass-heart.webp" alt="" />
+        <p class="bass-footer__tag">Fitness-first American swimwear.</p>
+        <p class="bass-footer__legal">
+          © {new Date().getFullYear()} bASS SWIM · A sister venture of
+          <a href="/">MonkeyPayPay</a>.
+        </p>
+      </div>
+    </footer>
+
+    <script>
+      import { initInteractions } from '../scripts/interactions';
+      interface BassWindow extends Window {
+        __bassInteractions?: boolean;
+      }
+      const w = window as BassWindow;
+      const onScroll = () => {
+        const nav = document.querySelector('[data-nav]');
+        if (nav) nav.classList.toggle('is-scrolled', window.scrollY > 12);
+      };
+      if (!w.__bassInteractions) {
+        w.__bassInteractions = true;
+        document.addEventListener('astro:page-load', initInteractions);
+        document.addEventListener('astro:page-load', onScroll);
+        window.addEventListener('scroll', onScroll, { passive: true });
+      }
+    </script>
+  </body>
+</html>

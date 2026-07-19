@@ -284,9 +284,31 @@ kbd {
 .nav__search:hover { border-color: var(--accent); color: var(--text); }
 .nav__kbd { background: var(--surface-2); }
 
+/* bASS SWIM — the wife's brand, pinned far right and visually its own thing */
+.nav__bass {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.5rem 0.9rem;
+  border-radius: var(--radius-pill);
+  border: 1px solid rgba(224, 33, 138, 0.45);
+  color: #ff5ea8;
+  text-decoration: none;
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  white-space: nowrap;
+  transition: background var(--transition), border-color var(--transition), color var(--transition);
+}
+.nav__bass:hover {
+  background: rgba(224, 33, 138, 0.14);
+  border-color: #e0218a;
+  color: #ff7ec0;
+}
+
 @media (max-width: 720px) {
   .nav__links { display: none; }
   .nav__search-label { display: none; }
+  .nav__bass { display: none; }
 }
 
 /* ---- Theme toggle --------------------------------------------------------- */
@@ -923,6 +945,189 @@ kbd {
   font-style: italic;
   color: var(--text) !important;
 }
+
+/* ==========================================================================
+   bASS SWIM — standalone brand identity (its own world, not MonkeyPayPay)
+   ========================================================================== */
+.bass-theme {
+  --bg: #0a0a0a;
+  --bg-elev: #0f0f0f;
+  --surface: #141414;
+  --surface-2: #1b1517;
+  --text: #f6f4f5;
+  --muted: #b7abb0;
+  --border: #2b2226;
+  --accent: #e0218a;
+  --accent-2: #ff5ea8;
+  --accent-grad: linear-gradient(120deg, #e0218a, #ff7ec0);
+  --ring: #ff5ea8;
+  --font-display: 'Playfair Display Variable', Georgia, 'Times New Roman', serif;
+  background: #0a0a0a;
+}
+.bass-theme h1,
+.bass-theme h2,
+.bass-theme h3 { font-family: var(--font-display); letter-spacing: -0.01em; }
+
+/* Nav */
+.bass-nav {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  border-bottom: 1px solid transparent;
+  transition: background var(--transition), border-color var(--transition);
+}
+.bass-nav.is-scrolled {
+  background: rgba(10, 10, 10, 0.72);
+  backdrop-filter: saturate(140%) blur(14px);
+  border-bottom-color: var(--border);
+}
+.bass-nav__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding-block: 1rem;
+}
+.bass-nav__brand { display: inline-flex; align-items: center; line-height: 0; }
+.bass-nav__brand img { height: clamp(26px, 3.5vw, 34px); width: auto; display: block; }
+.bass-nav__links { display: flex; align-items: center; gap: clamp(1rem, 3vw, 2rem); }
+.bass-nav__links a {
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 0.9rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  transition: color var(--transition);
+}
+.bass-nav__links a:hover { color: var(--text); }
+.bass-nav__back { color: var(--accent-2) !important; }
+
+/* Hero */
+.bass-hero {
+  position: relative;
+  overflow: hidden;
+  padding-block: clamp(4rem, 12vw, 8rem);
+  text-align: center;
+  background:
+    radial-gradient(60% 80% at 50% -10%, rgba(224, 33, 138, 0.22), transparent 70%),
+    radial-gradient(40% 60% at 85% 20%, rgba(255, 94, 168, 0.12), transparent 70%);
+}
+.bass-hero__lockup {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+.bass-hero__mark { height: clamp(90px, 14vw, 150px); width: auto; }
+.bass-hero__word { margin: 0; line-height: 0; }
+.bass-hero__word img { height: clamp(56px, 11vw, 116px); width: auto; display: block; }
+.bass-hero__lead {
+  max-width: 46ch;
+  margin: 0 auto 2rem;
+  color: var(--muted);
+  font-size: var(--fs-lead);
+  line-height: 1.7;
+}
+.bass-hero__meta { display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap; align-items: center; }
+
+/* Section shell */
+.bass-section { padding-block: clamp(3rem, 8vw, 6rem); }
+.bass-section__head { text-align: center; max-width: 60ch; margin: 0 auto clamp(2.5rem, 6vw, 4rem); }
+.bass-section__eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  font-size: 0.75rem;
+  color: var(--accent-2);
+  margin: 0 0 0.75rem;
+}
+.bass-section__title { font-size: var(--fs-h1); margin: 0 0 1rem; }
+.bass-section__intro { color: var(--muted); font-size: var(--fs-lead); line-height: 1.7; margin: 0; }
+
+/* 50 / 50 split of the two lines */
+.bass-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(1.25rem, 3vw, 2rem);
+}
+@media (max-width: 760px) { .bass-split { grid-template-columns: 1fr; } }
+.bass-line {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: clamp(1.75rem, 4vw, 2.75rem);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  overflow: hidden;
+}
+.bass-line::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 3px;
+  background: var(--accent-grad);
+}
+.bass-line__mark {
+  height: clamp(64px, 10vw, 92px);
+  width: auto;
+  align-self: flex-start;
+  margin-bottom: 1.5rem;
+}
+.bass-line__label {
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  font-size: 0.72rem;
+  color: var(--accent-2);
+  margin: 0 0 0.4rem;
+}
+.bass-line__name { font-size: var(--fs-h3); margin: 0 0 0.9rem; }
+.bass-line__desc { color: var(--muted); line-height: 1.75; margin: 0 0 1.5rem; }
+.bass-line__list { list-style: none; margin: 0 0 1.75rem; padding: 0; display: grid; gap: 0.55rem; }
+.bass-line__list li { position: relative; padding-left: 1.5rem; color: var(--text); font-size: var(--fs-sm); }
+.bass-line__list li::before { content: "♥"; position: absolute; left: 0; color: var(--accent); font-size: 0.85em; }
+.bass-line__foot { margin-top: auto; }
+
+/* Shared "what makes it different" band */
+.bass-band {
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-elev);
+}
+.bass-band__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr));
+  gap: 0.75rem 2rem;
+}
+.bass-band__list li { position: relative; padding-left: 1.6rem; color: var(--text); }
+.bass-band__list li::before { content: "✓"; position: absolute; left: 0; color: var(--accent); font-weight: 700; }
+
+/* Family note + CTA */
+.bass-note {
+  max-width: 60ch;
+  margin: 0 auto;
+  text-align: center;
+  color: var(--muted);
+  line-height: 1.8;
+  font-size: var(--fs-lead);
+}
+.bass-note strong { color: var(--text); font-weight: 600; }
+.bass-cta { text-align: center; }
+.bass-cta .bass-section__title { margin-bottom: 0.75rem; }
+
+/* Footer */
+.bass-footer {
+  border-top: 1px solid var(--border);
+  padding-block: clamp(2.5rem, 6vw, 4rem);
+  text-align: center;
+}
+.bass-footer__mark { height: 54px; width: auto; margin: 0 auto 1rem; display: block; }
+.bass-footer__tag { font-family: var(--font-display); font-size: 1.15rem; margin: 0 0 1rem; color: var(--text); }
+.bass-footer__legal { color: var(--muted); font-size: var(--fs-sm); margin: 0; }
+.bass-footer__legal a { color: var(--accent-2); }
 
 /* ---- Reduced motion ------------------------------------------------------- */
 @media (prefers-reduced-motion: reduce) {
