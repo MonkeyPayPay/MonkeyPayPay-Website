@@ -1,126 +1,83 @@
 ---
-import BassLayout from '../layouts/BassLayout.astro';
+import '@fontsource-variable/inter';
+import '@fontsource-variable/playfair-display';
+import '@fontsource-variable/bitter';
+import '@fontsource/pacifico';
+import '../styles/global.css';
+import { ClientRouter } from 'astro:transitions';
+import { site } from '../data/site';
+import { swimBrands, swimLinkAttrs } from '../data/swim';
 
-const lines = [
-  {
-    name: 'bASS SWIM',
-    label: 'The fitness core',
-    mark: '/brand/bass-heart.webp',
-    desc: 'Minimal cuts and sculpting fits engineered for training — clean, gym-to-beach essentials in premium compression fabric that stays put through every rep and every wave.',
-    points: [
-      'Sports-bra-level support, removable molded cups',
-      'Anti-slip, anti-roll construction',
-      'Sculpting compression that holds all day',
-    ],
-  },
-  {
-    name: 'American RiverRapps™',
-    label: 'The style line',
-    mark: '/brand/rr-monogram.webp',
-    desc: 'The fashion side of the house — textures, prints, reversibles, and limited drops for the days the look leads. Same American engineering, dialed up for the shoreline.',
-    points: [
-      'Prints, textures & reversible pieces',
-      'Limited seasonal drops',
-      'Statement fits, made to be seen',
-    ],
-  },
-];
-
-const highlights = [
-  'Sports-bra-level support with removable molded cups',
-  'Premium technical fabrics (Carvico, Eurojersey, Lycra® XTRA LIFE™)',
-  'Anti-slip, anti-roll construction that never shifts',
-  'Inclusive, athlete-fit sizing (XS–2XL)',
-  'Designed and engineered in America',
-];
+const bass = swimBrands.bass;
+const rr = swimBrands.riverrapps;
+const canonical = new URL('/bass-swim', site.url).href;
+const title = 'bASS SWIM — two lines, one house';
+const desc =
+  'bASS SWIM — fitness-first American swimwear. Choose your line: bASS SWIM, or American RiverRapps.';
 ---
 
-<BassLayout
-  title="Fitness-first American swimwear"
-  description="bASS SWIM — fitness-first American swimwear for women who train. Two lines, one house: bASS SWIM and American RiverRapps."
->
-  <section class="bass-hero">
-    <div class="container">
-      <div class="bass-hero__lockup reveal">
-        <img class="bass-hero__mark" src="/brand/bass-heart.webp" alt="" width="150" height="135" />
-        <h1 class="bass-hero__word">
-          <img src="/brand/bass-wordmark.webp" alt="bASS SWIM" />
-        </h1>
-      </div>
-      <p class="bass-hero__lead reveal">
-        Fitness-first American swimwear for women who train — premium, technical,
-        and built to move from the water to the weight room.
-      </p>
-      <div class="bass-hero__meta reveal">
-        <span class="chip chip--soon">Shop · coming soon</span>
-      </div>
-    </div>
-  </section>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/brand/bass-favicon-32.png" />
+    <link rel="apple-touch-icon" href="/brand/bass-apple-touch.png" />
+    <link rel="canonical" href={canonical} />
+    <title>{title}</title>
+    <meta name="description" content={desc} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={desc} />
+    <meta property="og:type" content="website" />
+    <meta name="theme-color" content="#0a0a0a" />
+    <ClientRouter />
+  </head>
+  <body class="chooser-body">
+    <a class="skip-link" href="#main">Skip to content</a>
 
-  <section class="bass-section" id="lines">
-    <div class="container">
-      <div class="bass-section__head reveal">
-        <p class="bass-section__eyebrow">Two lines, one house</p>
-        <h2 class="bass-section__title">One brand. Two ways to wear it.</h2>
-        <p class="bass-section__intro">
-          Whether you’re training or turning heads, bASS SWIM has a line for it —
-          both built on the same premium American engineering.
-        </p>
-      </div>
-
-      <div class="bass-split">
-        {
-          lines.map((l) => (
-            <article class="bass-line reveal">
-              <img class="bass-line__mark" src={l.mark} alt={l.name} />
-              <p class="bass-line__label">{l.label}</p>
-              <h3 class="bass-line__name">{l.name}</h3>
-              <p class="bass-line__desc">{l.desc}</p>
-              <ul class="bass-line__list">
-                {l.points.map((p) => <li>{p}</li>)}
-              </ul>
-              <div class="bass-line__foot">
-                <span class="chip chip--soon">Shop · coming soon</span>
-              </div>
-            </article>
-          ))
-        }
-      </div>
+    <div class="chooser__topbar">
+      <a class="chooser__back" href="/">← MonkeyPayPay</a>
+      <span class="chooser__house">Two lines, one house</span>
     </div>
-  </section>
 
-  <section class="bass-section bass-band">
-    <div class="container">
-      <div class="bass-section__head reveal">
-        <p class="bass-section__eyebrow">The difference</p>
-        <h2 class="bass-section__title">What makes it different</h2>
-      </div>
-      <ul class="bass-band__list reveal">
-        {highlights.map((h) => <li>{h}</li>)}
-      </ul>
-    </div>
-  </section>
+    <main id="main" class="chooser">
+      <a
+        class="chooser__half chooser__half--bass"
+        href={bass.href}
+        {...swimLinkAttrs(bass)}
+        aria-label="Enter bASS SWIM"
+      >
+        <span class="chooser__inner">
+          <img class="chooser__logo chooser__logo--bass" src="/brand/bass-logo.webp" alt="bASS SWIM" />
+          <span class="chooser__tag chooser__tag--bass">Fitness-first. Made to be seen.</span>
+          <span class="chooser__enter chooser__enter--bass">Enter <span aria-hidden="true">→</span></span>
+        </span>
+      </a>
 
-  <section class="bass-section">
-    <div class="container">
-      <p class="bass-note reveal">
-        <strong>bASS SWIM is my wife’s project</strong> — her brand, her vision.
-        The first truly premium American-designed athletic swimwear: the
-        sculpting fit of a sports bra, the luxury feel of Alo, and technical
-        construction made to outperform the field.
-      </p>
-    </div>
-  </section>
+      <a
+        class="chooser__half chooser__half--rr"
+        href={rr.href}
+        {...swimLinkAttrs(rr)}
+        aria-label="Enter American RiverRapps"
+      >
+        <span class="chooser__inner">
+          <img class="chooser__logo chooser__logo--rr" src="/brand/riverrapps-lockup.webp" alt="American RiverRapps" />
+          <span class="chooser__tag chooser__tag--rr">All-American river girl.</span>
+          <span class="chooser__enter chooser__enter--rr">Enter <span aria-hidden="true">→</span></span>
+        </span>
+      </a>
+    </main>
 
-  <section class="bass-section bass-cta">
-    <div class="container">
-      <h2 class="bass-section__title reveal">Want first access?</h2>
-      <p class="bass-note reveal">
-        The shop is on the way. Check back soon for the launch collection.
-      </p>
-      <p class="bass-hero__meta reveal" style="margin-top: 1.5rem;">
-        <span class="chip chip--soon">Shop · coming soon</span>
-      </p>
-    </div>
-  </section>
-</BassLayout>
+    <script>
+      import { initInteractions } from '../scripts/interactions';
+      interface ChooserWindow extends Window {
+        __swimChooser?: boolean;
+      }
+      const w = window as ChooserWindow;
+      if (!w.__swimChooser) {
+        w.__swimChooser = true;
+        document.addEventListener('astro:page-load', initInteractions);
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,89 @@
+---
+import BassLayout from '../../layouts/BassLayout.astro';
+
+const highlights = [
+  'Sculpting, sports-bra-level support with removable molded cups',
+  'Premium technical fabrics (Carvico, Eurojersey, Lycra® XTRA LIFE™)',
+  'Anti-slip, anti-roll construction that never shifts',
+  'Inclusive, athlete-fit sizing (XS–2XL)',
+  'Designed and engineered in America',
+];
+
+const feats = [
+  {
+    t: 'Made to move',
+    d: 'The sculpting hold of a sports bra in swimwear that trains as hard as you do — from the pool to the platform.',
+  },
+  {
+    t: 'Made to be seen',
+    d: 'Cuts engineered to flatter every angle. Confidence you feel the second it’s on.',
+  },
+  {
+    t: 'Made in America',
+    d: 'Premium technical fabrics, obsessive fit testing, and construction built to outlast the season.',
+  },
+];
+---
+
+<BassLayout
+  title="Fitness-first swimwear"
+  description="bASS SWIM — fitness-first American swimwear for women who train. Sculpting fits, premium technical fabric, made to be seen."
+>
+  <section class="bass-hero bass-hero--brand">
+    <div class="container">
+      <p class="bass-hero__eyebrow reveal">The fitness core</p>
+      <h1 class="bass-hero__word reveal">
+        <img src="/brand/bass-logo.webp" alt="bASS SWIM" />
+      </h1>
+      <p class="bass-hero__lead reveal">
+        Fitness-first American swimwear for women who train — the sculpting fit of
+        a sports bra, the luxury feel you’ve been waiting for, engineered to
+        outperform the field.
+      </p>
+      <div class="bass-hero__meta reveal">
+        <span class="chip chip--soon">Shop · coming soon</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="bass-section">
+    <div class="container">
+      <div class="bass-feats">
+        {
+          feats.map((f) => (
+            <article class="bass-feat reveal">
+              <h2 class="bass-feat__t">{f.t}</h2>
+              <p class="bass-feat__d">{f.d}</p>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="bass-section bass-band">
+    <div class="container">
+      <div class="bass-section__head reveal">
+        <p class="bass-section__eyebrow">The difference</p>
+        <h2 class="bass-section__title">Engineered, not just designed</h2>
+      </div>
+      <ul class="bass-band__list reveal">
+        {highlights.map((h) => <li>{h}</li>)}
+      </ul>
+    </div>
+  </section>
+
+  <section class="bass-section bass-cta">
+    <div class="container">
+      <h2 class="bass-section__title reveal">Be first in the water</h2>
+      <p class="bass-note reveal">
+        The launch collection is on the way. Check back soon — or explore the
+        other side of the house.
+      </p>
+      <p class="bass-hero__meta reveal" style="margin-top: 1.5rem;">
+        <span class="chip chip--soon">Shop · coming soon</span>
+        <a class="btn btn--ghost" href="/bass-swim/riverrapps">Meet American RiverRapps →</a>
+      </p>
+    </div>
+  </section>
+</BassLayout>

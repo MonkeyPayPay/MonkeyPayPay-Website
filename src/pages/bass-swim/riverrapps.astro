@@ -1,0 +1,87 @@
+---
+import RiverRappsLayout from '../../layouts/RiverRappsLayout.astro';
+
+const feats = [
+  {
+    t: 'Prints with a pulse',
+    d: 'Bold textures, reversibles, and river-ready patterns for the days the look leads. Sunup on the water to tailgate after.',
+  },
+  {
+    t: 'Limited drops',
+    d: 'Small, seasonal releases you won’t see coming and won’t see twice. When it’s gone, it’s downstream.',
+  },
+  {
+    t: 'Free-spirit fit',
+    d: 'The same American engineering as bASS SWIM, dialed up for the shoreline — made to move from the dock to the bonfire.',
+  },
+];
+
+const values = [
+  'Prints, textures & reversible pieces',
+  'Small-batch, limited seasonal drops',
+  'The same premium American fabrics as bASS SWIM',
+  'Anti-slip, anti-roll — built for the current',
+  'Statement fits, made to be seen on the water',
+];
+---
+
+<RiverRappsLayout
+  title="All-American river girl"
+  description="American RiverRapps — the style line of bASS SWIM. Prints, textures, and limited drops for the all-American river girl."
+>
+  <section class="rr-hero">
+    <div class="container rr-hero__inner">
+      <p class="rr-hero__eyebrow reveal">The style line</p>
+      <img class="rr-hero__logo reveal" src="/brand/riverrapps-lockup.webp" alt="American RiverRapps" />
+      <p class="rr-hero__script reveal">All-American river girl.</p>
+      <p class="rr-hero__lead reveal">
+        The fashion side of the house — sun, water, and stars-and-stripes spirit.
+        Prints, textures, and limited drops for the girl who lives on the river.
+      </p>
+      <div class="rr-hero__meta reveal">
+        <span class="chip chip--soon">Shop · coming soon</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="rr-section">
+    <div class="container">
+      <div class="rr-feats">
+        {
+          feats.map((f) => (
+            <article class="rr-feat reveal">
+              <h2 class="rr-feat__t">{f.t}</h2>
+              <p class="rr-feat__d">{f.d}</p>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="rr-section rr-band">
+    <div class="container">
+      <div class="rr-section__head reveal">
+        <p class="rr-section__eyebrow">Why RiverRapps</p>
+        <h2 class="rr-section__title">Made for the water. Built for the crew.</h2>
+      </div>
+      <ul class="rr-band__list reveal">
+        {values.map((v) => <li>{v}</li>)}
+      </ul>
+    </div>
+  </section>
+
+  <section class="rr-section rr-cta">
+    <div class="container">
+      <h2 class="rr-section__title reveal">First on the water</h2>
+      <p class="rr-note reveal">
+        The first drop is on its way. Check back soon — or head over to the
+        fitness core.
+      </p>
+      <p class="rr-hero__meta reveal" style="margin-top: 1.5rem;">
+        <span class="chip chip--soon">Shop · coming soon</span>
+        <a class="btn btn--ghost" href="/bass-swim/bass">Meet bASS SWIM →</a>
+      </p>
+    </div>
+  </section>
+</RiverRappsLayout>

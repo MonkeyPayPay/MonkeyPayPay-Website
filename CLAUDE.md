@@ -25,16 +25,40 @@ docs live in `README.md`.)
     entry: **Mise**, a restaurant operating system (repo
     `monkeypaypay/reservation-scheduling-app`), status `in-development`. Add
     more programs/categories here as they come.
-  - `src/pages/bass-swim.astro` — the **bASS SWIM** section (`/bass-swim`, in
-    nav/footer/⌘K): the owner's wife's premium fitness swimwear brand (repo
-    `monkeypaypay/bikini-app-store`, project name `bass-swim`; two lines —
-    bASS SWIM fitness core + American RiverRapps™). Standalone page (not under
-    Software), status in-development, "Shop · coming soon". Set a shop URL when
-    the store deploys. Content is inline in the page (single brand). Real logos
-    (owner-supplied, black bg removed via dark-key → transparent webp) live in
-    `public/brand/`: `bass-wordmark.webp` + `bass-heart.webp` (hero lockup),
-    `rr-monogram.webp` (RiverRapps card). Also saved for later:
-    `riverrapps-wordmark.webp`, `riverrapps-lockup.webp`, `riverrapps-heart.webp`.
+  - **bASS SWIM — the wife's brand (its own world, split from MonkeyPayPay).**
+    Reached from the main site via a distinct **pink brand chip pinned far
+    right** in `Nav.astro` (in `nav__actions`, `.nav__bass`) — deliberately off
+    the MonkeyPayPay menu (Apps / Software / Paisley's Story). Repo
+    `monkeypaypay/bikini-app-store` (project `bass-swim`). Structure:
+    - `/bass-swim` (`src/pages/bass-swim.astro`) = **standalone chooser landing**
+      — full-viewport 50/50 split, pick a line. Left = bASS SWIM (dark/sexy,
+      new `bass-logo.webp`, Playfair italic tag). Right = American RiverRapps
+      (warm cream/denim/sun, `riverrapps-lockup.webp`, Pacifico script tag).
+      Halves grow on hover; stack on mobile. Its own `<html>`, bASS favicon.
+    - `/bass-swim/bass` (`src/pages/bass-swim/bass.astro`, **BassLayout**) =
+      **sexy** bASS SWIM brand page (fitness core). Black + hot-pink (`.bass-theme`),
+      Playfair Display headings, new `bass-logo.webp` hero, feature trio + "the
+      difference" band + CTA.
+    - `/bass-swim/riverrapps` (`src/pages/bass-swim/riverrapps.astro`,
+      **RiverRappsLayout**) = **all-American river girl** style-line page. Warm
+      Americana (`.rr-theme`: cream/denim/red), Bitter slab-serif headings +
+      Pacifico script accents, star bullets, `riverrapps-lockup`/`heart`/`rr-monogram`.
+    - **Brand link config: `src/data/swim.ts`** (`swimBrands.bass` / `.riverrapps`,
+      each `{href, external}`). The chooser + cross-links read from it. **When the
+      real standalone URLs arrive, set `href` to the external URL + `external:true`
+      — everything updates automatically.** (Owner said each line will get its own
+      unique URL later; that's the swap point.)
+    - Logos (owner-supplied, black bg removed via soft dark-key → transparent
+      webp) in `public/brand/`: **`bass-logo.webp`** (NEW sexy silhouette-B
+      wordmark = hero/chooser), `bass-wordmark.webp` (older wordmark, unused),
+      `bass-heart.webp` (devil-heart = nav mark/favicon), `riverrapps-lockup.webp`
+      (RR hero), `rr-monogram.webp` (RR nav), `riverrapps-heart.webp` (RR footer),
+      `riverrapps-wordmark.webp` (saved). bASS favicons: `bass-favicon-32/64.png`,
+      `bass-apple-touch.png`. Fonts: `@fontsource-variable/playfair-display`
+      (bASS), `@fontsource-variable/bitter` + `@fontsource/pacifico` (RiverRapps).
+    - Status in-development, "Shop · coming soon" everywhere. Set shop URLs when
+      the store deploys. Old single 50/50 combined page (`.bass-split`/`.bass-line`
+      CSS) is superseded — those styles linger unused in global.css.
   - **Detail-page infra:** Each program has a detail page
     at `/software/<slug>` (overview, modules, pricing) via
     `src/pages/software/[slug].astro`. Demo is wired to `program.demoUrl` —
