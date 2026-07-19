@@ -30,7 +30,11 @@ docs live in `README.md`.)
     `monkeypaypay/bikini-app-store`, project name `bass-swim`; two lines —
     bASS SWIM fitness core + American RiverRapps™). Standalone page (not under
     Software), status in-development, "Shop · coming soon". Set a shop URL when
-    the store deploys. Content is inline in the page (single brand).
+    the store deploys. Content is inline in the page (single brand). Real logos
+    (owner-supplied, black bg removed via dark-key → transparent webp) live in
+    `public/brand/`: `bass-wordmark.webp` + `bass-heart.webp` (hero lockup),
+    `rr-monogram.webp` (RiverRapps card). Also saved for later:
+    `riverrapps-wordmark.webp`, `riverrapps-lockup.webp`, `riverrapps-heart.webp`.
   - **Detail-page infra:** Each program has a detail page
     at `/software/<slug>` (overview, modules, pricing) via
     `src/pages/software/[slug].astro`. Demo is wired to `program.demoUrl` —

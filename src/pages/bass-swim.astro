@@ -5,11 +5,13 @@ const lines = [
   {
     name: 'bASS SWIM',
     label: 'Fitness core',
+    mark: '/brand/bass-heart.webp',
     desc: 'Minimal cuts and sculpting fits engineered for training — clean, gym-to-beach essentials in premium compression fabric that stays put through every rep and every wave.',
   },
   {
     name: 'American RiverRapps™',
     label: 'Style line',
+    mark: '/brand/rr-monogram.webp',
     desc: 'The fashion side of the house: textures, prints, reversibles, and limited drops for the days the look leads.',
   },
 ];
@@ -30,7 +32,12 @@ const highlights = [
   <section class="page-hero">
     <div class="container">
       <p class="page-hero__eyebrow reveal">A sister venture</p>
-      <h1 class="page-hero__title reveal">bASS SWIM</h1>
+      <div class="bass-lockup reveal">
+        <img class="bass-lockup__mark" src="/brand/bass-heart.webp" alt="" width="150" height="135" />
+        <h1 class="bass-lockup__word">
+          <img src="/brand/bass-wordmark.webp" alt="bASS SWIM" />
+        </h1>
+      </div>
       <p class="page-hero__lead reveal">
         Fitness-first American swimwear for women who train — premium, technical,
         and built to move from the water to the weight room.
@@ -58,6 +65,7 @@ const highlights = [
         {
           lines.map((l) => (
             <div class="prog__module">
+              <img class="line-mark" src={l.mark} alt="" height="52" />
               <p class="prog__cat">{l.label}</p>
               <h3>{l.name}</h3>
               <p>{l.desc}</p>
