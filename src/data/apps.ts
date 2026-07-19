@@ -146,6 +146,21 @@ export const apps: App[] = [
     legal: { dataModel: 'local-only', usesSubscriptions: true, usesNotifications: true },
   },
   {
+    slug: 'apex',
+    name: 'Apex',
+    category: 'fitness',
+    tagline: 'Your whole fitness and health, in one place.',
+    description:
+      'An all-in-one fitness and health app: strength programs and a smart workout generator, macro and TDEE tracking with barcode scanning, body metrics with trend charts, a progress-photo gallery, and a daily mind check-in — one clean dashboard. Apex is the azure sibling of Forge, built on the same engine. Everything is stored on your device.',
+    icon: '/apps/apex/icon.webp',
+    playUrl: '',
+    appStoreUrl: '',
+    webAppUrl: '', // Apex is a web app — set this to the live URL once launched
+    screenshots: [],
+    legalLastUpdated: '2026-07-19',
+    legal: { dataModel: 'local-only', usesSubscriptions: true, usesNotifications: true },
+  },
+  {
     slug: 'lyra',
     name: 'Lyra',
     category: 'fitness',

@@ -154,9 +154,13 @@ docs live in `README.md`.)
      - *Health & Fitness:* **SpinFit** (`micro-workout-roulette`), **Quitline**
        (`quit-anything` — quit tracker), **Roastline** (`habit-tracker-` — habit
        + water tracker), **Forge** (`mens-health-app` — men's health, a **web
-       app**; set `webAppUrl` when deployed), **Lyra** (`health-fitness-` — AI
-       women's cycle fitness, a **Next.js web SaaS**; `webAppUrl` when live,
-       legal dataModel 'standard').
+       app**; set `webAppUrl` when deployed), **Apex** (the **azure sibling of
+       Forge** living in the *same* repo `mens-health-app` — "Carbon & Ember"
+       design system, Forge=ember/men's, Apex=azure/general; same feature set,
+       live at apex-delta-ecru.vercel.app but not fully launched. Apex's icon was
+       derived by recoloring Forge's dumbbell icon orange→azure `#3b82f6`),
+       **Lyra** (`health-fitness-` — AI women's cycle fitness, a **Next.js web
+       SaaS**; `webAppUrl` when live, legal dataModel 'standard').
      - *Games:* **All In Trivia** (`point-wagering-trivia`), **Chainlink**
        (`daily-puzzle` — daily word puzzle), **Empire Table** (`restaurant-tycoon`
        — idle tycoon), **EVOLVE** (`evolve` — bare Unity project, no art/README
