@@ -1,0 +1,128 @@
+---
+// Embeds a Shopify collection storefront directly on the page via Shopify's
+// Buy Button SDK. Renders nothing until `shop` is provided. Product/cart/
+// checkout buttons are tinted with each brand's accent color.
+import type { SwimShop } from '../data/swim';
+
+interface Props {
+  shop: SwimShop;
+  accent?: string;
+  accentText?: string;
+  nodeId?: string;
+}
+
+const { shop, accent = '#e0218a', accentText = '#ffffff', nodeId = 'shopify-collection' } = Astro.props;
+---
+
+<div
+  id={nodeId}
+  class="shopify-embed"
+  data-shopify
+  data-domain={shop.domain}
+  data-token={shop.storefrontAccessToken}
+  data-collection={shop.collectionId}
+  data-accent={accent}
+  data-accent-text={accentText}
+>
+</div>
+
+<script>
+  interface ShopWindow extends Window {
+    ShopifyBuy?: any;
+    __shopifyShopInit?: boolean;
+  }
+
+  const SDK_URL = 'https://sdks.shopifycdn.com/buy-button/latest/buy-button-storefront.min.js';
+
+  function mount(node: HTMLElement) {
+    if (node.dataset.mounted) return;
+    node.dataset.mounted = '1';
+
+    const w = window as ShopWindow;
+    const accent = node.dataset.accent || '#e0218a';
+    const accentText = node.dataset.accentText || '#ffffff';
+
+    const build = () => {
+      const client = w.ShopifyBuy.buildClient({
+        domain: node.dataset.domain,
+        storefrontAccessToken: node.dataset.token,
+      });
+      w.ShopifyBuy.UI.onReady(client).then((ui: any) => {
+        ui.createComponent('collection', {
+          id: node.dataset.collection,
+          node,
+          moneyFormat: '%24%7B%7Bamount%7D%7D',
+          options: {
+            product: {
+              styles: {
+                product: { 'margin-bottom': '2rem' },
+                button: {
+                  'background-color': accent,
+                  color: accentText,
+                  'border-radius': '999px',
+                  ':hover': { 'background-color': accent, opacity: '0.9' },
+                  ':focus': { 'background-color': accent },
+                },
+              },
+              buttonDestination: 'cart',
+              contents: { img: true, title: true, price: true },
+              text: { button: 'Add to cart' },
+            },
+            productSet: {
+              styles: { products: { 'margin-left': '-10px', 'margin-right': '-10px' } },
+            },
+            cart: {
+              styles: {
+                button: {
+                  'background-color': accent,
+                  color: accentText,
+                  'border-radius': '999px',
+                  ':hover': { 'background-color': accent, opacity: '0.9' },
+                  ':focus': { 'background-color': accent },
+                },
+              },
+              text: { total: 'Subtotal', button: 'Checkout' },
+            },
+            toggle: {
+              styles: {
+                toggle: {
+                  'background-color': accent,
+                  ':hover': { 'background-color': accent, opacity: '0.9' },
+                  ':focus': { 'background-color': accent },
+                },
+                count: { color: accentText },
+                iconPath: { fill: accentText },
+              },
+            },
+          },
+        });
+      });
+    };
+
+    if (w.ShopifyBuy && w.ShopifyBuy.UI) {
+      build();
+    } else {
+      const existing = document.querySelector<HTMLScriptElement>('script[data-shopify-sdk]');
+      if (existing) {
+        existing.addEventListener('load', build);
+      } else {
+        const s = document.createElement('script');
+        s.async = true;
+        s.src = SDK_URL;
+        s.dataset.shopifySdk = '1';
+        s.addEventListener('load', build);
+        document.head.appendChild(s);
+      }
+    }
+  }
+
+  function initShopify() {
+    document.querySelectorAll<HTMLElement>('[data-shopify]').forEach(mount);
+  }
+
+  const w = window as ShopWindow;
+  if (!w.__shopifyShopInit) {
+    w.__shopifyShopInit = true;
+    document.addEventListener('astro:page-load', initShopify);
+  }
+</script>

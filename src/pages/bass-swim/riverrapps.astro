@@ -1,5 +1,9 @@
 ---
 import RiverRappsLayout from '../../layouts/RiverRappsLayout.astro';
+import ShopifyShop from '../../components/ShopifyShop.astro';
+import { swimBrands } from '../../data/swim';
+
+const rr = swimBrands.riverrapps;
 
 const feats = [
   {
@@ -39,7 +43,7 @@ const values = [
         Prints, textures, and limited drops for the girl who lives on the river.
       </p>
       <div class="rr-hero__meta reveal">
-        <span class="chip chip--soon">Shop · coming soon</span>
+        <a class="chip chip--soon" href="#shop">Shop · coming soon</a>
       </div>
     </div>
   </section>
@@ -71,15 +75,32 @@ const values = [
     </div>
   </section>
 
+  <section class="rr-section" id="shop">
+    <div class="container">
+      <div class="rr-section__head reveal">
+        <p class="rr-section__eyebrow">The shop</p>
+        <h2 class="rr-section__title">Shop American RiverRapps</h2>
+      </div>
+      {
+        rr.shop ? (
+          <ShopifyShop shop={rr.shop} accent={rr.accent} accentText={rr.accentText} nodeId="shop-rr" />
+        ) : (
+          <p class="rr-note reveal">
+            The first drop is on its way.{' '}
+            <span class="chip chip--soon">Shop · coming soon</span>
+          </p>
+        )
+      }
+    </div>
+  </section>
+
   <section class="rr-section rr-cta">
     <div class="container">
-      <h2 class="rr-section__title reveal">First on the water</h2>
+      <h2 class="rr-section__title reveal">The other side of the house</h2>
       <p class="rr-note reveal">
-        The first drop is on its way. Check back soon — or head over to the
-        fitness core.
+        The sculpting fitness core, engineered to outperform.
       </p>
       <p class="rr-hero__meta reveal" style="margin-top: 1.5rem;">
-        <span class="chip chip--soon">Shop · coming soon</span>
         <a class="btn btn--ghost" href="/bass-swim/bass">Meet bASS SWIM →</a>
       </p>
     </div>

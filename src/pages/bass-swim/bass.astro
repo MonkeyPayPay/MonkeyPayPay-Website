@@ -1,5 +1,9 @@
 ---
 import BassLayout from '../../layouts/BassLayout.astro';
+import ShopifyShop from '../../components/ShopifyShop.astro';
+import { swimBrands } from '../../data/swim';
+
+const bass = swimBrands.bass;
 
 const highlights = [
   'Sculpting, sports-bra-level support with removable molded cups',
@@ -41,7 +45,7 @@ const feats = [
         outperform the field.
       </p>
       <div class="bass-hero__meta reveal">
-        <span class="chip chip--soon">Shop · coming soon</span>
+        <a class="chip chip--soon" href="#shop">Shop · coming soon</a>
       </div>
     </div>
   </section>
@@ -73,15 +77,32 @@ const feats = [
     </div>
   </section>
 
+  <section class="bass-section" id="shop">
+    <div class="container">
+      <div class="bass-section__head reveal">
+        <p class="bass-section__eyebrow">The shop</p>
+        <h2 class="bass-section__title">Shop bASS SWIM</h2>
+      </div>
+      {
+        bass.shop ? (
+          <ShopifyShop shop={bass.shop} accent={bass.accent} accentText={bass.accentText} nodeId="shop-bass" />
+        ) : (
+          <p class="bass-note reveal">
+            The launch collection is almost here.{' '}
+            <span class="chip chip--soon">Shop · coming soon</span>
+          </p>
+        )
+      }
+    </div>
+  </section>
+
   <section class="bass-section bass-cta">
     <div class="container">
-      <h2 class="bass-section__title reveal">Be first in the water</h2>
+      <h2 class="bass-section__title reveal">The other side of the house</h2>
       <p class="bass-note reveal">
-        The launch collection is on the way. Check back soon — or explore the
-        other side of the house.
+        Same American engineering, dialed up for the shoreline.
       </p>
       <p class="bass-hero__meta reveal" style="margin-top: 1.5rem;">
-        <span class="chip chip--soon">Shop · coming soon</span>
         <a class="btn btn--ghost" href="/bass-swim/riverrapps">Meet American RiverRapps →</a>
       </p>
     </div>

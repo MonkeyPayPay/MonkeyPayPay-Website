@@ -68,9 +68,19 @@ docs live in `README.md`.)
       sky/water glows + a faint red wash so the whole page reads red/white/blue.
       (Recolor was a throwaway `_recolor.mjs` HSL script; magenta originals are
       in git history if ever needed.)
-    - Status in-development, "Shop · coming soon" everywhere. Set shop URLs when
-      the store deploys. Old single 50/50 combined page (`.bass-split`/`.bass-line`
-      CSS) is superseded — those styles linger unused in global.css.
+    - **SHOP = Shopify embedded (owner chose this; no store exists yet).** Each
+      brand page has a `#shop` section that renders an on-page Shopify collection
+      storefront via `src/components/ShopifyShop.astro` (Buy Button SDK from
+      `sdks.shopifycdn.com`, inits on `astro:page-load`, buttons tinted with each
+      line's accent). It stays "Shop · coming soon" until `swimBrands.<line>.shop`
+      in `src/data/swim.ts` is filled with `{ domain, storefrontAccessToken,
+      collectionId }`. **To go live:** owner creates a Shopify store + one
+      collection per line + enables the "Buy Button" sales channel; paste those 3
+      values per line → shop appears automatically. Accent per line already set
+      (bASS `#e0218a`, RR `#b3202e`). Hero + section "coming soon" chips anchor to
+      `#shop`. (Walkthrough for owner was given in chat.)
+    - Status in-development. Old single 50/50 combined page (`.bass-split`/
+      `.bass-line` CSS) is superseded — those styles linger unused in global.css.
   - **Detail-page infra:** Each program has a detail page
     at `/software/<slug>` (overview, modules, pricing) via
     `src/pages/software/[slug].astro`. Demo is wired to `program.demoUrl` —
