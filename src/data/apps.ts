@@ -140,7 +140,7 @@ export const apps: App[] = [
     icon: '/apps/forge/icon.webp',
     playUrl: '',
     appStoreUrl: '',
-    webAppUrl: '', // Forge is a web app — set this to the live URL once deployed
+    webAppUrl: 'https://forge-wine-nine.vercel.app', // live web app
     screenshots: [
       { src: '/apps/forge/screens/dashboard.webp', alt: 'Forge — daily readiness and today’s mission' },
       { src: '/apps/forge/screens/train.webp', alt: 'Forge — programs and a smart workout generator' },
@@ -161,7 +161,7 @@ export const apps: App[] = [
     icon: '/apps/apex/icon.webp',
     playUrl: '',
     appStoreUrl: '',
-    webAppUrl: '', // Apex is a web app — set this to the live URL once launched
+    webAppUrl: 'https://apex-delta-ecru.vercel.app', // live web app
     screenshots: [
       { src: '/apps/apex/screens/dashboard.webp', alt: 'Apex — daily readiness and today’s mission' },
       { src: '/apps/apex/screens/train.webp', alt: 'Apex — programs and a smart workout generator' },
@@ -182,7 +182,7 @@ export const apps: App[] = [
     icon: '/apps/lyra/icon.webp',
     playUrl: '',
     appStoreUrl: '',
-    webAppUrl: '', // Lyra is a web app / SaaS — set this to the live URL once deployed
+    webAppUrl: 'https://health-fitness-phi.vercel.app', // live web app
     screenshots: [
       { src: '/apps/lyra/screens/dashboard.webp', alt: 'Lyra — a daily dashboard tuned to today’s cycle phase' },
       { src: '/apps/lyra/screens/cycle.webp', alt: 'Lyra — a cycle tracker with phase-by-phase guidance' },
