@@ -174,13 +174,20 @@ docs live in `README.md`.)
        has ads/accounts; subscriptions/notifications flags set accordingly).
        **Lyra vs Forge placement:** put on Apps/Health&Fitness as (web) apps;
        move to Software if the owner prefers.
-     - **Screenshots:** only **Chainlink** (`daily-puzzle/marketing/appstore_*.png`)
-       and **Just One** (`one-task-only/store/assets/screenshots/*.png`) shipped
-       committed store images → pulled into `public/apps/<slug>/screens/` and
-       wired into each app's `screenshots[]`. The rest are RN apps with copy-only
-       store listings (no committed images) — their galleries stay empty until
-       captured from a device, or Forge/Apex/Lyra are run locally and screenshotted.
-       PENDING for all: launch/store URLs.
+     - **Screenshots (DONE for 5 apps):** committed store images existed for
+       **Chainlink** (`daily-puzzle/marketing/appstore_*.png`) and **Just One**
+       (`one-task-only/store/assets/screenshots/*.png`). The three web apps were
+       **run locally and screenshotted with Playwright** (mobile viewport):
+       **Forge** & **Apex** (Vite; seeded `forge.onboarded` in localStorage to skip
+       onboarding; Apex captured by throwaway-editing the app header to "Apex" +
+       `--accent` to azure, then rebuilding), and **Lyra** (Next.js — stood up a
+       local Postgres 16 under the `postgres` OS user on :5433, `prisma db push` +
+       `npm run db:seed` → demo account `demo@lyrahealth.app`/`demo12345`, then
+       logged in and shot dashboard/cycle/training/nutrition/insights/coach). All
+       in `public/apps/<slug>/screens/` → each app's `screenshots[]`. **Still
+       empty:** the RN apps (SpinFit, Quitline, Roastline, All In Trivia, Empire
+       Table, Fate) — copy-only store listings, need device capture. PENDING all:
+       launch/store URLs.
    - Favicon/app icon is the monkey head (`public/favicon-16.png`,
      `favicon-32.png`, `apple-touch-icon.png`). Social share card is
      `public/og-image.png` (1200×630, monkey + wordmark) wired via og:image.

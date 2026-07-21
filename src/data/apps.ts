@@ -141,7 +141,13 @@ export const apps: App[] = [
     playUrl: '',
     appStoreUrl: '',
     webAppUrl: '', // Forge is a web app — set this to the live URL once deployed
-    screenshots: [],
+    screenshots: [
+      { src: '/apps/forge/screens/dashboard.webp', alt: 'Forge — daily readiness and today’s mission' },
+      { src: '/apps/forge/screens/train.webp', alt: 'Forge — programs and a smart workout generator' },
+      { src: '/apps/forge/screens/fuel.webp', alt: 'Forge — TDEE targets and macro tracking' },
+      { src: '/apps/forge/screens/body.webp', alt: 'Forge — body metrics and age-aware health checks' },
+      { src: '/apps/forge/screens/mind.webp', alt: 'Forge — a daily mind check-in' },
+    ],
     legalLastUpdated: '2026-07-19',
     legal: { dataModel: 'local-only', usesSubscriptions: true, usesNotifications: true },
   },
@@ -156,7 +162,13 @@ export const apps: App[] = [
     playUrl: '',
     appStoreUrl: '',
     webAppUrl: '', // Apex is a web app — set this to the live URL once launched
-    screenshots: [],
+    screenshots: [
+      { src: '/apps/apex/screens/dashboard.webp', alt: 'Apex — daily readiness and today’s mission' },
+      { src: '/apps/apex/screens/train.webp', alt: 'Apex — programs and a smart workout generator' },
+      { src: '/apps/apex/screens/fuel.webp', alt: 'Apex — calorie targets and macro tracking' },
+      { src: '/apps/apex/screens/body.webp', alt: 'Apex — body metrics and health checks' },
+      { src: '/apps/apex/screens/mind.webp', alt: 'Apex — a daily mind check-in' },
+    ],
     legalLastUpdated: '2026-07-19',
     legal: { dataModel: 'local-only', usesSubscriptions: true, usesNotifications: true },
   },
@@ -171,7 +183,14 @@ export const apps: App[] = [
     playUrl: '',
     appStoreUrl: '',
     webAppUrl: '', // Lyra is a web app / SaaS — set this to the live URL once deployed
-    screenshots: [],
+    screenshots: [
+      { src: '/apps/lyra/screens/dashboard.webp', alt: 'Lyra — a daily dashboard tuned to today’s cycle phase' },
+      { src: '/apps/lyra/screens/cycle.webp', alt: 'Lyra — a cycle tracker with phase-by-phase guidance' },
+      { src: '/apps/lyra/screens/training.webp', alt: 'Lyra — workouts adapted to your current phase' },
+      { src: '/apps/lyra/screens/nutrition.webp', alt: 'Lyra — a food plan for your phase' },
+      { src: '/apps/lyra/screens/insights.webp', alt: 'Lyra — weekly insights on energy, mood and your cycle' },
+      { src: '/apps/lyra/screens/coach.webp', alt: 'Lyra — an AI coach that knows your cycle' },
+    ],
     legalLastUpdated: '2026-07-19',
     legal: { dataModel: 'standard', usesSubscriptions: true, usesNotifications: true },
   },
