@@ -102,11 +102,14 @@ docs live in `README.md`.)
       online orders, guest marketing, menu engineering, multi-location P&L,
       bilingual public booking widget). Pricing unchanged (Prep/Service/Prime/
       Enterprise). To refresh: re-pull that branch's `docs/publicity/*.png`.
-    - **NEXT for Mise (deferred, logged for later):** (a) deploy the Mise app
+    - **Mise logo (DONE):** real brand mark at `public/software/mise/mark.webp`
+      — a brass candle-flame on warm ink ("Candlelight service" identity), drawn
+      as SVG → webp. Wired via `Program.logo` (optional square mark; falls back
+      to the letter monogram via `.program__mark--img` on card + detail).
+    - **NEXT for Mise (deferred, logged for later):** deploy the Mise app
       (React + Express/WebSocket, seeded "Harbor & Vine" demo) to a host that
       supports WebSockets — Render/Railway/Fly — then set `program.demoUrl` to
-      flip the "Try the demo" button live; (b) add a real Mise logo (currently a
-      gradient "M" monogram).
+      flip the "Try the demo" button live.
 - **Deploy:** push to branch `claude/wordpress-github-setup-mup411` → **Vercel**
   auto-builds and deploys. The owner reviews via the Vercel preview/production URL.
 - **Owner is non-technical** ("Claude drives, I review"). Keep guidance concrete;
@@ -169,9 +172,15 @@ docs live in `README.md`.)
      - *Utilities:* **Fate** (`decision-spinner` — spin wheel / coin / dice).
      - Legal per app inferred from each README (local-only vs 'standard' when it
        has ads/accounts; subscriptions/notifications flags set accordingly).
-       PENDING for all: real screenshots (arrays empty) + launch URLs. **Lyra vs
-       Forge placement:** put on Apps/Health&Fitness as (web) apps; move to
-       Software if the owner prefers.
+       **Lyra vs Forge placement:** put on Apps/Health&Fitness as (web) apps;
+       move to Software if the owner prefers.
+     - **Screenshots:** only **Chainlink** (`daily-puzzle/marketing/appstore_*.png`)
+       and **Just One** (`one-task-only/store/assets/screenshots/*.png`) shipped
+       committed store images → pulled into `public/apps/<slug>/screens/` and
+       wired into each app's `screenshots[]`. The rest are RN apps with copy-only
+       store listings (no committed images) — their galleries stay empty until
+       captured from a device, or Forge/Apex/Lyra are run locally and screenshotted.
+       PENDING for all: launch/store URLs.
    - Favicon/app icon is the monkey head (`public/favicon-16.png`,
      `favicon-32.png`, `apple-touch-icon.png`). Social share card is
      `public/og-image.png` (1200×630, monkey + wordmark) wired via og:image.

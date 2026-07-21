@@ -15,7 +15,13 @@ const statusLabel = {
 
 <article class="program reveal">
   <div class="program__head">
-    <span class="program__mark" aria-hidden="true">{program.name.charAt(0)}</span>
+    {
+      program.logo ? (
+        <img class="program__mark program__mark--img" src={program.logo} alt={`${program.name} logo`} width="56" height="56" />
+      ) : (
+        <span class="program__mark" aria-hidden="true">{program.name.charAt(0)}</span>
+      )
+    }
     <div class="program__heading">
       <h3 class="program__name">{program.name}</h3>
       <p class="program__tagline">{program.tagline}</p>

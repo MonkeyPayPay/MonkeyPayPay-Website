@@ -38,6 +38,8 @@ export interface Program {
   /** Short blurb for the card + detail intro. */
   description: string;
   status: 'in-development' | 'beta' | 'live';
+  /** Square brand mark (path under /public). Falls back to a letter monogram. */
+  logo?: string;
   /** Public marketing/site link, if any. */
   url?: string;
   /** Live interactive demo. Leave undefined for a "coming soon" state. */
@@ -68,6 +70,7 @@ export const programs: Program[] = [
     name: 'Mise',
     category: 'restaurant',
     tagline: 'The restaurant operating system.',
+    logo: '/software/mise/mark.webp',
     description:
       'One platform that runs the whole restaurant in real time — reservations, floor, private events, online orders, inventory, scheduling, procurement, a live P&L, team comms, and guest marketing — every module reading and writing the same live data, so a check closed on the POS moves sales, depletes stock, and updates the guest across every screen within the same second.',
     status: 'in-development',

@@ -864,6 +864,7 @@ a.chip:hover { border-color: var(--accent); color: var(--text); }
   display: grid;
   place-items: center;
 }
+.program__mark--img { background: none; padding: 0; object-fit: cover; }
 .program__heading { flex: 1; min-width: 0; }
 .program__name { font-size: var(--fs-h3); margin: 0; }
 .program__tagline { color: var(--accent-2); font-size: var(--fs-sm); margin: 0; }
