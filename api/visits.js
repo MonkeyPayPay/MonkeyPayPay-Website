@@ -9,11 +9,11 @@
 // Until a store is connected it returns { count: null } and the footer stays
 // hidden — nothing fake is ever shown.
 
-const BASE = process.env.KV_REST_API_URL;
-const TOKEN = process.env.KV_REST_API_TOKEN;
-
 export default async function handler(req, res) {
   res.setHeader('Cache-Control', 'no-store');
+  // Accept whichever names the connected store injects (Vercel KV or Upstash).
+  const BASE = process.env.KV_REST_API_URL || process.env.UPSTASH_REDIS_REST_URL;
+  const TOKEN = process.env.KV_REST_API_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN;
   if (!BASE || !TOKEN) return res.status(200).json({ count: null });
   try {
     const cmd = req.method === 'POST' ? 'incr' : 'get';
