@@ -390,12 +390,10 @@ a.chip:hover { border-color: var(--accent); color: var(--text); }
   flex-wrap: wrap;
 }
 .hero__mascot {
-  width: clamp(150px, 22vw, 240px);
   height: auto;
   display: block;
   margin: 2.5rem auto 0;
   filter: drop-shadow(0 24px 45px rgba(124, 92, 255, 0.3));
-  animation: float 4.5s ease-in-out infinite;
 }
 @keyframes float {
   0%, 100% { transform: translateY(0); }
@@ -705,7 +703,6 @@ a.chip:hover { border-color: var(--accent); color: var(--text); }
 }
 .story__mascot {
   float: right;
-  width: clamp(150px, 32vw, 240px);
   height: auto;
   margin: 0 0 1rem 1.5rem;
   shape-outside: circle(50%);
@@ -743,7 +740,6 @@ a.chip:hover { border-color: var(--accent); color: var(--text); }
 }
 .story__celebrate {
   float: right;
-  width: clamp(120px, 24vw, 190px);
   height: auto;
   margin: -0.5rem -0.5rem 0.5rem 1rem;
   shape-outside: circle(50%);
@@ -785,7 +781,6 @@ a.chip:hover { border-color: var(--accent); color: var(--text); }
   justify-content: center;
 }
 .notfound__mascot {
-  width: clamp(160px, 40vw, 240px);
   height: auto;
   margin-bottom: 1rem;
   filter: drop-shadow(0 20px 40px rgba(124, 92, 255, 0.25));
@@ -1623,37 +1618,52 @@ a.chip:hover { border-color: var(--accent); color: var(--text); }
 .nav__bass { letter-spacing: 0.02em; }
 
 /* ==========================================================================
-   Character motion (Tier A) — subtle, looping life for the monkey mascot.
-   Neutralised automatically by the prefers-reduced-motion block below.
+   Character motion (Tier B) — real frame-by-frame sprite animation of the
+   monkey mascot (owner-supplied painted frames, magenta keyed to transparent).
+   Each sprite is one horizontal strip; a steps() animation walks the frames.
+   Frozen on frame 1 for anyone who prefers reduced motion (block below).
    ========================================================================== */
-@keyframes mascot-wave {
-  0%, 100% { transform: translateY(0) rotate(-2deg); }
-  50%      { transform: translateY(-9px) rotate(2.5deg); }
+.mascot-sprite {
+  display: block;
+  background-repeat: no-repeat;
+  background-position: 0 0;
+  width: var(--fw);
 }
-@keyframes mascot-sway {
-  0%   { transform: translateY(0) rotate(-2.5deg); }
-  50%  { transform: translateY(-7px) rotate(2.5deg); }
-  100% { transform: translateY(0) rotate(-2.5deg); }
+.mascot-sprite--wave {
+  --fw: clamp(150px, 22vw, 240px);
+  aspect-ratio: 342 / 474;
+  background-image: url('/brand/anim/wave.webp');
+  background-size: calc(var(--fw) * 6) 100%;
+  animation: sprite-wave 1.25s steps(6) infinite;
 }
-@keyframes mascot-float {
-  0%, 100% { transform: translateY(0) rotate(0); }
-  50%      { transform: translateY(-10px) rotate(-1.5deg); }
+@keyframes sprite-wave { to { background-position-x: calc(var(--fw) * -6); } }
+
+.mascot-sprite--twirl {
+  --fw: clamp(150px, 32vw, 240px);
+  aspect-ratio: 268 / 466;
+  background-image: url('/brand/anim/twirl.webp');
+  background-size: calc(var(--fw) * 8) 100%;
+  animation: sprite-twirl 1.9s steps(8) infinite;
 }
-@keyframes mascot-bounce {
-  0%, 100% { transform: translateY(0); }
-  25%      { transform: translateY(-16px); }
-  40%      { transform: translateY(-3px); }
-  55%      { transform: translateY(-10px); }
-  70%      { transform: translateY(0); }
+@keyframes sprite-twirl { to { background-position-x: calc(var(--fw) * -8); } }
+
+.mascot-sprite--jump {
+  --fw: clamp(120px, 24vw, 180px);
+  aspect-ratio: 342 / 515;
+  background-image: url('/brand/anim/jump.webp');
+  background-size: calc(var(--fw) * 6) 100%;
+  animation: sprite-jump 1.4s steps(6) infinite;
 }
-.anim-wave,
-.anim-sway,
-.anim-float,
-.anim-bounce { transform-origin: bottom center; will-change: transform; }
-.anim-wave { animation: mascot-wave 3.4s ease-in-out infinite; }
-.anim-sway { animation: mascot-sway 5.5s ease-in-out infinite; }
-.anim-float { animation: mascot-float 3.8s ease-in-out infinite; }
-.anim-bounce { animation: mascot-bounce 2.8s ease-in-out infinite; }
+@keyframes sprite-jump { to { background-position-x: calc(var(--fw) * -6); } }
+
+.mascot-sprite--shrug {
+  --fw: clamp(160px, 40vw, 240px);
+  aspect-ratio: 409 / 550;
+  background-image: url('/brand/anim/shrug.webp');
+  background-size: calc(var(--fw) * 6) 100%;
+  animation: sprite-shrug 2.4s steps(6) infinite;
+}
+@keyframes sprite-shrug { to { background-position-x: calc(var(--fw) * -6); } }
 
 /* ---- Reduced motion ------------------------------------------------------- */
 @media (prefers-reduced-motion: reduce) {

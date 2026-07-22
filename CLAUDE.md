@@ -237,12 +237,17 @@ docs live in `README.md`.)
      `monkey-ballet.webp` = story page (top), `monkey-404.webp` = 404 page,
      `monkey-celebrate.webp` = story support card (by the donate button),
      `monkey-apps.webp` = saved/unused (crowded the homepage next to the hero).
-     **Tier-A character motion (DONE):** each mascot has a subtle looping CSS
-     idle animation — `.anim-wave` (hero), `.anim-sway` (story ballet),
-     `.anim-bounce` (story donate card), `.anim-float` (404) — defined in
-     global.css, auto-neutralized by `prefers-reduced-motion`. **Tier B** (true
-     frame-by-frame limb animation) is deferred pending sprite-sheet/rig art the
-     owner supplies (would wire up like Cuddle Crush's painted sprite sheets).
+     **Tier-B character animation (DONE):** real frame-by-frame sprite animation
+     of the monkey mascot. Owner supplied painted frame strips (on magenta) via
+     GPT; `_sprites.mjs` (throwaway) keyed magenta→transparent (distance key
+     D≈86), normalized each frame into an even grid (horizontal-center; bottom-
+     align, except the jump which preserves vertical lift), and wrote horizontal
+     sprite strips to `public/brand/anim/{wave,twirl,jump,shrug}.webp`. Wired via
+     `.mascot-sprite--{wave,twirl,jump,shrug}` in global.css — each a `steps()`
+     `background-position` walk, sized by a `--fw` var + `aspect-ratio`. Placed on
+     `<span role=img>`: wave=hero, twirl=story ballet, jump=story donate card,
+     shrug=404. `prefers-reduced-motion` freezes them on frame 1. (Old static
+     `monkey-*.webp` poses remain in `public/brand/`, now unused.)
      Also: app/Mise screenshots open in a **lightbox** (`Lightbox.astro`, ~75vw/
      82vh over a dimmed backdrop; galleries marked `data-zoom`).
    - Per-app legal is tailored via the `legal` field (dataModel 'local-only',
