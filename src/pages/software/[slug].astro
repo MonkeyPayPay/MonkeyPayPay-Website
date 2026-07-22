@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import StoreMeta from '../../components/StoreMeta.astro';
 import { programs, getProgram, programCategoryName } from '../../data/programs';
 
 export function getStaticPaths() {
@@ -35,6 +36,7 @@ const statusLabel = {
           <p class="prog__cat">{programCategoryName(program.category)}</p>
           <h1 class="prog__name">{program.name}</h1>
           <p class="prog__tagline">{program.tagline}</p>
+          <StoreMeta slug={program.slug} variant="detail" />
           <div class="prog__actions">
             {
               program.url && (

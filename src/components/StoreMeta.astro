@@ -1,0 +1,42 @@
+---
+// Shows real store rating (5-star) + download range next to an app/program.
+// Renders nothing until `store-stats.json` has real data for this slug — so
+// unpublished apps show no stars and no counts.
+import { getStat } from '../data/stats';
+
+interface Props {
+  slug: string;
+  /** 'card' (compact) or 'detail' (slightly larger). */
+  variant?: 'card' | 'detail';
+}
+
+const { slug, variant = 'card' } = Astro.props;
+const s = getStat(slug);
+const nf = new Intl.NumberFormat('en-US');
+const pct = s?.rating ? Math.max(0, Math.min(100, (s.rating / 5) * 100)) : 0;
+---
+
+{
+  s && (
+    <div class={`storemeta storemeta--${variant}`}>
+      {typeof s.rating === 'number' && s.rating > 0 && (
+        <span
+          class="storemeta__rating"
+          role="img"
+          aria-label={`Rated ${s.rating.toFixed(1)} out of 5${s.ratingCount ? ` from ${nf.format(s.ratingCount)} ratings` : ''}`}
+        >
+          <span class="stars" aria-hidden="true"><i style={`width:${pct}%`} /></span>
+          <span class="storemeta__num">
+            {s.rating.toFixed(1)}
+            {s.ratingCount ? <span class="storemeta__count"> ({nf.format(s.ratingCount)})</span> : null}
+          </span>
+        </span>
+      )}
+      {s.downloads && (
+        <span class="storemeta__dl" title="Downloads across the app stores">
+          {s.downloads} downloads
+        </span>
+      )}
+    </div>
+  )
+}

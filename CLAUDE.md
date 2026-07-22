@@ -113,14 +113,31 @@ docs live in `README.md`.)
       online orders, guest marketing, menu engineering, multi-location P&L,
       bilingual public booking widget). Pricing unchanged (Prep/Service/Prime/
       Enterprise). To refresh: re-pull that branch's `docs/publicity/*.png`.
-    - **Mise logo (DONE):** real brand mark at `public/software/mise/mark.webp`
-      — a brass candle-flame on warm ink ("Candlelight service" identity), drawn
-      as SVG → webp. Wired via `Program.logo` (optional square mark; falls back
-      to the letter monogram via `.program__mark--img` on card + detail).
+    - **Mise logo (DONE):** owner's real brand mark at `public/software/mise/mark.webp`
+      — a brushed-metal "M" with a chef's-knife motif on dark + amber glow (the
+      earlier brass candle was Claude's placeholder, now replaced). Wired via
+      `Program.logo` (`.program__mark--img` on card + detail). Full horizontal
+      lockup ("M · MISE · MENU·INVENTORY·STAFF·EVENTS") saved at
+      `public/software/mise/lockup.webp` for later hero use if wanted.
     - **NEXT for Mise (deferred, logged for later):** deploy the Mise app
       (React + Express/WebSocket, seeded "Harbor & Vine" demo) to a host that
       supports WebSockets — Render/Railway/Fly — then set `program.demoUrl` to
       flip the "Try the demo" button live.
+- **Live metrics (real only — nothing fabricated):**
+  - **Visitor counter** — subtle, bottom of the footer (`.footer__visits`). Backed
+    by **Vercel KV** via the serverless function `api/visits.js` (uses the
+    Upstash REST API with env `KV_REST_API_URL`/`KV_REST_API_TOKEN`). Increments
+    once per browser (localStorage `mpp.v`), reads after. **Stays hidden until KV
+    is connected** (owner must add a KV/Upstash store to the Vercel project) —
+    returns `{count:null}` otherwise.
+  - **Store ratings + downloads** — `StoreMeta.astro` shows a real 5-star rating +
+    download range next to each app/program (card + detail), reading
+    `src/data/store-stats.json` via `src/data/stats.ts`. That JSON is populated
+    ONLY from live stores by `scripts/fetch-store-stats.mjs` (run daily by
+    `.github/workflows/store-stats.yml`, which installs `google-play-scraper` +
+    `app-store-scraper` with `--no-save` so they never enter project deps / audit).
+    Apps without a Play/App Store URL are skipped → **no stars shown for unpublished
+    apps**. It all lights up automatically once a store URL is set + the app is live.
 - **Deploy:** push to branch `claude/wordpress-github-setup-mup411` → **Vercel**
   auto-builds and deploys. The owner reviews via the Vercel preview/production URL.
 - **Owner is non-technical** ("Claude drives, I review"). Keep guidance concrete;

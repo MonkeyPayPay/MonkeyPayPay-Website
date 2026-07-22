@@ -65,4 +65,31 @@ const year = new Date().getFullYear();
       )
     }
   </div>
+
+  <p class="footer__visits" data-visits hidden aria-hidden="true">
+    <span data-visits-n></span> visits
+  </p>
 </footer>
+
+<script>
+  // Subtle site visit counter (Vercel KV backed). Increments once per browser,
+  // reads thereafter. Stays hidden unless the endpoint returns a real number,
+  // so nothing shows until KV is connected.
+  function initVisits() {
+    const el = document.querySelector('[data-visits]') as HTMLElement | null;
+    if (!el || el.dataset.done) return;
+    el.dataset.done = '1';
+    const seen = localStorage.getItem('mpp.v');
+    fetch('/api/visits', { method: seen ? 'GET' : 'POST' })
+      .then((r) => r.json())
+      .then(({ count }) => {
+        if (count == null) return;
+        localStorage.setItem('mpp.v', '1');
+        const n = el.querySelector('[data-visits-n]');
+        if (n) n.textContent = new Intl.NumberFormat().format(count);
+        el.hidden = false;
+      })
+      .catch(() => {});
+  }
+  document.addEventListener('astro:page-load', initVisits);
+</script>

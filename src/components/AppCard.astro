@@ -3,6 +3,7 @@ import type { App } from '../data/apps';
 import PlayIcon from './PlayIcon.astro';
 import AppleIcon from './AppleIcon.astro';
 import WebIcon from './WebIcon.astro';
+import StoreMeta from './StoreMeta.astro';
 
 interface Props {
   app: App;
@@ -25,6 +26,7 @@ const shots = app.screenshots.slice(0, 4);
     <div class="card__heading">
       <h3 class="card__name"><a href={`/apps/${app.slug}`}>{app.name}</a></h3>
       <p class="card__tagline">{app.tagline}</p>
+      <StoreMeta slug={app.slug} />
     </div>
   </div>
 

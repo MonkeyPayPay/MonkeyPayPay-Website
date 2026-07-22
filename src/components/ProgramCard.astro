@@ -1,5 +1,6 @@
 ---
 import type { Program } from '../data/programs';
+import StoreMeta from './StoreMeta.astro';
 
 interface Props {
   program: Program;
@@ -25,6 +26,7 @@ const statusLabel = {
     <div class="program__heading">
       <h3 class="program__name">{program.name}</h3>
       <p class="program__tagline">{program.tagline}</p>
+      <StoreMeta slug={program.slug} />
     </div>
     <span class={`program__status program__status--${program.status}`}>{statusLabel}</span>
   </div>

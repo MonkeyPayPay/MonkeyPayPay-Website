@@ -1,0 +1,40 @@
+name: Refresh store stats
+
+# Pulls real ratings + download ranges from the app stores for any app that has
+# a Google Play / App Store URL in apps.ts, and commits the result to
+# src/data/store-stats.json (which Vercel then redeploys). Apps that aren't
+# published yet have no store URL, so they're skipped — nothing fake is shown.
+#
+# The scraper libraries are installed with --no-save so they never enter the
+# project's own dependencies (keeping `npm audit` at 0 vulnerabilities).
+
+on:
+  schedule:
+    - cron: '0 7 * * *' # daily, 07:00 UTC
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm ci
+      - run: npm i --no-save google-play-scraper app-store-scraper
+      - run: npm run fetch-stats
+      - name: Commit changes if any
+        run: |
+          if ! git diff --quiet -- src/data/store-stats.json; then
+            git config user.name "github-actions[bot]"
+            git config user.email "github-actions[bot]@users.noreply.github.com"
+            git add src/data/store-stats.json
+            git commit -m "chore: refresh store stats"
+            git push
+          else
+            echo "No store-stats changes."
+          fi
