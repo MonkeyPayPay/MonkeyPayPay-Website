@@ -302,7 +302,7 @@ export const apps: App[] = [
     icon: '/apps/carecircle/icon.webp',
     playUrl: '',
     appStoreUrl: '',
-    webAppUrl: '', // CareCircle is a web app / PWA — set this to the live URL once deployed
+    webAppUrl: 'https://my-new-app-lyart.vercel.app', // live web app
     screenshots: [],
     legalLastUpdated: '2026-07-21',
     legal: { dataModel: 'standard', usesSubscriptions: true, usesNotifications: true },
