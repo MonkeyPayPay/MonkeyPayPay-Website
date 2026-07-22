@@ -82,14 +82,20 @@ export const apps: App[] = [
     category: 'fitness',
     tagline: 'Spin. Sweat. Two minutes at a time.',
     description:
-      'Turn exercise into a game: flick the wheel, land on a random 2-minute move, and knock it out with an on-screen coach and countdown. Earn XP, level up, and build a streak — 48 bodyweight exercises, three difficulty tiers, and a quiet mode for apartments. No gym, no equipment, no account.',
+      'Turn exercise into a game: flick the wheel, land on a random 2-minute move, and knock it out with an on-screen coach, countdown, and haptics. Earn XP, clear daily quests, and build a streak — 48 bodyweight exercises with animated demos, three difficulty tiers, unlockable wheel themes, and a quiet mode for apartments. No gym, no equipment, no account.',
     icon: '/apps/spinfit/icon.webp',
     splash: '/apps/spinfit/banner.webp',
     playUrl: '', // ← paste the Google Play link once SpinFit is published
     appStoreUrl: '', // ← add when the iOS version ships
     webAppUrl: '', // ← SpinFit is a native app; leave blank (shows "coming soon")
-    // Real in-app screenshots go here when ready (public/apps/spinfit/1.png …).
-    screenshots: [],
+    screenshots: [
+      { src: '/apps/spinfit/screens/spin.webp', alt: 'SpinFit — flick the wheel to land on a 2-minute move' },
+      { src: '/apps/spinfit/screens/coach.webp', alt: 'SpinFit — an on-screen coach walks you through each move' },
+      { src: '/apps/spinfit/screens/timer.webp', alt: 'SpinFit — a countdown timer for every exercise' },
+      { src: '/apps/spinfit/screens/victory.webp', alt: 'SpinFit — earn XP and level up after each spin' },
+      { src: '/apps/spinfit/screens/progress.webp', alt: 'SpinFit — track your streak and training balance' },
+      { src: '/apps/spinfit/screens/themes.webp', alt: 'SpinFit — unlockable wheel themes' },
+    ],
     legalLastUpdated: '2026-07-16',
     legal: {
       dataModel: 'local-only',
@@ -106,7 +112,7 @@ export const apps: App[] = [
     category: 'fitness',
     tagline: 'Quit anything. Watch it add up.',
     description:
-      'A calm quit-anything tracker — vaping, alcohol, sugar, doomscrolling, gambling, or anything custom. Live counters for days clean, money saved and time reclaimed; a milestone ladder from your first hour to two years; a craving panic button with a 60-second breathing exercise; compassionate relapse handling that keeps your lifetime stats; and home-screen widgets. Everything stays on your device.',
+      'A calm quit-anything tracker — vaping, alcohol, sugar, doomscrolling, gambling, or anything custom. Live counters tick money saved and time reclaimed by the second, an 11-step milestone ladder fires confetti and shareable cards, and a craving panic button surfaces your reasons plus a 60-second breathing exercise. Relapses reset with encouragement while keeping your lifetime stats and best streak; track several quits at once, with home-screen widgets on iOS and Android. Everything stays on your device.',
     icon: '/apps/quitline/icon.webp',
     playUrl: '',
     appStoreUrl: '',
@@ -121,7 +127,7 @@ export const apps: App[] = [
     category: 'fitness',
     tagline: 'Build streaks. Get roasted into showing up.',
     description:
-      'A habit and water tracker that actually keeps you honest — one-tap logging with a satisfying progress ring, streaks with freeze tokens so one bad day won’t nuke weeks of work, and a coach you choose (Gentle, Sarcastic, or Brutal) that calls you out when you slip. Shareable streak cards, full dark mode, local-first with no account.',
+      'A habit and water tracker that actually keeps you honest — one-tap logging with a satisfying progress ring, streaks with freeze tokens so one bad day won’t undo weeks, and a coach you choose (Gentle, Sarcastic, or Brutal) that calls you out in that tone when you slip. Track counts, water, minutes, pages or steps, share your streak cards, and onboard in under 30 seconds. Local-first, no account.',
     icon: '/apps/roastline/icon.webp',
     playUrl: '',
     appStoreUrl: '',
@@ -136,7 +142,7 @@ export const apps: App[] = [
     category: 'fitness',
     tagline: 'Every part of men’s health, one dashboard.',
     description:
-      'A fitness and health app built for men: strength programs and a smart workout generator that reads your equipment and recovery, macro and TDEE tracking with barcode scanning, body metrics with age-aware screening reminders, a progress-photo gallery, and a daily mind check-in. Everything is stored on your device — no account, no server.',
+      'A fitness and health app built for men: strength programs and a Smart Workout generator that reads your equipment and recovery, a HIIT timer, GPS run/ride/walk with voice cues, macro & TDEE tracking with barcode scanning, a Daily Readiness score, body metrics with age-aware screening reminders, progress photos, and a daily mind check-in. Local-first by default, with optional account sync across devices.',
     icon: '/apps/forge/icon.webp',
     playUrl: '',
     appStoreUrl: '',
@@ -149,7 +155,7 @@ export const apps: App[] = [
       { src: '/apps/forge/screens/mind.webp', alt: 'Forge — a daily mind check-in' },
     ],
     legalLastUpdated: '2026-07-19',
-    legal: { dataModel: 'local-only', usesSubscriptions: true, usesNotifications: true },
+    legal: { dataModel: 'standard', usesSubscriptions: true, usesNotifications: false },
   },
   {
     slug: 'apex',
@@ -157,7 +163,7 @@ export const apps: App[] = [
     category: 'fitness',
     tagline: 'Your whole fitness and health, in one place.',
     description:
-      'An all-in-one fitness and health app: strength programs and a smart workout generator, macro and TDEE tracking with barcode scanning, body metrics with trend charts, a progress-photo gallery, and a daily mind check-in — one clean dashboard. Apex is the azure sibling of Forge, built on the same engine. Everything is stored on your device.',
+      'An all-in-one fitness and health app: a Smart Workout generator, a HIIT timer, GPS cardio, a Daily Readiness score, macro & TDEE tracking with barcode scanning, body metrics, progress photos, and a daily mind check-in — one clean dashboard. Apex is the azure sibling of Forge, built on the same engine. Local-first by default, with optional account sync.',
     icon: '/apps/apex/icon.webp',
     playUrl: '',
     appStoreUrl: '',
@@ -170,7 +176,7 @@ export const apps: App[] = [
       { src: '/apps/apex/screens/mind.webp', alt: 'Apex — a daily mind check-in' },
     ],
     legalLastUpdated: '2026-07-19',
-    legal: { dataModel: 'local-only', usesSubscriptions: true, usesNotifications: true },
+    legal: { dataModel: 'standard', usesSubscriptions: true, usesNotifications: false },
   },
   {
     slug: 'lyra',
@@ -202,14 +208,14 @@ export const apps: App[] = [
     category: 'games',
     tagline: 'Wager your points. Trust your gut.',
     description:
-      'A trivia game where you bet your points on your confidence — answer right to multiply your wager, wrong to lose it, and try not to go bust. 2,040 questions across 12 categories, a globally-shared daily challenge, an escalating endless mode, and lifelines earned by streaks (never bought). Fully offline, no account.',
+      'A trivia game where you bet your points on your confidence — answer right to multiply your wager, wrong to lose it, and try not to go bust. 2,040 questions across 12 categories, a globally-shared Daily Challenge with percentile scoring, an escalating Endless mode, streak-earned lifelines, and a seasonal Growth Hub with XP and unlockable rank frames. Fully offline, no account.',
     icon: '/apps/all-in-trivia/icon.webp',
     playUrl: '',
     appStoreUrl: '',
     webAppUrl: '',
     screenshots: [],
     legalLastUpdated: '2026-07-19',
-    legal: { dataModel: 'standard', usesSubscriptions: true, usesNotifications: false },
+    legal: { dataModel: 'standard', usesSubscriptions: true, usesNotifications: true },
   },
   {
     slug: 'chainlink',
@@ -217,7 +223,7 @@ export const apps: App[] = [
     category: 'games',
     tagline: 'One word chains into the next.',
     description:
-      'A daily word puzzle for everyone on earth: fill each link with a real word that starts and ends on the given letters, threading your words into a chain. One shared puzzle a day, two years of puzzles shipped, spoiler-free result sharing, and endless practice — deterministic and fully offline, no account.',
+      'A daily word puzzle for everyone on earth: fill each link with a real word that starts and ends on the given letters, threading your words into a chain. One shared puzzle a day (two years shipped), a spoiler-free emoji share grid, streaks, a home-screen widget, and deep accessibility (colorblind mode, dynamic type, reduce-motion) — deterministic, fully offline, no account.',
     icon: '/apps/chainlink/icon.webp',
     playUrl: '',
     appStoreUrl: '',
@@ -270,7 +276,7 @@ export const apps: App[] = [
     category: 'productivity',
     tagline: 'One task at a time. That’s it.',
     description:
-      'An anti-overwhelm to-do app that shows exactly one task at a time. Brain-dump everything into a hidden backlog; the home screen shows only your single current task in large, calm typography. Finish it with a swipe and the next one appears — Things 3 meets a meditation app. Local-first, no account.',
+      'An anti-overwhelm to-do app that shows exactly one task at a time. Brain-dump everything into a hidden backlog; the home screen shows only your current task in large, calm type. Finish with a swipe and the next appears — plus on-device voice capture, a breathing focus timer with weekly stats, home-screen widgets, and an end-of-day recap. Local-first, no account.',
     icon: '/apps/just-one/icon.webp',
     playUrl: '',
     appStoreUrl: '',
@@ -294,7 +300,7 @@ export const apps: App[] = [
     category: 'utilities',
     tagline: 'Let fate settle it.',
     description:
-      'A physics-driven decision maker: build custom spin wheels (with optional weighting), flip coins, roll dice, and let fate end every “you decide” standoff. Tuned spins with haptic ticks and a dramatic confetti reveal, a group mode where everyone adds an option, preset templates, and shareable result cards.',
+      'A physics-driven decision maker: build custom spin wheels (with optional weighting), flip coins, roll dice, and let fate end every “you decide” standoff. Tuned 60fps spins with haptic ticks and a confetti reveal, a pass-the-phone group mode, preset templates, unlockable themes, and shareable result cards.',
     icon: '/apps/fate/icon.webp',
     playUrl: '',
     appStoreUrl: '',

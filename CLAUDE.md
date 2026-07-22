@@ -24,9 +24,11 @@ docs live in `README.md`.)
     business/dev software grouped by category (linked in nav/footer/⌘K).
     Categories: **Restaurant** → **Mise**, a restaurant OS (repo
     `monkeypaypay/reservation-scheduling-app`); **Developer Tools** →
-    **Prometheus**, an experimental programming language where whole classes of
-    bugs are unrepresentable (repo `monkeypaypay/new-code`, README brands it
-    "Prometheus"; owner calls it "Project Prometheus"). Both `in-development`.
+    **Prometheus**, a programming language where whole classes of bugs are
+    unrepresentable — now v0.13 "Prism" with three native backends (C/JS/WasmGC),
+    algebraic effect handlers, traits & a WASM playground (repo
+    `monkeypaypay/new-code`; trust its CHANGELOG over the stale README; owner
+    calls it "Project Prometheus"). Both `in-development`.
     Add more programs/categories here as they come.
   - **bASS SWIM — the wife's brand (its own world, split from MonkeyPayPay).**
     Reached from the main site via a distinct **pink brand chip pinned far
@@ -184,10 +186,12 @@ docs live in `README.md`.)
        local Postgres 16 under the `postgres` OS user on :5433, `prisma db push` +
        `npm run db:seed` → demo account `demo@lyrahealth.app`/`demo12345`, then
        logged in and shot dashboard/cycle/training/nutrition/insights/coach). All
-       in `public/apps/<slug>/screens/` → each app's `screenshots[]`. **Still
-       empty:** the RN apps (SpinFit, Quitline, Roastline, All In Trivia, Empire
-       Table, Fate) — copy-only store listings, need device capture. PENDING all:
-       launch/store URLs.
+       in `public/apps/<slug>/screens/` → each app's `screenshots[]`. **SpinFit**
+       now has 6 real store screenshots too (from `micro-workout-roulette/
+       store-listing/screenshots/`). **Still empty:** Quitline, Roastline, All In
+       Trivia, Empire Table, Fate (copy-only store listings, need device capture).
+       PENDING all: launch/store URLs. Forge & Apex legal = dataModel 'standard'
+       (optional account/cloud sync), no notifications. Fate = 'standard' (AdMob).
    - Favicon/app icon is the monkey head (`public/favicon-16.png`,
      `favicon-32.png`, `apple-touch-icon.png`). Social share card is
      `public/og-image.png` (1200×630, monkey + wordmark) wired via og:image.
