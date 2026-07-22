@@ -1245,6 +1245,18 @@ a.chip:hover { border-color: var(--accent); color: var(--text); }
 }
 .chooser__tag--bass { font-family: 'Playfair Display Variable', serif; font-style: italic; color: #ff8ec8; }
 .chooser__tag--rr { font-family: 'Pacifico', cursive; color: #b3202e; }
+.chooser__status {
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-weight: 700;
+  padding: 0.32rem 0.8rem;
+  border-radius: var(--radius-pill);
+  border: 1px solid currentColor;
+  color: #ff8ec8;
+  opacity: 0.85;
+}
+.chooser__status--rr { color: #b3202e; }
 .chooser__enter {
   display: inline-flex;
   align-items: center;
@@ -1609,6 +1621,39 @@ a.chip:hover { border-color: var(--accent); color: var(--text); }
 
 /* The renamed swim-line chip sits fine at its longer label */
 .nav__bass { letter-spacing: 0.02em; }
+
+/* ==========================================================================
+   Character motion (Tier A) — subtle, looping life for the monkey mascot.
+   Neutralised automatically by the prefers-reduced-motion block below.
+   ========================================================================== */
+@keyframes mascot-wave {
+  0%, 100% { transform: translateY(0) rotate(-2deg); }
+  50%      { transform: translateY(-9px) rotate(2.5deg); }
+}
+@keyframes mascot-sway {
+  0%   { transform: translateY(0) rotate(-2.5deg); }
+  50%  { transform: translateY(-7px) rotate(2.5deg); }
+  100% { transform: translateY(0) rotate(-2.5deg); }
+}
+@keyframes mascot-float {
+  0%, 100% { transform: translateY(0) rotate(0); }
+  50%      { transform: translateY(-10px) rotate(-1.5deg); }
+}
+@keyframes mascot-bounce {
+  0%, 100% { transform: translateY(0); }
+  25%      { transform: translateY(-16px); }
+  40%      { transform: translateY(-3px); }
+  55%      { transform: translateY(-10px); }
+  70%      { transform: translateY(0); }
+}
+.anim-wave,
+.anim-sway,
+.anim-float,
+.anim-bounce { transform-origin: bottom center; will-change: transform; }
+.anim-wave { animation: mascot-wave 3.4s ease-in-out infinite; }
+.anim-sway { animation: mascot-sway 5.5s ease-in-out infinite; }
+.anim-float { animation: mascot-float 3.8s ease-in-out infinite; }
+.anim-bounce { animation: mascot-bounce 2.8s ease-in-out infinite; }
 
 /* ---- Reduced motion ------------------------------------------------------- */
 @media (prefers-reduced-motion: reduce) {

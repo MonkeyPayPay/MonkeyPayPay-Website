@@ -40,6 +40,10 @@ docs live in `README.md`.)
       new `bass-logo.webp`, Playfair italic tag). Right = American RiverRapps
       (warm cream/denim/sun, `riverrapps-lockup.webp`, Pacifico script tag).
       Halves grow on hover; stack on mobile. Its own `<html>`, bASS favicon.
+     Each half shows a flirty catch phrase + an "In development · Dropping
+     Spring 2027" status pill (`.chooser__status`), CTA "Sneak a peek". The
+     nav chip + footer link that point here are labeled **"My Wife's Swim Line"**
+     (not "bASS SWIM"); the brand pages keep their real names.
     - `/bass-swim/bass` (`src/pages/bass-swim/bass.astro`, **BassLayout**) =
       **sexy** bASS SWIM brand page (fitness core). Black + hot-pink (`.bass-theme`),
       Playfair Display headings, new `bass-logo.webp` hero, feature trio + "the
@@ -233,6 +237,14 @@ docs live in `README.md`.)
      `monkey-ballet.webp` = story page (top), `monkey-404.webp` = 404 page,
      `monkey-celebrate.webp` = story support card (by the donate button),
      `monkey-apps.webp` = saved/unused (crowded the homepage next to the hero).
+     **Tier-A character motion (DONE):** each mascot has a subtle looping CSS
+     idle animation — `.anim-wave` (hero), `.anim-sway` (story ballet),
+     `.anim-bounce` (story donate card), `.anim-float` (404) — defined in
+     global.css, auto-neutralized by `prefers-reduced-motion`. **Tier B** (true
+     frame-by-frame limb animation) is deferred pending sprite-sheet/rig art the
+     owner supplies (would wire up like Cuddle Crush's painted sprite sheets).
+     Also: app/Mise screenshots open in a **lightbox** (`Lightbox.astro`, ~75vw/
+     82vh over a dimmed backdrop; galleries marked `data-zoom`).
    - Per-app legal is tailored via the `legal` field (dataModel 'local-only',
      usesSubscriptions, usesNotifications, contactEmail) → `Legal.astro`.
    - **Contact email:** `support@monkeypaypay.com` site-wide (site.ts), used by
