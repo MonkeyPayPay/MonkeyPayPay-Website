@@ -148,11 +148,10 @@ export const apps: App[] = [
     appStoreUrl: '',
     webAppUrl: 'https://forge-wine-nine.vercel.app', // live web app
     screenshots: [
-      { src: '/apps/forge/screens/dashboard.webp', alt: 'Forge — daily readiness and today’s mission' },
-      { src: '/apps/forge/screens/train.webp', alt: 'Forge — programs and a smart workout generator' },
+      { src: '/apps/forge/screens/dashboard.webp', alt: 'Forge — Daily Readiness and today’s mission' },
+      { src: '/apps/forge/screens/train.webp', alt: 'Forge — programs and a Smart Workout generator' },
+      { src: '/apps/forge/screens/cardio.webp', alt: 'Forge — GPS run, ride & walk tracking' },
       { src: '/apps/forge/screens/fuel.webp', alt: 'Forge — TDEE targets and macro tracking' },
-      { src: '/apps/forge/screens/body.webp', alt: 'Forge — body metrics and age-aware health checks' },
-      { src: '/apps/forge/screens/mind.webp', alt: 'Forge — a daily mind check-in' },
     ],
     legalLastUpdated: '2026-07-19',
     legal: { dataModel: 'standard', usesSubscriptions: true, usesNotifications: false },
