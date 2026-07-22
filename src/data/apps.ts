@@ -293,6 +293,22 @@ export const apps: App[] = [
     legal: { dataModel: 'local-only', usesSubscriptions: true, usesNotifications: true },
   },
 
+  {
+    slug: 'carecircle',
+    name: 'CareCircle',
+    category: 'productivity',
+    tagline: 'Coordinate a loved one’s care, together.',
+    description:
+      'A family caregiving hub that keeps everyone on the same page: a shared care log, tasks and calendar, expense splitting, and a document vault with AI summaries — plus an AI care advisor for the hard questions. Built for the sibling group coordinating a parent’s care, on web, iOS, and Android.',
+    icon: '/apps/carecircle/icon.webp',
+    playUrl: '',
+    appStoreUrl: '',
+    webAppUrl: '', // CareCircle is a web app / PWA — set this to the live URL once deployed
+    screenshots: [],
+    legalLastUpdated: '2026-07-21',
+    legal: { dataModel: 'standard', usesSubscriptions: true, usesNotifications: true },
+  },
+
   // ── Utilities ───────────────────────────────────────────────────────────────
   {
     slug: 'fate',

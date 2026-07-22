@@ -86,6 +86,15 @@ docs live in `README.md`.)
       `#shop`. (Walkthrough for owner was given in chat.)
     - Status in-development. Old single 50/50 combined page (`.bass-split`/
       `.bass-line` CSS) is superseded — those styles linger unused in global.css.
+  - **Featured flagship game — Cuddle Crush** (repo `monkeypaypay/little-men`,
+    working title "little-men"). A browser multiplayer arena brawler (Phaser 3 +
+    Node/Socket.io, 15 original fighters, 4 modes, progression/shop/season pass,
+    party voice chat). Showcased in its OWN band on the homepage (above the app
+    directory) via `src/components/FeaturedGame.astro` + `src/data/featured.ts`
+    (swap `playUrl` to the live URL to flip "Play · coming soon" → live button;
+    Docker-deployable to Fly/Railway/Render, no public URL yet). Painted key art
+    (hero, logo, icon, fighter portraits) in `public/games/cuddle-crush/`. Also in
+    ⌘K. Apex's real owner-supplied icon (azure "A") now replaces the generated one.
   - **Detail-page infra:** Each program has a detail page
     at `/software/<slug>` (overview, modules, pricing) via
     `src/pages/software/[slug].astro`. Demo is wired to `program.demoUrl` —
@@ -170,7 +179,10 @@ docs live in `README.md`.)
        (`daily-puzzle` — daily word puzzle), **Empire Table** (`restaurant-tycoon`
        — idle tycoon), **EVOLVE** (`evolve` — bare Unity project, no art/README
        yet → **placeholder gradient "E" icon**, minimal copy).
-     - *Productivity:* **Just One** (`one-task-only` — one-task-at-a-time to-do).
+     - *Productivity:* **Just One** (`one-task-only` — one-task-at-a-time to-do),
+       **CareCircle** (`mynewapp` — family caregiving coordination SaaS: care log,
+       tasks, calendar, expense-splitting, AI care advisor; Vite+Supabase web/PWA,
+       legal 'standard', `webAppUrl` when deployed).
      - *Utilities:* **Fate** (`decision-spinner` — spin wheel / coin / dice).
      - Legal per app inferred from each README (local-only vs 'standard' when it
        has ads/accounts; subscriptions/notifications flags set accordingly).

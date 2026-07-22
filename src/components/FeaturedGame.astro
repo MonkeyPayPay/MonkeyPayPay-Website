@@ -1,0 +1,47 @@
+---
+import { featuredGame as g } from '../data/featured';
+---
+
+<section class="flagship" id="flagship">
+  <div class="container">
+    <div class="flagship__card reveal">
+      <div class="flagship__media">
+        <img class="flagship__hero" src={g.hero} alt={`${g.name} key art`} loading="lazy" />
+        <span class="flagship__badge">Featured · Flagship game</span>
+      </div>
+
+      <div class="flagship__body">
+        <img class="flagship__logo" src={g.logo} alt={g.name} />
+        <p class="flagship__tag">{g.tagline}</p>
+        <p class="flagship__blurb">{g.blurb}</p>
+
+        <ul class="flagship__points">
+          {g.highlights.map((h) => <li>{h}</li>)}
+        </ul>
+
+        <div class="flagship__roster" aria-label="A few of the fighters">
+          {
+            g.fighters.map((f) => (
+              <figure class="flagship__fighter">
+                <img src={f.img} alt={f.name} loading="lazy" />
+                <figcaption>{f.name}</figcaption>
+              </figure>
+            ))
+          }
+        </div>
+
+        <div class="flagship__actions">
+          {
+            g.playUrl ? (
+              <a class="btn btn--primary" href={g.playUrl} target="_blank" rel="noopener" data-magnetic>
+                Play in your browser →
+              </a>
+            ) : (
+              <span class="chip chip--soon">Play · coming soon</span>
+            )
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

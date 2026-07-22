@@ -1447,6 +1447,66 @@ a.chip:hover { border-color: var(--accent); color: var(--text); }
 .rr-footer__legal { color: var(--muted); font-size: var(--fs-sm); margin: 0; }
 .rr-footer__legal a { color: var(--accent-2); }
 
+/* ==========================================================================
+   Featured flagship game (Cuddle Crush) — homepage band above the directory
+   ========================================================================== */
+.flagship { padding-block: clamp(2rem, 5vw, 4rem); }
+.flagship__card {
+  display: grid;
+  grid-template-columns: 1.05fr 1fr;
+  gap: clamp(1.5rem, 4vw, 3rem);
+  align-items: center;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background:
+    radial-gradient(120% 140% at 0% 0%, color-mix(in oklab, var(--accent) 16%, transparent), transparent 60%),
+    var(--surface);
+  overflow: hidden;
+}
+@media (max-width: 860px) { .flagship__card { grid-template-columns: 1fr; } }
+.flagship__media { position: relative; height: 100%; min-height: 260px; }
+.flagship__hero { width: 100%; height: 100%; object-fit: cover; display: block; }
+.flagship__badge {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  padding: 0.4rem 0.8rem;
+  border-radius: var(--radius-pill);
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(6px);
+  color: #fff;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.flagship__body { padding: clamp(1.5rem, 3vw, 2.5rem); padding-left: 0; }
+@media (max-width: 860px) { .flagship__body { padding: clamp(1.5rem, 5vw, 2rem); } }
+.flagship__logo { width: clamp(190px, 34vw, 280px); height: auto; display: block; margin-bottom: 1rem; }
+.flagship__tag {
+  font-family: var(--font-display);
+  font-style: italic;
+  color: var(--accent-2);
+  font-size: var(--fs-lead);
+  margin: 0 0 1rem;
+}
+.flagship__blurb { color: var(--muted); line-height: 1.7; margin: 0 0 1.25rem; max-width: 60ch; }
+.flagship__points { list-style: none; margin: 0 0 1.5rem; padding: 0; display: grid; gap: 0.5rem; }
+.flagship__points li { position: relative; padding-left: 1.6rem; color: var(--text); font-size: var(--fs-sm); }
+.flagship__points li::before { content: "▸"; position: absolute; left: 0; color: var(--accent); font-weight: 700; }
+.flagship__roster { display: flex; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
+.flagship__fighter { margin: 0; text-align: center; }
+.flagship__fighter img {
+  width: 56px;
+  height: 56px;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  object-fit: cover;
+  display: block;
+}
+.flagship__fighter figcaption { font-size: 0.68rem; color: var(--muted); margin-top: 0.3rem; }
+.flagship__actions { display: flex; gap: 0.75rem; flex-wrap: wrap; align-items: center; }
+
 /* ---- Reduced motion ------------------------------------------------------- */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
