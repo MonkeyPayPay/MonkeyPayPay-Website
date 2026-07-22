@@ -6,6 +6,7 @@ import { ClientRouter } from 'astro:transitions';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
 import CommandPalette from '../components/CommandPalette.astro';
+import Lightbox from '../components/Lightbox.astro';
 import { site } from '../data/site';
 
 interface Props {
@@ -61,6 +62,7 @@ const ogImage = new URL('/og-image.png', site.url).href;
     </main>
     <Footer />
     <CommandPalette />
+    <Lightbox />
 
     <script>
       import { initInteractions } from '../scripts/interactions';

@@ -79,9 +79,11 @@ if (!app) {
 
       {
         app.screenshots.length > 0 && (
-          <div class="app__shots reveal">
+          <div class="app__shots reveal" data-zoom>
             {app.screenshots.map((s) => (
-              <img src={s.src} alt={s.alt} loading="lazy" />
+              <a href={s.src} aria-label={`Enlarge: ${s.alt}`}>
+                <img src={s.src} alt={s.alt} loading="lazy" />
+              </a>
             ))}
           </div>
         )
