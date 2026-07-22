@@ -303,7 +303,12 @@ export const apps: App[] = [
     playUrl: '',
     appStoreUrl: '',
     webAppUrl: 'https://my-new-app-lyart.vercel.app', // live web app
-    screenshots: [],
+    screenshots: [
+      { src: '/apps/carecircle/screens/dashboard.webp', alt: 'CareCircle — the family care dashboard: tasks, expenses & activity' },
+      { src: '/apps/carecircle/screens/features.webp', alt: 'CareCircle — task board, care calendar, expense splitting, document vault & AI advisor' },
+      { src: '/apps/carecircle/screens/how-it-works.webp', alt: 'CareCircle — up and running in three steps' },
+      { src: '/apps/carecircle/screens/pricing.webp', alt: 'CareCircle — free to start, with Family and Pro tiers' },
+    ],
     legalLastUpdated: '2026-07-21',
     legal: { dataModel: 'standard', usesSubscriptions: true, usesNotifications: true },
   },
