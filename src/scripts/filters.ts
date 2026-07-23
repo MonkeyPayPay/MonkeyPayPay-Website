@@ -18,7 +18,7 @@ function perch(monkey: HTMLElement, btn: HTMLElement, hop: boolean): void {
     monkey.classList.remove('is-hopping');
     void monkey.offsetWidth; // reflow so the animation restarts every hop
     monkey.classList.add('is-hopping');
-    window.setTimeout(() => monkey.classList.remove('is-hopping'), 520);
+    window.setTimeout(() => monkey.classList.remove('is-hopping'), 700);
   }
 }
 
