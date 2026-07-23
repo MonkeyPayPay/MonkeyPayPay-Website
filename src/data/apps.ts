@@ -237,36 +237,6 @@ export const apps: App[] = [
     legalLastUpdated: '2026-07-19',
     legal: { dataModel: 'local-only', usesSubscriptions: true, usesNotifications: true },
   },
-  {
-    slug: 'empire-table',
-    name: 'Empire Table',
-    category: 'games',
-    tagline: 'From food cart to restaurant empire.',
-    description:
-      'An idle restaurant tycoon: hire crew, balance food and labor cost, price your menu, survive health inspections and viral reviews, then sell the business to prestige for permanent industry reputation. Warm illustrated art, juicy number-and-haptic feedback, and offline earnings that pile up while you’re away.',
-    icon: '/apps/empire-table/icon.webp',
-    playUrl: '',
-    appStoreUrl: '',
-    webAppUrl: '',
-    screenshots: [],
-    legalLastUpdated: '2026-07-19',
-    legal: { dataModel: 'standard', usesSubscriptions: true, usesNotifications: false },
-  },
-  {
-    slug: 'evolve',
-    name: 'EVOLVE',
-    category: 'games',
-    tagline: 'A new game, in the making.',
-    description:
-      'An original game in early development, built in Unity. Still taking shape — more to come soon.',
-    icon: '/apps/evolve/icon.webp',
-    playUrl: '',
-    appStoreUrl: '',
-    webAppUrl: '',
-    screenshots: [],
-    legalLastUpdated: '2026-07-19',
-    legal: { dataModel: 'standard' },
-  },
 
   // ── Productivity ────────────────────────────────────────────────────────────
   {

@@ -10,6 +10,16 @@ const year = new Date().getFullYear();
     <div class="footer__brand">
       <span class="footer__name">{site.name}</span>
       <p class="footer__tag">{site.tagline}</p>
+      <nav class="footer__col footer__sitelinks" aria-label="Site">
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li><a href="/software">Software</a></li>
+          <li><a href="/bass-swim">My Wife’s Swim Line</a></li>
+          <li><a href="/story">Paisley’s Story</a></li>
+          <li><a href="/story#support">Support Paisley</a></li>
+          <li><a href={`mailto:${site.contactEmail}`}>Contact</a></li>
+        </ul>
+      </nav>
     </div>
 
     <nav class="footer__col footer__col--legal" aria-label="App legal pages">
@@ -36,17 +46,6 @@ const year = new Date().getFullYear();
       </ul>
     </nav>
 
-    <nav class="footer__col" aria-label="Site">
-      <h4>Site</h4>
-      <ul>
-        <li><a href="/">Home</a></li>
-        <li><a href="/software">Software</a></li>
-        <li><a href="/bass-swim">My Wife’s Swim Line</a></li>
-        <li><a href="/story">Paisley’s Story</a></li>
-        <li><a href="/story#support">Support Paisley</a></li>
-        <li><a href={`mailto:${site.contactEmail}`}>Contact</a></li>
-      </ul>
-    </nav>
   </div>
 
   <div class="container footer__bar">

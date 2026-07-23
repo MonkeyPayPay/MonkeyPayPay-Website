@@ -1,5 +1,7 @@
 ---
 import { featuredGame as g } from '../data/featured';
+import PlayIcon from './PlayIcon.astro';
+import AppleIcon from './AppleIcon.astro';
 ---
 
 <section class="flagship" id="flagship">
@@ -38,6 +40,24 @@ import { featuredGame as g } from '../data/featured';
               </a>
             ) : (
               <span class="chip chip--soon">Play · coming soon</span>
+            )
+          }
+          {
+            g.appStoreUrl ? (
+              <a class="btn btn--store" href={g.appStoreUrl} target="_blank" rel="noopener">
+                <AppleIcon /> App Store
+              </a>
+            ) : (
+              <span class="chip chip--soon"><AppleIcon /> App Store · soon</span>
+            )
+          }
+          {
+            g.playStoreUrl ? (
+              <a class="btn btn--store" href={g.playStoreUrl} target="_blank" rel="noopener">
+                <PlayIcon /> Google Play
+              </a>
+            ) : (
+              <span class="chip chip--soon"><PlayIcon /> Google Play · soon</span>
             )
           }
         </div>

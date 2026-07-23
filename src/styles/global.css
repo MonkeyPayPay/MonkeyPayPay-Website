@@ -565,12 +565,14 @@ a.chip:hover { border-color: var(--accent); color: var(--text); }
 }
 .footer__inner {
   display: grid;
-  grid-template-columns: 1.4fr 1fr 1fr;
+  grid-template-columns: 1fr 1.3fr;
   gap: 2rem;
   padding-bottom: 2.5rem;
 }
 .footer__name { font-family: var(--font-display); font-weight: 700; font-size: 1.2rem; }
 .footer__tag { color: var(--muted); }
+.footer__sitelinks { margin-top: 1.25rem; }
+.footer__sitelinks ul { display: grid; gap: 0.5rem; }
 .footer__col h4 { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--muted); }
 .footer__col ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.5rem; }
 .footer__col a { color: var(--muted); text-decoration: none; font-size: var(--fs-sm); }

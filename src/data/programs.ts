@@ -74,7 +74,7 @@ export const programs: Program[] = [
     description:
       'One platform that runs the whole restaurant in real time — reservations, floor, private events, online orders, inventory, scheduling, procurement, a live P&L, team comms, and guest marketing — every module reading and writing the same live data, so a check closed on the POS moves sales, depletes stock, and updates the guest across every screen within the same second.',
     status: 'in-development',
-    // url: 'https://mise.example.com',      // ← set when there's a marketing site
+    url: 'https://mise-hospitality.com',
     // demoUrl: 'https://demo.mise.example', // ← set when the live demo is deployed
     highlights: [
       'Reservations, live floor plan & a guest CRM that builds itself',

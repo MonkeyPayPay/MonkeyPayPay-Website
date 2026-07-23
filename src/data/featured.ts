@@ -16,6 +16,10 @@ export interface FeaturedGame {
   icon: string;
   /** Live URL to play in the browser. Leave '' for a "coming soon" state. */
   playUrl: string;
+  /** Apple App Store URL. Leave '' for "coming soon". */
+  appStoreUrl: string;
+  /** Google Play URL. Leave '' for "coming soon". */
+  playStoreUrl: string;
   status: string;
   highlights: string[];
   fighters: Fighter[];
@@ -30,6 +34,8 @@ export const featuredGame: FeaturedGame = {
   hero: '/games/cuddle-crush/hero.webp',
   icon: '/games/cuddle-crush/icon.webp',
   playUrl: '', // ← set to the live game URL once deployed
+  appStoreUrl: '', // ← set to the App Store link once published
+  playStoreUrl: '', // ← set to the Google Play link once published
   status: 'in-development',
   highlights: [
     '15 original fighters, each with a kit, special & passive',

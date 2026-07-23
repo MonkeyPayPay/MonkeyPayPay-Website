@@ -44,7 +44,15 @@ const statusLabel = {
   }
 
   <div class="program__foot">
-    <a class="btn btn--primary" href={`/software/${program.slug}`}>Explore {program.name}</a>
+    {
+      program.url ? (
+        <a class="btn btn--primary" href={program.url} target="_blank" rel="noopener" data-magnetic>
+          Explore {program.name}
+        </a>
+      ) : (
+        <a class="btn btn--primary" href={`/software/${program.slug}`}>Explore {program.name}</a>
+      )
+    }
     {
       program.demoUrl ? (
         <a class="btn btn--store" href={program.demoUrl} target="_blank" rel="noopener">
