@@ -420,7 +420,7 @@ a.chip:hover { border-color: var(--accent); color: var(--text); }
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
-  padding-top: 4rem;
+  padding-top: 6rem;
   margin-bottom: 3rem;
 }
 .filter {
@@ -1679,7 +1679,7 @@ a.chip:hover { border-color: var(--accent); color: var(--text); }
   position: absolute;
   left: 0;
   top: 0;
-  width: 42px;
+  width: 63px;
   pointer-events: none;
   z-index: 3;
   transition:
@@ -1688,7 +1688,7 @@ a.chip:hover { border-color: var(--accent); color: var(--text); }
   will-change: left, top;
 }
 .filter-monkey__art {
-  --fw: 42px;
+  --fw: 63px;
   display: block;
   width: var(--fw);
   aspect-ratio: 342 / 515;
