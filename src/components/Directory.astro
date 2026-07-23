@@ -17,6 +17,11 @@ const cats = usedCategories();
     {
       cats.length > 0 && (
         <div class="filters" role="tablist" aria-label="Filter apps by category">
+          {/* Mascot that perches on the active filter and hops to the one you pick.
+              The inner .filter-monkey__art is the swap point for a Rive canvas. */}
+          <span class="filter-monkey" data-filter-monkey aria-hidden="true">
+            <span class="filter-monkey__art"></span>
+          </span>
           <button class="filter is-active" type="button" data-filter="all" role="tab" aria-selected="true">
             All
           </button>
