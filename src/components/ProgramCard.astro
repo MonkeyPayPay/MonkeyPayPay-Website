@@ -12,9 +12,13 @@ const statusLabel = {
   beta: 'Beta',
   live: 'Live',
 }[program.status];
+
+// The monkey that grabs the Mise card and strains to pull it. Placeholder art +
+// CSS for now; .mise-tug__art is the drop-in point for a Rive "pull" animation.
+const tug = program.slug === 'mise';
 ---
 
-<article class="program reveal">
+<article class:list={['program', 'reveal', { 'program--tug': tug }]}>
   <div class="program__head">
     {
       program.logo ? (
@@ -63,4 +67,12 @@ const statusLabel = {
       )
     }
   </div>
+
+  {
+    tug && (
+      <span class="mise-tug" aria-hidden="true">
+        <img class="mise-tug__art" src="/brand/monkey-wave.webp" alt="" width="84" height="136" loading="lazy" />
+      </span>
+    )
+  }
 </article>
