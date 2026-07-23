@@ -1694,7 +1694,7 @@ a.chip:hover { border-color: var(--accent); color: var(--text); }
   aspect-ratio: 250 / 303;
   background-image: url('/brand/anim/monkey-rain.webp');
   background-size: calc(var(--fw) * 15) 100%;
-  animation: sprite-rain 2.5s steps(15) infinite;
+  animation: sprite-rain 3.5s steps(15) infinite;
 }
 @keyframes sprite-rain { to { background-position-x: calc(var(--fw) * -15); } }
 
