@@ -1672,12 +1672,12 @@ a.chip:hover { border-color: var(--accent); color: var(--text); }
 
 .mascot-sprite--jump {
   --fw: clamp(120px, 24vw, 180px);
-  aspect-ratio: 342 / 515;
-  background-image: url('/brand/anim/jump.webp');
-  background-size: calc(var(--fw) * 6) 100%;
-  animation: sprite-jump 1.4s steps(6) infinite;
+  aspect-ratio: 200 / 322;
+  background-image: url('/brand/anim/monkey-jump.webp');
+  background-size: calc(var(--fw) * 15) 100%;
+  animation: sprite-jump 1.8s steps(15) infinite;
 }
-@keyframes sprite-jump { to { background-position-x: calc(var(--fw) * -6); } }
+@keyframes sprite-jump { to { background-position-x: calc(var(--fw) * -15); } }
 
 .mascot-sprite--shrug {
   --fw: clamp(160px, 40vw, 240px);
