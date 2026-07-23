@@ -1748,48 +1748,31 @@ a.chip:hover { border-color: var(--accent); color: var(--text); }
   }
 }
 
-/* ---- Mise card "tug" -----------------------------------------------------
-   A monkey stands in the empty grid track to the right of the Mise card,
-   grabs its edge and strains to haul it over. The card holds firm (it's
-   "trying"). Static pose + CSS strain now; .mise-tug__art is the swap point
-   for a Rive pull/strain animation. Hidden on narrow screens where the card
-   goes full-width and there's no room beside it. */
-.program--tug {
+/* ---- Mise card chef mascot ------------------------------------------------
+   The chef monkey (15-frame knife-flourish sprite) parked in the bottom-right
+   corner of the Mise card, beside the Explore/Demo buttons. */
+.program--chef {
   position: relative;
 }
-.mise-tug {
+.mise-chef {
+  --fw: clamp(72px, 12vw, 98px);
   position: absolute;
-  left: calc(100% - 28px); /* overlap the card edge so the hand grabs it */
-  bottom: 0;
-  width: 84px;
+  right: clamp(0.4rem, 2vw, 0.9rem);
+  bottom: clamp(0.4rem, 1.5vw, 0.8rem);
+  width: var(--fw);
+  aspect-ratio: 200 / 339;
+  background: url('/brand/anim/monkey-chef.webp') left top / calc(var(--fw) * 15) 100% no-repeat;
   pointer-events: none;
   z-index: 2;
+  filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.42));
+  animation: mise-chef 2.5s steps(15) infinite;
 }
-.mise-tug__art {
-  display: block;
-  width: 84px;
-  height: auto;
-  transform-origin: 30% 92%; /* pivot near the feet, on the card side */
-  animation: mise-tug 1.7s ease-in-out infinite;
-  filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.4));
-}
-/* scaleX(-1) faces the monkey toward the card; it grips, then heaves back. */
-@keyframes mise-tug {
-  0%,
-  100% {
-    transform: scaleX(-1) rotate(-4deg) translateX(0);
-  }
-  45% {
-    transform: scaleX(-1) rotate(10deg) translateX(8px);
-  }
-  70% {
-    transform: scaleX(-1) rotate(6deg) translateX(4px);
-  }
-}
-@media (max-width: 900px) {
-  .mise-tug {
-    display: none;
-  }
+@keyframes mise-chef { to { background-position-x: calc(var(--fw) * -15); } }
+/* Reserve a right gutter so the card's text & buttons clear the chef. */
+.program--chef .program__desc,
+.program--chef .program__highlights,
+.program--chef .program__foot {
+  padding-right: clamp(86px, 16vw, 116px);
 }
 
 /* ---- Reduced motion ------------------------------------------------------- */
