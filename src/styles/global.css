@@ -1679,6 +1679,16 @@ a.chip:hover { border-color: var(--accent); color: var(--text); }
 }
 @keyframes sprite-wave { to { background-position-x: calc(var(--fw) * -6); } }
 
+/* Blowing-a-kiss monkey (15 frames) — the homepage hero mascot. */
+.mascot-sprite--kiss {
+  --fw: clamp(150px, 22vw, 240px);
+  aspect-ratio: 210 / 334;
+  background-image: url('/brand/anim/monkey-kiss.webp');
+  background-size: calc(var(--fw) * 15) 100%;
+  animation: sprite-kiss 3s steps(15) infinite;
+}
+@keyframes sprite-kiss { to { background-position-x: calc(var(--fw) * -15); } }
+
 .mascot-sprite--twirl {
   --fw: clamp(150px, 32vw, 240px);
   aspect-ratio: 268 / 466;
