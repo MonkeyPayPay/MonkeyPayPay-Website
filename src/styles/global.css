@@ -1670,6 +1670,16 @@ a.chip:hover { border-color: var(--accent); color: var(--text); }
 }
 @keyframes sprite-twirl { to { background-position-x: calc(var(--fw) * -8); } }
 
+/* Dancing monkey (15 frames) — the hero mascot at the top of Paisley's Story. */
+.mascot-sprite--dance {
+  --fw: clamp(150px, 32vw, 240px);
+  aspect-ratio: 200 / 360;
+  background-image: url('/brand/anim/monkey-dance.webp');
+  background-size: calc(var(--fw) * 15) 100%;
+  animation: sprite-dance 2.2s steps(15) infinite;
+}
+@keyframes sprite-dance { to { background-position-x: calc(var(--fw) * -15); } }
+
 .mascot-sprite--jump {
   --fw: clamp(120px, 24vw, 180px);
   aspect-ratio: 200 / 322;
