@@ -759,7 +759,8 @@ a.chip:hover { border-color: var(--accent); color: var(--text); }
 
 /* ---- Homepage story teaser ------------------------------------------------ */
 .teaser {
-  padding-block: var(--space-section);
+  padding-top: var(--space-section);
+  padding-bottom: clamp(160px, 24vw, 230px); /* room for the swinging monkey */
   border-top: 1px solid var(--border);
 }
 .teaser__inner { max-width: 44rem; margin-inline: auto; text-align: center; }
@@ -773,6 +774,23 @@ a.chip:hover { border-color: var(--accent); color: var(--text); }
 .teaser__title { font-size: var(--fs-h2); }
 .teaser__text { color: var(--muted); font-size: var(--fs-lead); }
 .teaser__actions { display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap; margin-top: 1.5rem; }
+/* Swinging monkey dangling from the Support Paisley button (15-frame sprite). */
+.teaser__donate { position: relative; display: inline-flex; }
+.teaser__swing {
+  --fw: clamp(104px, 16vw, 150px);
+  position: absolute;
+  top: calc(100% - 16px);
+  left: 50%;
+  transform: translateX(-50%);
+  width: var(--fw);
+  aspect-ratio: 220 / 309;
+  background: url('/brand/anim/monkey-swing.webp') left top / calc(var(--fw) * 15) 100% no-repeat;
+  pointer-events: none;
+  z-index: 1;
+  filter: drop-shadow(0 10px 14px rgba(0, 0, 0, 0.45));
+  animation: sprite-swing 2.6s steps(15) infinite;
+}
+@keyframes sprite-swing { to { background-position-x: calc(var(--fw) * -15); } }
 
 /* ---- 404 page ------------------------------------------------------------- */
 .notfound {

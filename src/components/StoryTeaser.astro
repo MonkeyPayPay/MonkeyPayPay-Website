@@ -12,7 +12,10 @@ import DonateButton from './DonateButton.astro';
     </p>
     <div class="teaser__actions">
       <a class="btn btn--ghost" href="/story">Read her story</a>
-      <DonateButton />
+      <span class="teaser__donate">
+        <DonateButton />
+        <span class="teaser__swing" aria-hidden="true"></span>
+      </span>
     </div>
   </div>
 </section>
