@@ -420,7 +420,7 @@ a.chip:hover { border-color: var(--accent); color: var(--text); }
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
-  padding-top: 6rem;
+  padding-top: 7.5rem;
   margin-bottom: 3rem;
 }
 .filter {
@@ -1688,6 +1688,16 @@ a.chip:hover { border-color: var(--accent); color: var(--text); }
 }
 @keyframes sprite-shrug { to { background-position-x: calc(var(--fw) * -6); } }
 
+/* "Making it rain" — money-throwing monkey (15 frames) on the Support card. */
+.mascot-sprite--rain {
+  --fw: clamp(160px, 32vw, 240px);
+  aspect-ratio: 250 / 303;
+  background-image: url('/brand/anim/monkey-rain.webp');
+  background-size: calc(var(--fw) * 15) 100%;
+  animation: sprite-rain 2s steps(15) infinite;
+}
+@keyframes sprite-rain { to { background-position-x: calc(var(--fw) * -15); } }
+
 /* ---- Filter-bar hopper ---------------------------------------------------
    A tiny monkey that perches on the active category filter and hops to the
    one you click. Positioned in JS (src/scripts/filters.ts) by writing left/top;
@@ -1710,18 +1720,18 @@ a.chip:hover { border-color: var(--accent); color: var(--text); }
   --fw: 63px;
   display: block;
   width: var(--fw);
-  aspect-ratio: 342 / 515;
-  background-image: url('/brand/anim/jump.webp');
+  aspect-ratio: 190 / 336;
+  background-image: url('/brand/anim/monkey-jump.webp');
   background-repeat: no-repeat;
-  background-size: calc(var(--fw) * 6) 100%;
-  background-position-x: 0; /* frame 1 = grounded, perched idle */
+  background-size: calc(var(--fw) * 15) 100%;
+  background-position-x: 0; /* frame 1 = standing, perched idle */
   filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.35));
 }
 .filter-monkey.is-hopping {
-  animation: filter-hop-arc 0.5s ease;
+  animation: filter-hop-arc 0.52s ease;
 }
 .filter-monkey.is-hopping .filter-monkey__art {
-  animation: sprite-jump-once 0.5s steps(6) 1;
+  animation: sprite-jump-once 0.52s steps(15) 1;
 }
 @keyframes filter-hop-arc {
   0%,
@@ -1729,12 +1739,12 @@ a.chip:hover { border-color: var(--accent); color: var(--text); }
     transform: translateY(0);
   }
   45% {
-    transform: translateY(-45%);
+    transform: translateY(-42%);
   }
 }
 @keyframes sprite-jump-once {
   to {
-    background-position-x: calc(var(--fw) * -6);
+    background-position-x: calc(var(--fw) * -15);
   }
 }
 
