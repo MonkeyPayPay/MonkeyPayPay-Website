@@ -1748,30 +1748,32 @@ a.chip:hover { border-color: var(--accent); color: var(--text); }
   }
 }
 
-/* ---- Mise card chef mascot ------------------------------------------------
-   The chef monkey (15-frame knife-flourish sprite) parked in the bottom-right
-   corner of the Mise card, beside the Explore/Demo buttons. */
-.program--chef {
+/* ---- Program card monkey mascot -------------------------------------------
+   A per-program 15-frame monkey sprite parked in the card's bottom-right corner
+   (chef on Mise, torch-bearer on Prometheus). The sprite src + aspect come from
+   the program data; a reserved right gutter keeps the card's text & buttons
+   clear of it on desktop and mobile. */
+.program--mascot {
   position: relative;
 }
-.mise-chef {
+.program__mascot {
   --fw: clamp(72px, 12vw, 98px);
   position: absolute;
   right: clamp(0.4rem, 2vw, 0.9rem);
   bottom: clamp(0.4rem, 1.5vw, 0.8rem);
   width: var(--fw);
-  aspect-ratio: 200 / 339;
-  background: url('/brand/anim/monkey-chef.webp') left top / calc(var(--fw) * 15) 100% no-repeat;
+  background-repeat: no-repeat;
+  background-position: left top;
+  background-size: calc(var(--fw) * 15) 100%;
   pointer-events: none;
   z-index: 2;
   filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.42));
-  animation: mise-chef 2.5s steps(15) infinite;
+  animation: program-mascot 2.5s steps(15) infinite;
 }
-@keyframes mise-chef { to { background-position-x: calc(var(--fw) * -15); } }
-/* Reserve a right gutter so the card's text & buttons clear the chef. */
-.program--chef .program__desc,
-.program--chef .program__highlights,
-.program--chef .program__foot {
+@keyframes program-mascot { to { background-position-x: calc(var(--fw) * -15); } }
+.program--mascot .program__desc,
+.program--mascot .program__highlights,
+.program--mascot .program__foot {
   padding-right: clamp(86px, 16vw, 116px);
 }
 

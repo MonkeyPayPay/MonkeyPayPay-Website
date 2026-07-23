@@ -13,11 +13,11 @@ const statusLabel = {
   live: 'Live',
 }[program.status];
 
-// The chef monkey mascot on the Mise card (15-frame knife-flourish sprite).
-const mise = program.slug === 'mise';
+// Optional animated monkey mascot parked in the card corner (per-program).
+const mascot = program.mascot;
 ---
 
-<article class:list={['program', 'reveal', { 'program--chef': mise }]}>
+<article class:list={['program', 'reveal', { 'program--mascot': !!mascot }]}>
   <div class="program__head">
     {
       program.logo ? (
@@ -67,5 +67,13 @@ const mise = program.slug === 'mise';
     }
   </div>
 
-  {mise && <span class="mise-chef" aria-hidden="true"></span>}
+  {
+    mascot && (
+      <span
+        class="program__mascot"
+        aria-hidden="true"
+        style={`aspect-ratio:${mascot.aspect};background-image:url('${mascot.src}');`}
+      />
+    )
+  }
 </article>

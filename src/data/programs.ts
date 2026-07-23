@@ -56,6 +56,8 @@ export interface Program {
   pricing?: PricingTier[];
   /** Product screenshots for the detail-page gallery. */
   screenshots?: Screenshot[];
+  /** Animated monkey mascot parked in the card's corner (15-frame sprite strip). */
+  mascot?: { src: string; aspect: string };
 }
 
 export const programCategories: ProgramCategory[] = [
@@ -71,6 +73,7 @@ export const programs: Program[] = [
     category: 'restaurant',
     tagline: 'The restaurant operating system.',
     logo: '/software/mise/mark.webp',
+    mascot: { src: '/brand/anim/monkey-chef.webp', aspect: '200 / 339' },
     description:
       'One platform that runs the whole restaurant in real time — reservations, floor, private events, online orders, inventory, scheduling, procurement, a live P&L, team comms, and guest marketing — every module reading and writing the same live data, so a check closed on the POS moves sales, depletes stock, and updates the guest across every screen within the same second.',
     status: 'in-development',
@@ -145,6 +148,7 @@ export const programs: Program[] = [
     name: 'Prometheus',
     category: 'developer',
     tagline: 'A language where whole classes of bugs can’t exist.',
+    mascot: { src: '/brand/anim/monkey-prometheus.webp', aspect: '190 / 325' },
     description:
       'A pure, statically-typed functional language designed so that entire categories of software failure — memory corruption, data races, null, hidden side effects, missing cases — are unrepresentable by construction rather than merely discouraged. It now compiles through three native backends (C, JavaScript, and WebAssembly), with algebraic effect handlers, traits, and a browser playground running the real toolchain.',
     status: 'in-development',
