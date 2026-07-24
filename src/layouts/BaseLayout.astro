@@ -12,16 +12,18 @@ import { site } from '../data/site';
 interface Props {
   title?: string;
   description?: string;
+  /** Optional page-specific JSON-LD (e.g. SoftwareApplication on detail pages). */
+  jsonLd?: unknown;
 }
 
-const { title, description } = Astro.props;
+const { title, description, jsonLd } = Astro.props;
 const pageTitle = title ? `${title} · ${site.name}` : `${site.name} — ${site.tagline}`;
 const pageDesc = description ?? site.description;
 const canonical = new URL(Astro.url.pathname, site.url).href;
 const ogImage = new URL('/og-image.png', site.url).href;
 
 // Site-wide structured data (Organization + WebSite) for richer search results.
-const jsonLd = {
+const siteJsonLd = {
   '@context': 'https://schema.org',
   '@graph': [
     {
@@ -68,7 +70,8 @@ const jsonLd = {
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:image" content={ogImage} />
     <meta name="theme-color" content="#0b0b12" />
-    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+    <script type="application/ld+json" set:html={JSON.stringify(siteJsonLd)} />
+    {jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
     <ClientRouter />
     <script is:inline>
       // Mark JS as available so scroll-reveal only hides content when it can be

@@ -5,6 +5,7 @@ import AppleIcon from '../../../components/AppleIcon.astro';
 import WebIcon from '../../../components/WebIcon.astro';
 import StoreMeta from '../../../components/StoreMeta.astro';
 import { apps, getApp, categoryName } from '../../../data/apps';
+import { site } from '../../../data/site';
 
 export function getStaticPaths() {
   return apps.map((a) => ({ params: { slug: a.slug } }));
@@ -15,9 +16,30 @@ const app = getApp(slug as string);
 if (!app) {
   return Astro.redirect('/404');
 }
+
+// SoftwareApplication structured data for richer search listings.
+const schemaCategory: Record<string, string> = {
+  fitness: 'HealthApplication',
+  games: 'GameApplication',
+  productivity: 'BusinessApplication',
+  utilities: 'UtilitiesApplication',
+};
+const hasStore = !!(app.playUrl || app.appStoreUrl || app.webAppUrl);
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareApplication',
+  name: app.name,
+  description: app.description,
+  applicationCategory: schemaCategory[app.category] ?? 'MobileApplication',
+  operatingSystem: app.webAppUrl ? 'Web' : 'Android, iOS',
+  image: new URL(app.icon, site.url).href,
+  url: new URL(`/apps/${app.slug}`, site.url).href,
+  publisher: { '@id': `${site.url}/#org` },
+  ...(hasStore ? { offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' } } : {}),
+};
 ---
 
-<BaseLayout title={app.name} description={app.description}>
+<BaseLayout title={app.name} description={app.description} jsonLd={jsonLd}>
   <article class="app">
     <div class="container">
       <a class="app__back" href="/#apps">← All apps</a>

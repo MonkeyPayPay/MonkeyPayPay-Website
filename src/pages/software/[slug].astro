@@ -2,6 +2,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import StoreMeta from '../../components/StoreMeta.astro';
 import { programs, getProgram, programCategoryName } from '../../data/programs';
+import { site } from '../../data/site';
 
 export function getStaticPaths() {
   return programs.map((p) => ({ params: { slug: p.slug } }));
@@ -17,9 +18,26 @@ const statusLabel = {
   beta: 'Beta',
   live: 'Live',
 }[program.status];
+
+// SoftwareApplication structured data for richer search listings.
+const schemaCategory: Record<string, string> = {
+  restaurant: 'BusinessApplication',
+  developer: 'DeveloperApplication',
+};
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareApplication',
+  name: program.name,
+  description: program.description,
+  applicationCategory: schemaCategory[program.category] ?? 'BusinessApplication',
+  operatingSystem: 'Web',
+  url: new URL(`/software/${program.slug}`, site.url).href,
+  ...(program.logo ? { image: new URL(program.logo, site.url).href } : {}),
+  publisher: { '@id': `${site.url}/#org` },
+};
 ---
 
-<BaseLayout title={program.name} description={program.description}>
+<BaseLayout title={program.name} description={program.description} jsonLd={jsonLd}>
   <article class="prog">
     <div class="container">
       <a class="app__back" href="/software">← Software</a>
