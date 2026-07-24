@@ -11,6 +11,7 @@ interface Props {
 
 const { app } = Astro.props;
 const shots = app.screenshots.slice(0, 4);
+const hasStore = !!(app.playUrl || app.appStoreUrl || app.webAppUrl);
 ---
 
 <article class="card reveal" data-category={app.category}>
@@ -45,36 +46,26 @@ const shots = app.screenshots.slice(0, 4);
   <div class="card__foot">
     <div class="card__stores">
       {
-        app.playUrl ? (
-          <a class="btn btn--store" href={app.playUrl} target="_blank" rel="noopener">
-            <PlayIcon /> Google Play
-          </a>
+        hasStore ? (
+          <>
+            {app.playUrl && (
+              <a class="btn btn--store" href={app.playUrl} target="_blank" rel="noopener">
+                <PlayIcon /> Google Play
+              </a>
+            )}
+            {app.appStoreUrl && (
+              <a class="btn btn--store" href={app.appStoreUrl} target="_blank" rel="noopener">
+                <AppleIcon /> App Store
+              </a>
+            )}
+            {app.webAppUrl && (
+              <a class="btn btn--store" href={app.webAppUrl} target="_blank" rel="noopener">
+                <WebIcon /> Web app
+              </a>
+            )}
+          </>
         ) : (
-          <span class="chip chip--soon" title="Coming soon to Google Play">
-            <PlayIcon /> Google Play · soon
-          </span>
-        )
-      }
-      {
-        app.appStoreUrl ? (
-          <a class="btn btn--store" href={app.appStoreUrl} target="_blank" rel="noopener">
-            <AppleIcon /> App Store
-          </a>
-        ) : (
-          <span class="chip chip--soon" title="Coming soon to the App Store">
-            <AppleIcon /> App Store · soon
-          </span>
-        )
-      }
-      {
-        app.webAppUrl ? (
-          <a class="btn btn--store" href={app.webAppUrl} target="_blank" rel="noopener">
-            <WebIcon /> Web app
-          </a>
-        ) : (
-          <span class="chip chip--soon" title="Web app coming soon">
-            <WebIcon /> Web · soon
-          </span>
+          <span class="chip chip--soon">Coming soon</span>
         )
       }
     </div>

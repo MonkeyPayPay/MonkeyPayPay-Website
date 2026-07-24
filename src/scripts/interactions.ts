@@ -24,6 +24,28 @@ export function initInteractions(): void {
     reveals.forEach((el) => el.classList.add('is-visible'));
   }
 
+  // Pause looping mascot sprite animations while off-screen (saves CPU/battery,
+  // and keeps only the in-view motion running for a calmer, more premium feel).
+  const loops = document.querySelectorAll<HTMLElement>(
+    '.mascot-sprite, .filter-monkey__art, .cc-mascot, .program__mascot, .teaser__swing',
+  );
+  if ('IntersectionObserver' in window && loops.length) {
+    const pauseIO = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          (entry.target as HTMLElement).style.animationPlayState = entry.isIntersecting ? 'running' : 'paused';
+        }
+      },
+      { rootMargin: '150px' },
+    );
+    loops.forEach((el) => {
+      if (el.dataset.pauseBound) return;
+      el.dataset.pauseBound = 'true';
+      el.style.animationPlayState = 'paused';
+      pauseIO.observe(el);
+    });
+  }
+
   // Magnetic hover (fine pointers only).
   if (!prefersReduced() && window.matchMedia('(pointer: fine)').matches) {
     document.querySelectorAll<HTMLElement>('[data-magnetic]').forEach((el) => {

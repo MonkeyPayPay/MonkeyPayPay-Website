@@ -19,6 +19,32 @@ const pageTitle = title ? `${title} · ${site.name}` : `${site.name} — ${site.
 const pageDesc = description ?? site.description;
 const canonical = new URL(Astro.url.pathname, site.url).href;
 const ogImage = new URL('/og-image.png', site.url).href;
+
+// Site-wide structured data (Organization + WebSite) for richer search results.
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Organization',
+      '@id': `${site.url}/#org`,
+      name: site.name,
+      url: site.url,
+      email: site.contactEmail,
+      description: site.description,
+      logo: new URL('/apple-touch-icon.png', site.url).href,
+      ...(site.social.length ? { sameAs: site.social.map((s) => s.href) } : {}),
+    },
+    {
+      '@type': 'WebSite',
+      '@id': `${site.url}/#site`,
+      name: site.name,
+      url: site.url,
+      description: site.description,
+      inLanguage: 'en',
+      publisher: { '@id': `${site.url}/#org` },
+    },
+  ],
+};
 ---
 
 <!doctype html>
@@ -42,8 +68,12 @@ const ogImage = new URL('/og-image.png', site.url).href;
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:image" content={ogImage} />
     <meta name="theme-color" content="#0b0b12" />
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
     <ClientRouter />
     <script is:inline>
+      // Mark JS as available so scroll-reveal only hides content when it can be
+      // revealed. Without JS (or if it fails), content stays visible.
+      document.documentElement.classList.add('js');
       // Apply saved theme before first paint to avoid a flash.
       (function () {
         try {
