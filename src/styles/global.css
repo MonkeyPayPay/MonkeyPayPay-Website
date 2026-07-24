@@ -792,7 +792,7 @@ a.chip:hover { border-color: var(--accent); color: var(--text); }
   pointer-events: none;
   z-index: 1;
   filter: drop-shadow(0 10px 14px rgba(0, 0, 0, 0.45));
-  animation: sprite-swing 2.6s steps(15) infinite;
+  animation: sprite-swing 3.6s steps(15) infinite;
 }
 @keyframes sprite-swing { to { background-position-x: calc(var(--fw) * -15); } }
 
@@ -1511,7 +1511,7 @@ a.chip:hover { border-color: var(--accent); color: var(--text); }
   pointer-events: none;
   z-index: 2;
   filter: drop-shadow(0 8px 14px rgba(0, 0, 0, 0.45));
-  animation: cc-slam 3s steps(24) infinite;
+  animation: cc-slam 4s steps(24) infinite;
 }
 @keyframes cc-slam { to { background-position-x: calc(var(--fw) * -24); } }
 @media (max-width: 860px) { .cc-mascot { --fw: clamp(96px, 25vw, 140px); } }
@@ -1689,7 +1689,7 @@ a.chip:hover { border-color: var(--accent); color: var(--text); }
   aspect-ratio: 210 / 334;
   background-image: url('/brand/anim/monkey-kiss.webp');
   background-size: calc(var(--fw) * 15) 100%;
-  animation: sprite-kiss 3s steps(15) infinite;
+  animation: sprite-kiss 4s steps(15) infinite;
 }
 @keyframes sprite-kiss { to { background-position-x: calc(var(--fw) * -15); } }
 
@@ -1708,7 +1708,7 @@ a.chip:hover { border-color: var(--accent); color: var(--text); }
   aspect-ratio: 200 / 360;
   background-image: url('/brand/anim/monkey-dance.webp');
   background-size: calc(var(--fw) * 15) 100%;
-  animation: sprite-dance 2.2s steps(15) infinite;
+  animation: sprite-dance 3.2s steps(15) infinite;
 }
 @keyframes sprite-dance { to { background-position-x: calc(var(--fw) * -15); } }
 
@@ -1736,7 +1736,7 @@ a.chip:hover { border-color: var(--accent); color: var(--text); }
   aspect-ratio: 250 / 303;
   background-image: url('/brand/anim/monkey-rain.webp');
   background-size: calc(var(--fw) * 15) 100%;
-  animation: sprite-rain 3.5s steps(15) infinite;
+  animation: sprite-rain 4.5s steps(15) infinite;
 }
 @keyframes sprite-rain { to { background-position-x: calc(var(--fw) * -15); } }
 
@@ -1810,13 +1810,36 @@ a.chip:hover { border-color: var(--accent); color: var(--text); }
   pointer-events: none;
   z-index: 2;
   filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.42));
-  animation: program-mascot 2.5s steps(15) infinite;
+  animation: program-mascot 3.5s steps(15) infinite;
 }
 @keyframes program-mascot { to { background-position-x: calc(var(--fw) * -15); } }
 .program--mascot .program__desc,
 .program--mascot .program__highlights,
 .program--mascot .program__foot {
   padding-right: clamp(86px, 16vw, 116px);
+}
+
+/* ---- Hover-to-play mascots (devices with a real pointer) ------------------
+   On desktop the monkeys sit frozen and only animate while you hover them (or
+   their card/button) — calmer by default, playful on interaction. Touch devices
+   (no hover) keep the in-view play/pause handled in JS, since there's nothing
+   to hover. */
+@media (hover: hover) and (pointer: fine) {
+  .mascot-sprite,
+  .cc-mascot,
+  .program__mascot,
+  .teaser__swing {
+    animation-play-state: paused;
+  }
+  /* directly hoverable mascots (hero kiss, story dance, donate "rain") */
+  .mascot-sprite:hover { animation-play-state: running; }
+  /* pointer-events:none mascots → play on hover of their container */
+  .flagship__card:hover .cc-mascot,
+  .program--mascot:hover .program__mascot,
+  .teaser__donate:hover .teaser__swing,
+  .teaser__actions:hover .teaser__swing {
+    animation-play-state: running;
+  }
 }
 
 /* ---- Reduced motion ------------------------------------------------------- */

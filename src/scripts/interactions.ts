@@ -24,12 +24,14 @@ export function initInteractions(): void {
     reveals.forEach((el) => el.classList.add('is-visible'));
   }
 
-  // Pause looping mascot sprite animations while off-screen (saves CPU/battery,
-  // and keeps only the in-view motion running for a calmer, more premium feel).
+  // Touch devices (no hover) can't trigger the hover-to-play CSS, so there we
+  // gently play looping mascots while in view and pause them off-screen. Desktop
+  // is handled purely by the hover-to-play CSS, so we skip this there.
+  const canHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
   const loops = document.querySelectorAll<HTMLElement>(
-    '.mascot-sprite, .filter-monkey__art, .cc-mascot, .program__mascot, .teaser__swing',
+    '.mascot-sprite, .cc-mascot, .program__mascot, .teaser__swing',
   );
-  if ('IntersectionObserver' in window && loops.length) {
+  if (!canHover && 'IntersectionObserver' in window && loops.length) {
     const pauseIO = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
