@@ -1825,13 +1825,15 @@ a.chip:hover { border-color: var(--accent); color: var(--text); }
    (no hover) keep the in-view play/pause handled in JS, since there's nothing
    to hover. */
 @media (hover: hover) and (pointer: fine) {
-  .mascot-sprite,
-  .cc-mascot,
+  /* everything is frozen by default, EXCEPT the signature "hero" mascots that
+     carry a page (marked .is-looping) — those keep gently looping. */
+  .mascot-sprite:not(.is-looping),
+  .cc-mascot:not(.is-looping),
   .program__mascot,
   .teaser__swing {
     animation-play-state: paused;
   }
-  /* directly hoverable mascots (hero kiss, story dance, donate "rain") */
+  /* directly hoverable mascots (donate "rain", etc.) play on hover */
   .mascot-sprite:hover { animation-play-state: running; }
   /* pointer-events:none mascots → play on hover of their container */
   .flagship__card:hover .cc-mascot,
