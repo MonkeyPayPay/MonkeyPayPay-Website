@@ -1747,6 +1747,10 @@ a.chip:hover { border-color: var(--accent); color: var(--text); }
   background-repeat: no-repeat;
   background-position: 0 0;
   width: var(--fw);
+  /* Grounding shadow, sized for the hero-tier mascots (kiss/dance/rain) so they
+     sit in the same lit world as the smaller card/corner mascots, which already
+     carry proportional drop-shadows (jump 4/6 → program 6/12 → cc 8/14). */
+  filter: drop-shadow(0 12px 18px rgba(0, 0, 0, 0.42));
 }
 .mascot-sprite--wave {
   --fw: clamp(150px, 22vw, 240px);

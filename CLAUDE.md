@@ -277,9 +277,20 @@ docs live in `README.md`.)
 6. **Design/polish backlog (Claude can drive some, owner-gated for the rest):**
    - **Mobile-first polish pass — IN PROGRESS** (this session). Auditing every
      page at phone width; sprite-heavy pages most at risk. Logging fixes here.
-   - **Unify mascot art style (deferred).** The 8 sprite sets came from separate
-     GPT sessions, so line-weight/palette drift card to card. Could regularize
-     later (re-generate from one reference, or color-normalize in the pipeline).
+   - **Unify mascot art style — PARTLY DONE.** Audited the 7 active monkey sprite
+     sets (jump/rain/chef/prometheus/dance/swing/kiss) with a measured contact
+     sheet + per-sprite stats. Finding: **palette/grade is already consistent** —
+     fur luminance 0.282–0.299 (≈1.7% spread), fur median RGB within ~10/255,
+     tutu 228–234R; the "drift" impression was mostly the props (money/torch/
+     vine/apron) and poses, not the palette. So NO regrade was applied (it would
+     change nothing and risk artifacts). The one real fix shipped: the base
+     `.mascot-sprite` class (hero-tier kiss/dance/rain) had **no grounding
+     drop-shadow** while every smaller card/corner mascot did (jump 4/6, program
+     6/12, cc 8/14, swing 10/14) — added a proportional `drop-shadow(0 12px 18px
+     rgba(0,0,0,.42))` so the big mascots sit in the same lit world. Remaining
+     drift is source line-weight/proportion (rain is the mild outlier — drawn a
+     touch chubbier, fill 0.807 vs ~0.70 cluster); only fixable by re-generating
+     that frame set from the locked house-style prompt (owner-gated, GPT).
    - **Mise "Try the demo" (owner-gated).** Deploy the Mise app (React +
      Express/WebSocket) to a WebSocket host (Render/Railway/Fly), then set
      `program.demoUrl` → live demo button. Needs a host login.
