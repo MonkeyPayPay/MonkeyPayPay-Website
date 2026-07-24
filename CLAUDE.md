@@ -160,6 +160,20 @@ docs live in `README.md`.)
 
 ## OPEN ITEMS / TODO (revisit)
 
+-1. **Coming-soon PASSWORD GATE is LIVE (`middleware.js`).** The whole site is
+   gated behind a shared passphrase until the owner launches. It's a **Vercel
+   Edge Middleware** (`middleware.js` at repo root, uses `@vercel/edge`'s
+   `next()`) that runs before any static page/asset is served, so nothing ships
+   until the visitor enters the password on a branded gate page (sets an
+   HttpOnly cookie `mpp_gate`; gate page is noindex). **Default password `1234`.**
+   Levers (Vercel → Project → Settings → Environment Variables, Production):
+   - `SITE_PASSWORD` = change the password without touching code.
+   - `SITE_GATE_OFF` = `1` → disables the gate entirely (launch). Or just delete
+     `middleware.js` (+ the `@vercel/edge` dep) and redeploy to remove it for good.
+   Logic is covered by local unit tests (see scratchpad `test-mw.mjs`). NOTE for
+   launch: also flip this off when going public, and revisit the www redirect +
+   KV items below.
+
 0. **Launch email capture ("Notify me") — BUILT, needs KV + admin key in Vercel.**
    Homepage has a `NotifySignup.astro` band (between Directory and StoryTeaser)
    posting to the serverless fn `api/notify.js`. Emails go into a Redis hash
