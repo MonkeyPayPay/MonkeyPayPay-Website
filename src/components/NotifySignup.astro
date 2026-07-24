@@ -1,0 +1,89 @@
+---
+// "Notify me at launch" email capture. Posts to /api/notify (KV-backed).
+---
+
+<section class="notify" id="notify">
+  <div class="container notify__inner reveal">
+    <p class="notify__eyebrow">Most of these are still in the workshop</p>
+    <h2 class="notify__title">Be first to know when they launch</h2>
+    <p class="notify__text">
+      Drop your email and I’ll ping you the moment an app goes live. No spam, no noise —
+      just launches. From one dad, for Paisley.
+    </p>
+    <form class="notify__form" data-notify novalidate>
+      <label class="screen-reader-text" for="notify-email">Your email address</label>
+      <input
+        class="notify__input"
+        id="notify-email"
+        type="email"
+        name="email"
+        inputmode="email"
+        autocomplete="email"
+        required
+        placeholder="you@email.com"
+      />
+      <!-- honeypot: real people leave this empty -->
+      <input class="notify__hp" type="text" name="company" tabindex="-1" autocomplete="off" aria-hidden="true" />
+      <button class="btn btn--primary notify__btn" type="submit" data-magnetic>Notify me</button>
+      <p class="notify__msg" data-notify-msg role="status" aria-live="polite"></p>
+    </form>
+  </div>
+</section>
+
+<script>
+  function initNotify() {
+    document.querySelectorAll<HTMLFormElement>('form[data-notify]').forEach((form) => {
+      if (form.dataset.bound) return;
+      form.dataset.bound = '1';
+      const msg = form.querySelector<HTMLElement>('[data-notify-msg]');
+      const btn = form.querySelector<HTMLButtonElement>('button');
+      const emailEl = form.querySelector<HTMLInputElement>('input[name="email"]');
+      const hpEl = form.querySelector<HTMLInputElement>('input[name="company"]');
+      const say = (text: string, state: '' | 'ok' | 'err') => {
+        if (!msg) return;
+        msg.textContent = text;
+        msg.dataset.state = state;
+      };
+
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const email = (emailEl?.value || '').trim();
+        if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
+          say('Please enter a valid email address.', 'err');
+          emailEl?.focus();
+          return;
+        }
+        if (hpEl?.value) {
+          say('You’re on the list — thank you! 💛', 'ok');
+          form.reset();
+          return;
+        }
+        if (btn) btn.disabled = true;
+        say('Adding you…', '');
+        try {
+          const r = await fetch('/api/notify', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email, company: hpEl?.value || '' }),
+          });
+          const d = await r.json().catch(() => ({}));
+          if (r.ok && d.ok) {
+            say('You’re on the list — thank you! 💛', 'ok');
+            form.reset();
+          } else if (d.error === 'not-configured') {
+            say('Sign-ups aren’t switched on yet — check back soon.', 'err');
+          } else if (d.error === 'invalid-email') {
+            say('That email doesn’t look right — mind checking it?', 'err');
+          } else {
+            say('Something went wrong — please try again.', 'err');
+          }
+        } catch {
+          say('Network hiccup — please try again.', 'err');
+        } finally {
+          if (btn) btn.disabled = false;
+        }
+      });
+    });
+  }
+  document.addEventListener('astro:page-load', initNotify);
+</script>
