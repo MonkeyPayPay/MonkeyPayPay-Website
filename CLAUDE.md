@@ -160,6 +160,19 @@ docs live in `README.md`.)
 
 ## OPEN ITEMS / TODO (revisit)
 
+0. **Launch email capture ("Notify me") — BUILT, needs KV + admin key in Vercel.**
+   Homepage has a `NotifySignup.astro` band (between Directory and StoryTeaser)
+   posting to the serverless fn `api/notify.js`. Emails go into a Redis hash
+   `notify:signups` (email → ISO time, de-duped) in the SAME Vercel KV/Upstash
+   store the visitor counter uses. **Stays dormant ("sign-ups aren't switched on
+   yet") until that KV store is connected.** To go live (desktop Vercel):
+   (a) add a KV/Upstash store to the Vercel project (sets `KV_REST_API_URL` /
+   `KV_REST_API_TOKEN` — same store unlocks the footer visitor counter too);
+   (b) add a secret env var `NOTIFY_ADMIN_KEY` (any long random string).
+   Then read the list at `monkeypaypay.com/api/notify?key=YOUR_SECRET` (JSON) or
+   download it at `…?key=YOUR_SECRET&format=csv` (email + signed_up_at columns).
+   Later: pipe into a real ESP (ConvertKit/Mailchimp/Buttondown) for automated
+   sending — deferred until there's a real launch to announce.
 1. **www redirect — DEFERRED.** Adding `www.monkeypaypay.com` in the Vercel
    *mobile* UI failed (the "Redirect to Another Domain" destination dropdown
    wouldn't let them select `monkeypaypay.com`). Retry on **desktop** Vercel:
