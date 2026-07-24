@@ -274,3 +274,14 @@ docs live in `README.md`.)
    "App Store · coming soon" / "Web app · coming soon" chips) until real
    assets/links arrive. Each app supports `playUrl`, `appStoreUrl`, and
    `webAppUrl` — set any to a real URL to turn its chip into a live button.
+6. **Design/polish backlog (Claude can drive some, owner-gated for the rest):**
+   - **Mobile-first polish pass — IN PROGRESS** (this session). Auditing every
+     page at phone width; sprite-heavy pages most at risk. Logging fixes here.
+   - **Unify mascot art style (deferred).** The 8 sprite sets came from separate
+     GPT sessions, so line-weight/palette drift card to card. Could regularize
+     later (re-generate from one reference, or color-normalize in the pipeline).
+   - **Mise "Try the demo" (owner-gated).** Deploy the Mise app (React +
+     Express/WebSocket) to a WebSocket host (Render/Railway/Fly), then set
+     `program.demoUrl` → live demo button. Needs a host login.
+   - **Cuddle Crush "Play" (owner-gated).** Same: deploy the game
+     (Docker → Fly/Railway/Render), set `featured.playUrl` → live Play button.
