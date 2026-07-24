@@ -318,6 +318,14 @@ a.chip:hover { border-color: var(--accent); color: var(--text); }
   .nav__bass { display: none; }
 }
 
+/* Tighten the vertical section rhythm on phones. On narrow screens 9vw falls
+   well below the 4rem floor, so every section kept a full 64px band top and
+   bottom — ~128px between sections, which reads as dead space on a phone.
+   Desktop/tablet rhythm (>600px) is untouched. */
+@media (max-width: 600px) {
+  :root { --space-section: 3rem; }
+}
+
 /* ---- Theme toggle --------------------------------------------------------- */
 .theme-toggle {
   display: inline-grid;
