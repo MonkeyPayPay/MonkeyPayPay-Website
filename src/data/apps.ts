@@ -210,6 +210,7 @@ export const apps: App[] = [
     description:
       'A daily word puzzle for everyone on earth: fill each link with a real word that starts and ends on the given letters, threading your words into a chain. One shared puzzle a day (two years shipped), a spoiler-free emoji share grid, streaks, a home-screen widget, and deep accessibility (colorblind mode, dynamic type, reduce-motion) — deterministic, fully offline, no account.',
     icon: '/apps/chainlink/icon.webp',
+    splash: '/apps/chainlink/banner.webp',
     playUrl: '',
     appStoreUrl: '',
     webAppUrl: '',
