@@ -114,6 +114,7 @@ export const apps: App[] = [
     description:
       'A calm quit-anything tracker — vaping, alcohol, sugar, doomscrolling, gambling, or anything custom. Live counters tick money saved and time reclaimed by the second, an 11-step milestone ladder fires confetti and shareable cards, and a craving panic button surfaces your reasons plus a 60-second breathing exercise. Relapses reset with encouragement while keeping your lifetime stats and best streak; track several quits at once, with home-screen widgets on iOS and Android. Everything stays on your device.',
     icon: '/apps/quitline/icon.webp',
+    splash: '/apps/quitline/banner.webp',
     playUrl: '',
     appStoreUrl: '',
     webAppUrl: '',
