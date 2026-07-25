@@ -133,7 +133,7 @@ export const apps: App[] = [
     splash: '/apps/roastline/banner.webp',
     playUrl: '',
     appStoreUrl: '',
-    webAppUrl: '',
+    webAppUrl: 'https://habit-tracker-eight-jet.vercel.app', // live web app
     screenshots: [],
     legalLastUpdated: '2026-07-19',
     legal: { dataModel: 'local-only', usesSubscriptions: true, usesNotifications: true },
