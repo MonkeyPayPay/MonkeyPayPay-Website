@@ -258,11 +258,13 @@ docs live in `README.md`.)
        Just One/Quitline/Chainlink; SpinFit/Fate already had one. All wired via
        `splash` → `/apps/<slug>/banner.webp`. (Chainlink briefly used its repo's
        og_image, now replaced by the owner's nicer CAT→COT→DOT→DOG art.)
-     - **Web links:** Forge, Apex, Lyra, CareCircle, Fate have `webAppUrl` (live
-       Vercel deploys). Owner wants ALL apps to have web links; still MISSING for
-       the 5 Expo apps — **SpinFit, Quitline, Roastline, Chainlink, Just One** —
-       whose deploy URLs aren't in their repos and can't be derived here. Waiting
-       on the owner to paste those 5 URLs.
+     - **Web links (DONE for all 10 apps).** Every app now has a live `webAppUrl`
+       so its card/detail shows an "Open the web app" button. The 5 Expo apps'
+       URLs were owner-supplied: SpinFit `micro-workout-roulette.vercel.app`,
+       Quitline `quit-anything-psi.vercel.app`, Roastline
+       `habit-tracker-eight-jet.vercel.app`, Chainlink `daily-puzzle-plum.vercel.app`,
+       Just One `one-task-only.vercel.app`. (Play/App Store URLs still pending
+       per app until store launch.)
        PENDING all: launch/store URLs. Forge & Apex legal = dataModel 'standard'
        (optional account/cloud sync), no notifications. Fate = 'standard' (AdMob).
    - Favicon/app icon is the monkey head (`public/favicon-16.png`,
