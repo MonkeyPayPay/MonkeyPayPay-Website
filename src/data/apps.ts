@@ -248,6 +248,7 @@ export const apps: App[] = [
     description:
       'An anti-overwhelm to-do app that shows exactly one task at a time. Brain-dump everything into a hidden backlog; the home screen shows only your current task in large, calm type. Finish with a swipe and the next appears — plus on-device voice capture, a breathing focus timer with weekly stats, home-screen widgets, and an end-of-day recap. Local-first, no account.',
     icon: '/apps/just-one/icon.webp',
+    splash: '/apps/just-one/banner.webp',
     playUrl: '',
     appStoreUrl: '',
     webAppUrl: '',
