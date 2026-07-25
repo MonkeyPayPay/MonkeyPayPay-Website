@@ -293,9 +293,10 @@ export const apps: App[] = [
     description:
       'A physics-driven decision maker: build custom spin wheels (with optional weighting), flip coins, roll dice, and let fate end every “you decide” standoff. Tuned 60fps spins with haptic ticks and a confetti reveal, a pass-the-phone group mode, preset templates, unlockable themes, and shareable result cards.',
     icon: '/apps/fate/icon.webp',
+    splash: '/apps/fate/banner.webp',
     playUrl: '',
     appStoreUrl: '',
-    webAppUrl: '',
+    webAppUrl: 'https://decision-spinner-jet.vercel.app', // live web app
     screenshots: [],
     legalLastUpdated: '2026-07-19',
     legal: { dataModel: 'standard', usesSubscriptions: true, usesNotifications: false },
