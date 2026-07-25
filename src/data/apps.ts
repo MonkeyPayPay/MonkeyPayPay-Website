@@ -87,7 +87,7 @@ export const apps: App[] = [
     splash: '/apps/spinfit/banner.webp',
     playUrl: '', // ← paste the Google Play link once SpinFit is published
     appStoreUrl: '', // ← add when the iOS version ships
-    webAppUrl: '', // ← SpinFit is a native app; leave blank (shows "coming soon")
+    webAppUrl: 'https://micro-workout-roulette.vercel.app', // live web app
     screenshots: [
       { src: '/apps/spinfit/screens/spin.webp', alt: 'SpinFit — flick the wheel to land on a 2-minute move' },
       { src: '/apps/spinfit/screens/coach.webp', alt: 'SpinFit — an on-screen coach walks you through each move' },
