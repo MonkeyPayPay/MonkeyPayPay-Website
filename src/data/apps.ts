@@ -241,7 +241,7 @@ export const apps: App[] = [
     splash: '/apps/just-one/banner.webp',
     playUrl: '',
     appStoreUrl: '',
-    webAppUrl: '',
+    webAppUrl: 'https://one-task-only.vercel.app', // live web app
     screenshots: [
       { src: '/apps/just-one/screens/home.webp', alt: 'Just One — a single current task, front and center' },
       { src: '/apps/just-one/screens/onboarding.webp', alt: 'Just One — one thing at a time' },
