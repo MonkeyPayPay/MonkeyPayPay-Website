@@ -217,7 +217,7 @@ export const apps: App[] = [
     splash: '/apps/chainlink/banner.webp',
     playUrl: '',
     appStoreUrl: '',
-    webAppUrl: '',
+    webAppUrl: 'https://daily-puzzle-plum.vercel.app', // live web app
     screenshots: [
       { src: '/apps/chainlink/screens/1.webp', alt: 'Chainlink — one new word chain every day' },
       { src: '/apps/chainlink/screens/2.webp', alt: 'Chainlink — link each word to the next' },
