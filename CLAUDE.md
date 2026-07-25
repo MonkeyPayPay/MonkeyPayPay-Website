@@ -223,10 +223,9 @@ docs live in `README.md`.)
        derived by recoloring Forge's dumbbell icon orange→azure `#3b82f6`),
        **Lyra** (`health-fitness-` — AI women's cycle fitness, a **Next.js web
        SaaS**; `webAppUrl` when live, legal dataModel 'standard').
-     - *Games:* **Chainlink**
-       (`daily-puzzle` — daily word puzzle), **Empire Table** (`restaurant-tycoon`
-       — idle tycoon), **EVOLVE** (`evolve` — bare Unity project, no art/README
-       yet → **placeholder gradient "E" icon**, minimal copy).
+     - *Games:* **Chainlink** (`daily-puzzle` — daily word puzzle). (Empire Table
+       — `restaurant-tycoon` — was dropped per owner: no longer developing it, do
+       not re-add. EVOLVE — `evolve` — is also not currently on the site.)
      - *Productivity:* **Just One** (`one-task-only` — one-task-at-a-time to-do),
        **CareCircle** (`mynewapp` — family caregiving coordination SaaS: care log,
        tasks, calendar, expense-splitting, AI care advisor; Vite+Supabase web/PWA,
@@ -254,8 +253,8 @@ docs live in `README.md`.)
        web target locally (`npm i` + `npx expo export --platform web`), serving
        the static `dist/`, and driving it with Playwright at 390×844 — 5 screens
        each in `public/apps/<slug>/screens/`. Repos: Fate=decision-spinner,
-       Quitline=quit-anything, Roastline=habit-tracker-. **Still empty:** Empire
-       Table (copy-only; restaurant-tycoon repo — recapture the same way if kept).
+       Quitline=quit-anything, Roastline=habit-tracker-. Every app on the site
+       now has a full screenshot gallery.
      - **Hero banners (DONE for all 10 apps).** Owner supplied illustrated
        banners (GPT art) for Forge, Apex, Lyra, CareCircle, Roastline + upgraded
        Just One/Quitline/Chainlink; SpinFit/Fate already had one. All wired via
