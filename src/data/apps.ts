@@ -130,6 +130,7 @@ export const apps: App[] = [
     description:
       'A habit and water tracker that actually keeps you honest — one-tap logging with a satisfying progress ring, streaks with freeze tokens so one bad day won’t undo weeks, and a coach you choose (Gentle, Sarcastic, or Brutal) that calls you out in that tone when you slip. Track counts, water, minutes, pages or steps, share your streak cards, and onboard in under 30 seconds. Local-first, no account.',
     icon: '/apps/roastline/icon.webp',
+    splash: '/apps/roastline/banner.webp',
     playUrl: '',
     appStoreUrl: '',
     webAppUrl: '',
@@ -145,6 +146,7 @@ export const apps: App[] = [
     description:
       'A fitness and health app built for men: strength programs and a Smart Workout generator that reads your equipment and recovery, a HIIT timer, GPS run/ride/walk with voice cues, macro & TDEE tracking with barcode scanning, a Daily Readiness score, body metrics with age-aware screening reminders, progress photos, and a daily mind check-in. Local-first by default, with optional account sync across devices.',
     icon: '/apps/forge/icon.webp',
+    splash: '/apps/forge/banner.webp',
     playUrl: '',
     appStoreUrl: '',
     webAppUrl: 'https://forge-wine-nine.vercel.app', // live web app
@@ -165,6 +167,7 @@ export const apps: App[] = [
     description:
       'An all-in-one fitness and health app: a Smart Workout generator, a HIIT timer, GPS cardio, a Daily Readiness score, macro & TDEE tracking with barcode scanning, body metrics, progress photos, and a daily mind check-in — one clean dashboard. Apex is the azure sibling of Forge, built on the same engine. Local-first by default, with optional account sync.',
     icon: '/apps/apex/icon.webp',
+    splash: '/apps/apex/banner.webp',
     playUrl: '',
     appStoreUrl: '',
     webAppUrl: 'https://apex-delta-ecru.vercel.app', // live web app
@@ -186,6 +189,7 @@ export const apps: App[] = [
     description:
       'An AI fitness coach designed around women’s hormonal reality — training and nutrition that adapt to each phase of the 28-day cycle, instead of a generic program built for male physiology. Gets smarter every cycle. In active development.',
     icon: '/apps/lyra/icon.webp',
+    splash: '/apps/lyra/banner.webp',
     playUrl: '',
     appStoreUrl: '',
     webAppUrl: 'https://health-fitness-phi.vercel.app', // live web app
@@ -258,6 +262,7 @@ export const apps: App[] = [
     description:
       'A family caregiving hub that keeps everyone on the same page: a shared care log, tasks and calendar, expense splitting, and a document vault with AI summaries — plus an AI care advisor for the hard questions. Built for the sibling group coordinating a parent’s care, on web, iOS, and Android.',
     icon: '/apps/carecircle/icon.webp',
+    splash: '/apps/carecircle/banner.webp',
     playUrl: '',
     appStoreUrl: '',
     webAppUrl: 'https://my-new-app-lyart.vercel.app', // live web app
