@@ -135,9 +135,13 @@ export const programs: Program[] = [
       { src: '/software/mise/screens/12-scheduling-labor-forecast.webp', alt: 'Scheduling and labor forecast', caption: 'Scheduled vs. actual labor against a demand forecast, with overtime warnings and a swap board.' },
       { src: '/software/mise/screens/13-procurement-vendors-POs.webp', alt: 'Procurement, vendors and purchase orders', caption: 'Vendors, catalog SKUs with price tracking, POs with receiving, and paste-an-email invoice capture.' },
       { src: '/software/mise/screens/14-financials-live-pnl.webp', alt: 'Live profit and loss statement', caption: 'A live, computed P&L — accrual COGS, labor with burden, prime cost and net margin, none of it typed in.' },
+      { src: '/software/mise/screens/15-budget-vs-actual.webp', alt: 'Budget versus actual', caption: 'Budget-vs-actual, line by line — where the month is pacing against plan, updated as the checks close.' },
       { src: '/software/mise/screens/16-multi-location-portfolio.webp', alt: 'Multi-location portfolio', caption: 'The portfolio: every location’s P&L side by side, plus the consolidated line and budget pace.' },
       { src: '/software/mise/screens/17-haccp-checklists.webp', alt: 'HACCP checklists', caption: 'Opening/closing/HACCP checklists with temperature capture and instant out-of-range alerts.' },
+      { src: '/software/mise/screens/18-team-comms.webp', alt: 'Team channels and manager logbook', caption: 'Team channels and a manager logbook — system events post themselves, and required reads are acknowledged.' },
+      { src: '/software/mise/screens/20-command-palette.webp', alt: 'Command palette', caption: 'A role-scoped command palette (⌘K) — jump to any table, guest, report or action without leaving the keyboard.' },
       { src: '/software/mise/screens/25-public-booking-widget.webp', alt: 'Public booking widget', caption: 'An embeddable, fee-free booking widget — real-time availability, deposits and waitlist, in English, Spanish & French.' },
+      { src: '/software/mise/screens/29-public-booking-french.webp', alt: 'Public booking widget in French', caption: 'The same widget in French — the booking flow is fully trilingual (English, Spanish & French) out of the box.' },
       { src: '/software/mise/screens/28-gift-cards-and-house-accounts.webp', alt: 'Gift cards and house accounts', caption: 'Gift cards and house accounts — issued, redeemed, and reconciled inside the same ledger.' },
       { src: '/software/mise/screens/30-reports-heatmap-server-performance.webp', alt: 'Server performance heatmap report', caption: 'Server-performance reports — sales, covers and upsells by server, shift and section.' },
       { src: '/software/mise/screens/31-tip-pool-and-break-compliance.webp', alt: 'Tip pool and break compliance', caption: 'Tip pooling and break-compliance tracking, computed from the same punches that drive labor.' },
@@ -163,7 +167,19 @@ export const programs: Program[] = [
     overview: [
       'Prometheus is built around a small number of load-bearing ideas, each chosen because it deletes a category of bugs rather than merely discouraging it. Pure value semantics remove memory corruption, dangling pointers, and leaks. No shared mutable state means data races and deadlocks simply can’t be written, and parallelism stays deterministic. An object-capability model makes side effects require an unforgeable capability value — so a function’s signature proves exactly what it can touch, closing the door on hidden effects and supply-chain “phone home.”',
       'On top of that: pattern matches are checked for totality at compile time (no missing-case bugs), `null` doesn’t exist (partial operations return an ordinary Option type), and full Hindley–Milner-style inference keeps annotations optional. Executable specifications — `check`, with property-based generation and shrinking — are a language construct that doubles as living documentation, and machine-readable `intent` metadata keeps docs from going stale.',
-      'It has grown from a bootstrap interpreter into a real toolchain: three native compiler backends (C, JavaScript, and WebAssembly/WasmGC), algebraic effect handlers with `resume`, traits with functional dependencies, generator-fusion optimizations, a `prom lsp` language server, and a browser playground that runs the actual compiler via WebAssembly. Latest release: v0.13 “Prism.” A personal research project exploring how much safety a language can guarantee before you ever run it.',
+      'It has grown from a bootstrap interpreter into a real toolchain: three native compiler backends (C, JavaScript, and WebAssembly/WasmGC), algebraic effect handlers with `resume` (now multi-shot, for backtracking and nondeterminism), traits with functional dependencies, generator-fusion optimizations, a `prom lsp` language server, and a browser playground that runs the actual compiler in-page. Latest release: v0.13 “Prism.” A personal research project exploring how much safety a language can guarantee before you ever run it.',
+    ],
+    screenshots: [
+      {
+        src: '/software/prometheus/screens/playground.webp',
+        alt: 'The Prometheus browser playground showing real source',
+        caption: 'The browser playground running the real v0.13 toolchain — an algebraic effect, an `intent` annotation, an executable `check` spec, and a `handle`/`resume` interpreter, all in a few lines.',
+      },
+      {
+        src: '/software/prometheus/screens/compiled-js.webp',
+        alt: 'Prometheus functions compiled to JavaScript, running in the browser',
+        caption: 'The same language compiled straight to JavaScript — these numbers are computed by Prometheus running in the page, with no server and no framework.',
+      },
     ],
   },
 ];
