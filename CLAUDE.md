@@ -248,11 +248,14 @@ docs live in `README.md`.)
        logged in and shot dashboard/cycle/training/nutrition/insights/coach). All
        in `public/apps/<slug>/screens/` → each app's `screenshots[]`. **SpinFit**
        now has 6 real store screenshots too (from `micro-workout-roulette/
-       store-listing/screenshots/`). **Still empty:** Quitline, Roastline,
-       Empire Table, Fate (copy-only store listings, need device capture; the
-       Expo apps can't be screenshotted here — network egress is blocked to all
-       external hosts incl. *.vercel.app, so live-URL capture is impossible;
-       would need a local Expo-web run).
+       store-listing/screenshots/`). **Fate, Quitline & Roastline screenshots
+       (DONE via local Expo-web).** Since egress is blocked to all external hosts
+       (incl. *.vercel.app), these Expo apps were captured by building each repo's
+       web target locally (`npm i` + `npx expo export --platform web`), serving
+       the static `dist/`, and driving it with Playwright at 390×844 — 5 screens
+       each in `public/apps/<slug>/screens/`. Repos: Fate=decision-spinner,
+       Quitline=quit-anything, Roastline=habit-tracker-. **Still empty:** Empire
+       Table (copy-only; restaurant-tycoon repo — recapture the same way if kept).
      - **Hero banners (DONE for all 10 apps).** Owner supplied illustrated
        banners (GPT art) for Forge, Apex, Lyra, CareCircle, Roastline + upgraded
        Just One/Quitline/Chainlink; SpinFit/Fate already had one. All wired via
