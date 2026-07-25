@@ -203,21 +203,6 @@ export const apps: App[] = [
 
   // ── Games ─────────────────────────────────────────────────────────────────
   {
-    slug: 'all-in-trivia',
-    name: 'All In Trivia',
-    category: 'games',
-    tagline: 'Wager your points. Trust your gut.',
-    description:
-      'A trivia game where you bet your points on your confidence — answer right to multiply your wager, wrong to lose it, and try not to go bust. 2,040 questions across 12 categories, a globally-shared Daily Challenge with percentile scoring, an escalating Endless mode, streak-earned lifelines, and a seasonal Growth Hub with XP and unlockable rank frames. Fully offline, no account.',
-    icon: '/apps/all-in-trivia/icon.webp',
-    playUrl: '',
-    appStoreUrl: '',
-    webAppUrl: '',
-    screenshots: [],
-    legalLastUpdated: '2026-07-19',
-    legal: { dataModel: 'standard', usesSubscriptions: true, usesNotifications: true },
-  },
-  {
     slug: 'chainlink',
     name: 'Chainlink',
     category: 'games',

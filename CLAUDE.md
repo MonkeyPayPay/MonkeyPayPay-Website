@@ -223,7 +223,7 @@ docs live in `README.md`.)
        derived by recoloring Forge's dumbbell icon orange→azure `#3b82f6`),
        **Lyra** (`health-fitness-` — AI women's cycle fitness, a **Next.js web
        SaaS**; `webAppUrl` when live, legal dataModel 'standard').
-     - *Games:* **All In Trivia** (`point-wagering-trivia`), **Chainlink**
+     - *Games:* **Chainlink**
        (`daily-puzzle` — daily word puzzle), **Empire Table** (`restaurant-tycoon`
        — idle tycoon), **EVOLVE** (`evolve` — bare Unity project, no art/README
        yet → **placeholder gradient "E" icon**, minimal copy).
@@ -248,8 +248,8 @@ docs live in `README.md`.)
        logged in and shot dashboard/cycle/training/nutrition/insights/coach). All
        in `public/apps/<slug>/screens/` → each app's `screenshots[]`. **SpinFit**
        now has 6 real store screenshots too (from `micro-workout-roulette/
-       store-listing/screenshots/`). **Still empty:** Quitline, Roastline, All In
-       Trivia, Empire Table, Fate (copy-only store listings, need device capture).
+       store-listing/screenshots/`). **Still empty:** Quitline, Roastline,
+       Empire Table, Fate (copy-only store listings, need device capture).
        PENDING all: launch/store URLs. Forge & Apex legal = dataModel 'standard'
        (optional account/cloud sync), no notifications. Fate = 'standard' (AdMob).
    - Favicon/app icon is the monkey head (`public/favicon-16.png`,
