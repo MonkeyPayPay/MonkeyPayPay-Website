@@ -117,7 +117,7 @@ export const apps: App[] = [
     splash: '/apps/quitline/banner.webp',
     playUrl: '',
     appStoreUrl: '',
-    webAppUrl: '',
+    webAppUrl: 'https://quit-anything-psi.vercel.app',
     screenshots: [],
     legalLastUpdated: '2026-07-19',
     legal: { dataModel: 'local-only', usesSubscriptions: true, usesNotifications: true },
