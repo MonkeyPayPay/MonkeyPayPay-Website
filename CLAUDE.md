@@ -249,7 +249,20 @@ docs live in `README.md`.)
        in `public/apps/<slug>/screens/` → each app's `screenshots[]`. **SpinFit**
        now has 6 real store screenshots too (from `micro-workout-roulette/
        store-listing/screenshots/`). **Still empty:** Quitline, Roastline,
-       Empire Table, Fate (copy-only store listings, need device capture).
+       Empire Table, Fate (copy-only store listings, need device capture; the
+       Expo apps can't be screenshotted here — network egress is blocked to all
+       external hosts incl. *.vercel.app, so live-URL capture is impossible;
+       would need a local Expo-web run).
+     - **Hero banners (DONE for all 10 apps).** Owner supplied illustrated
+       banners (GPT art) for Forge, Apex, Lyra, CareCircle, Roastline + upgraded
+       Just One/Quitline/Chainlink; SpinFit/Fate already had one. All wired via
+       `splash` → `/apps/<slug>/banner.webp`. (Chainlink briefly used its repo's
+       og_image, now replaced by the owner's nicer CAT→COT→DOT→DOG art.)
+     - **Web links:** Forge, Apex, Lyra, CareCircle, Fate have `webAppUrl` (live
+       Vercel deploys). Owner wants ALL apps to have web links; still MISSING for
+       the 5 Expo apps — **SpinFit, Quitline, Roastline, Chainlink, Just One** —
+       whose deploy URLs aren't in their repos and can't be derived here. Waiting
+       on the owner to paste those 5 URLs.
        PENDING all: launch/store URLs. Forge & Apex legal = dataModel 'standard'
        (optional account/cloud sync), no notifications. Fate = 'standard' (AdMob).
    - Favicon/app icon is the monkey head (`public/favicon-16.png`,
