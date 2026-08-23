@@ -27,6 +27,11 @@ export default async function middleware(request) {
   const password = process.env.SITE_PASSWORD || '1234';
   const url = new URL(request.url);
 
+  // --- Legal pages stay public even while the gate is up ---
+  // App stores require a privacy-policy URL reachable without a login, and legal
+  // pages contain no secrets. Allow any /privacy or /terms page straight through.
+  if (/\/(privacy|terms)\/?$/.test(url.pathname)) return next();
+
   // --- Handle the unlock form submission ---
   if (url.pathname === '/__enter' && request.method === 'POST') {
     let entered = '';
