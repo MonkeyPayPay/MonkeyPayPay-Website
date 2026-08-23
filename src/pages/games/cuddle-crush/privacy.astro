@@ -1,0 +1,284 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { site } from '../../../data/site';
+
+const updated = 'August 23, 2026';
+const contact = site.contactEmail;
+---
+
+<BaseLayout
+  title="Cuddle Crush — Privacy Policy"
+  description="Privacy Policy for Cuddle Crush, Squish ’Em, published by MonkeyPayPay."
+>
+  <article class="prose legal container">
+    <a class="app__back" href="/#flagship">← Cuddle Crush</a>
+    <h1>Cuddle Crush, Squish ’Em — Privacy Policy</h1>
+    <p class="legal__meta">Published by MonkeyPayPay · Last updated: {updated}</p>
+
+    <h2>1. The short version</h2>
+    <p>We collect what the game needs to work and almost nothing else.</p>
+    <ul>
+      <li>You can play without giving us an email address.</li>
+      <li>
+        We do not use advertising SDKs, and no third-party analytics or tracking company receives
+        your data.
+      </li>
+      <li>We never sell or rent your personal information.</li>
+      <li>We never see your card details. Apple and Google handle payment.</li>
+      <li>You can delete your account and everything attached to it from inside the game.</li>
+    </ul>
+    <p>The rest of this document says the same things in the detail the law expects.</p>
+
+    <h2>2. Who we are</h2>
+    <p>
+      MonkeyPayPay (“we”, “us”) publishes the mobile game Cuddle Crush, Squish ’Em (“the Game”). We
+      are the data controller for the information described here.
+    </p>
+    <p>Contact: <a href={`mailto:${contact}`}>{contact}</a></p>
+
+    <h2>3. What we collect, and why</h2>
+
+    <h3>3.1 Your account</h3>
+    <div class="legal__tablewrap">
+      <table>
+        <thead>
+          <tr><th>What</th><th>Why we hold it</th><th>Required?</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>A profile identifier (a random ID)</td><td>Identifies your progress and your seat in a match</td><td>Yes</td></tr>
+          <tr><td>Display name (up to 20 characters)</td><td>Shown to other players in matches, crews and leaderboards</td><td>Yes</td></tr>
+          <tr><td>Email address</td><td>Only if you register, so you can sign in on another device and recover your account</td><td>No — guest play needs none</td></tr>
+          <tr><td>Password (stored only as a one-way hash)</td><td>Signing in. We cannot read your password</td><td>No</td></tr>
+          <tr><td>Friend code</td><td>Lets other players add you deliberately rather than by searching</td><td>Yes</td></tr>
+          <tr><td>Account creation date</td><td>Account security, and support requests</td><td>Yes</td></tr>
+          <tr><td>Year of birth, if you enter it</td><td>Age-restricted features only (see §6). We ask for the year, never the full date</td><td>No</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>
+      If you play as a guest we hold no email address and no password. That guest profile lives on our
+      servers so your progress survives, but it is not linked to you personally by anything you have
+      told us.
+    </p>
+
+    <h3>3.2 How you play</h3>
+    <p>
+      Match results, wins and losses, fighter levels, unlocked characters, seasonal rank, quest and
+      battle-pass progress, and your balances of the three in-game currencies (Coins, Gems and
+      Shards). This is the game’s save file. Without it there is no game.
+    </p>
+    <p>
+      We also keep a record of every movement of in-game currency — what was earned or spent, when,
+      and why. That record exists so that if you ever tell us your balance is wrong we can actually
+      check, rather than guess.
+    </p>
+
+    <h3>3.3 Purchases</h3>
+    <p>
+      When you buy Gems or a subscription, Apple or Google processes the payment. We receive a
+      purchase token, the product identifier, the amount of in-game currency granted, the price in US
+      dollars from our own price table, and the time. We never receive your card number, billing
+      address, or any other payment credential.
+    </p>
+
+    <h3>3.4 Things you write</h3>
+    <p>
+      Crew chat messages. The most recent 50 messages of a crew’s chat are stored so the conversation
+      is there when you open it, and are filtered for profanity. Do not put anything private in chat:
+      every member of the crew can read it.
+    </p>
+    <p>Player reports and blocks, so we can act on them.</p>
+
+    <h3>3.5 Technical and diagnostic data</h3>
+    <ul>
+      <li>
+        Your IP address, used to rate-limit sign-in attempts and abusive traffic. It is not stored
+        against your gameplay history as a profile field.
+      </li>
+      <li>Error reports the Game sends when something goes wrong, so we can fix it.</li>
+      <li>
+        Gameplay events — for example that a match ended, a box was opened, or a level was gained —
+        recorded with your profile identifier and a timestamp. We use these to understand whether the
+        game is balanced and where players get stuck.
+      </li>
+    </ul>
+    <p>
+      These analytics are our own. They are written to our own server. They are not sent to an
+      advertising network, a data broker, or a third-party analytics provider.
+    </p>
+
+    <h2>4. What we do NOT do</h2>
+    <ul>
+      <li>
+        No advertising SDKs. The Game contains no advertising network code. It has a “rewarded” bonus
+        feature, and where that involves an ad partner in future this policy will be updated before
+        that ships.
+      </li>
+      <li>No third-party trackers or analytics services.</li>
+      <li>No selling or renting of personal information, to anyone, ever.</li>
+      <li>No cross-app or cross-site tracking. We do not follow you anywhere else.</li>
+      <li>No access to your contacts, photos, microphone, or precise location.</li>
+    </ul>
+
+    <h2>5. Our legal bases (UK/EU users)</h2>
+    <div class="legal__tablewrap">
+      <table>
+        <thead>
+          <tr><th>Purpose</th><th>Basis</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Running your account and the Game</td><td>Performance of a contract with you</td></tr>
+          <tr><td>Purchases and preventing payment fraud</td><td>Contract, and our legitimate interests</td></tr>
+          <tr><td>Keeping the Game secure and fair</td><td>Legitimate interests</td></tr>
+          <tr><td>Understanding and improving the Game</td><td>Legitimate interests</td></tr>
+          <tr><td>Anything you explicitly opt into</td><td>Consent, which you may withdraw</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>6. Children</h2>
+    <p>
+      The Game is not directed at children under 13 (or under 16 where local law sets that threshold),
+      and we do not knowingly collect personal information from them.
+    </p>
+    <p>
+      Some features are age-restricted. Shardfall staking is limited by a self-declared year of birth
+      and is unavailable to players under the required age. It uses Shards, an earned-only currency
+      that cannot be bought and cannot be converted into money or anything of real-world value — it is
+      not gambling.
+    </p>
+    <p>
+      If you believe a child has given us personal information, contact us at{' '}
+      <a href={`mailto:${contact}`}>{contact}</a> and we will delete it.
+    </p>
+
+    <h2>7. Sharing</h2>
+    <p>We share personal information only with:</p>
+    <ul>
+      <li>Apple and Google, to verify that a purchase is genuine and to learn when one has been refunded.</li>
+      <li>
+        Our hosting and database providers, who store the data on our behalf under contract and may
+        not use it for their own purposes.
+      </li>
+      <li>Authorities, where the law actually requires it.</li>
+    </ul>
+    <p>
+      Other players see your display name, your friend code if you give it to them, your fighters and
+      your public record — wins, rank, and leaderboard position. They do not see your email address.
+    </p>
+
+    <h2>8. Where your data is held</h2>
+    <p>
+      Our servers and database are operated by our hosting provider and may be located outside your
+      country. Where data leaves the UK or EEA we rely on the safeguards our providers offer,
+      including standard contractual clauses.
+    </p>
+
+    <h2>9. How long we keep it</h2>
+    <ul>
+      <li>Your account data: while your account exists.</li>
+      <li>After you delete your account: removed from our live systems immediately. Backups roll off within 30 days.</li>
+      <li>
+        Purchase and currency records: retained for up to 7 years where tax and accounting law
+        requires it, even after account deletion. These are financial records; they are kept
+        separately and are not used to rebuild a profile.
+      </li>
+      <li>Chat: only the most recent 50 messages per crew.</li>
+      <li>Analytics events: retained for up to 24 months.</li>
+    </ul>
+
+    <h2>10. Your rights</h2>
+    <p>Wherever you live, you may ask us to:</p>
+    <ul>
+      <li>See what we hold about you.</li>
+      <li>Correct anything that is wrong.</li>
+      <li>
+        Delete your account and its data. You can do this yourself: <strong>Account → Delete
+        Account</strong>, inside the Game. It is immediate and it is not reversible.
+      </li>
+      <li>Export a copy of your data in a portable format.</li>
+      <li>Object to or restrict how we use it.</li>
+      <li>Withdraw consent where we relied on it.</li>
+    </ul>
+    <p>
+      Email <a href={`mailto:${contact}`}>{contact}</a>. We will respond within 30 days and will not
+      charge you or make the Game worse for asking.
+    </p>
+    <p>
+      UK and EU users may complain to their data protection authority. In the UK that is the
+      Information Commissioner’s Office (ico.org.uk).
+    </p>
+    <p>
+      California residents: the rights above cover the CCPA/CPRA rights to know, delete, correct, and
+      opt out of sale or sharing. We do not sell or share personal information as those terms are
+      defined, so there is nothing to opt out of, and we will not discriminate against you for
+      exercising any right.
+    </p>
+
+    <h2>11. Security</h2>
+    <p>
+      Passwords are stored only as one-way hashes and are never recoverable, by us or by anyone else.
+      Sign-in attempts are rate-limited. Purchases are verified against Apple and Google and each
+      purchase can be granted exactly once, so a replayed receipt cannot be used twice.
+    </p>
+    <p>
+      No system is perfectly secure, and we will not pretend otherwise. If a breach affects you, we
+      will tell you and the relevant regulator as the law requires.
+    </p>
+
+    <h2>12. Changes to this policy</h2>
+    <p>
+      If we change this policy materially — particularly if we ever add advertising or a third-party
+      analytics service — we will say so in the Game before the change takes effect, not afterwards.
+      The “last updated” date at the top always reflects the current version.
+    </p>
+
+    <h2>13. Contact</h2>
+    <p>
+      MonkeyPayPay — <a href={`mailto:${contact}`}>{contact}</a>
+      <br />
+      <span class="todo">[POSTAL ADDRESS — optional; add before launch if you want one listed]</span>
+    </p>
+
+    <hr />
+    <p class="legal__note">
+      Questions about this privacy policy? Contact <a href={`mailto:${contact}`}>{contact}</a>. See
+      also the <a href="/games/cuddle-crush/terms">Cuddle Crush Terms of Service</a>.
+    </p>
+  </article>
+</BaseLayout>
+
+<style>
+  .legal .todo {
+    background: rgba(255, 176, 32, 0.16);
+    color: #ffca6a;
+    border: 1px dashed rgba(255, 176, 32, 0.5);
+    border-radius: 6px;
+    padding: 0 0.35em;
+    font-size: 0.92em;
+  }
+  .legal h3 {
+    font-size: 1.1rem;
+    margin-top: 1.6rem;
+  }
+  .legal__tablewrap {
+    overflow-x: auto;
+    margin: 1rem 0 1.5rem;
+  }
+  .legal table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.95rem;
+  }
+  .legal th,
+  .legal td {
+    text-align: left;
+    padding: 0.6rem 0.8rem;
+    border: 1px solid var(--border);
+    vertical-align: top;
+  }
+  .legal th {
+    background: var(--surface);
+    font-weight: 600;
+  }
+</style>

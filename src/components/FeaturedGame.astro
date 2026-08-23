@@ -61,6 +61,12 @@ import AppleIcon from './AppleIcon.astro';
             )
           }
         </div>
+
+        <p class="flagship__legal">
+          <a href="/games/cuddle-crush/privacy">Privacy Policy</a>
+          <span aria-hidden="true">·</span>
+          <a href="/games/cuddle-crush/terms">Terms of Service</a>
+        </p>
       </div>
 
       <!-- Cuddle Crush heart-slam mascot: 24-frame sprite in the flagship corner -->
@@ -68,3 +74,21 @@ import AppleIcon from './AppleIcon.astro';
     </div>
   </div>
 </section>
+
+<style>
+  .flagship__legal {
+    margin-top: 1.1rem;
+    display: flex;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+    color: var(--muted);
+  }
+  .flagship__legal a {
+    color: var(--muted);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+  .flagship__legal a:hover {
+    color: var(--text);
+  }
+</style>
