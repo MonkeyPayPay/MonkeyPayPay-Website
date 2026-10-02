@@ -159,8 +159,9 @@ docs live in `README.md`.)
   twinkle-light string, sleigh fly-by, live Christmas countdown, swinging
   name-tag tabs, gifts that unwrap on scroll/tap, confetti on store clicks +
   "Surprise me" + tapping the monkey. Amazon/Charles Tyrwhitt links were
-  stripped of tracking/third-party affiliate params. Still behind the site
-  password gate. **Retire after the holidays:** delete the page + data file.
+  stripped of tracking/third-party affiliate params. **Public — skips the
+  password gate** (allow-list block in `middleware.js`: the page, `/_astro/*`,
+  `monkey-dance.webp`, favicons). Live on production. **Retire after the holidays:** delete the page + data file.
 
 ## Domain / hosting facts
 
