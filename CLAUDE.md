@@ -150,6 +150,18 @@ docs live in `README.md`.)
 - The WordPress theme this started as is preserved in git history at commit
   `258612b` (superseded by the Astro rebuild).
 
+- **SECRET Christmas wish lists — `/north-pole` (TEMPORARY).** Family gift lists
+  (Dad / Mom / Paisley) in `src/pages/north-pole.astro`, data in
+  `src/data/wishlist.ts`. **Deliberately unlinked:** no nav/footer/⌘K/sitemap
+  entry, and `noindex` (via BaseLayout's `noindex` prop). Only Dad's list is
+  filled in so far; Mom's + Paisley's show a "letter on its way" placeholder
+  until items are added. Festive FX: canvas snow (wind follows the pointer),
+  twinkle-light string, sleigh fly-by, live Christmas countdown, swinging
+  name-tag tabs, gifts that unwrap on scroll/tap, confetti on store clicks +
+  "Surprise me" + tapping the monkey. Amazon/Charles Tyrwhitt links were
+  stripped of tracking/third-party affiliate params. Still behind the site
+  password gate. **Retire after the holidays:** delete the page + data file.
+
 ## Domain / hosting facts
 
 - Domain **monkeypaypay.com** registered at **GoDaddy**; site hosted on **Vercel**.

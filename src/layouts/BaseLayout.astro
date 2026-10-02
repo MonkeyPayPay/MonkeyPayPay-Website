@@ -14,9 +14,11 @@ interface Props {
   description?: string;
   /** Optional page-specific JSON-LD (e.g. SoftwareApplication on detail pages). */
   jsonLd?: unknown;
+  /** Keep this page out of search engines (e.g. the unlisted wish-list page). */
+  noindex?: boolean;
 }
 
-const { title, description, jsonLd } = Astro.props;
+const { title, description, jsonLd, noindex = false } = Astro.props;
 const pageTitle = title ? `${title} · ${site.name}` : `${site.name} — ${site.tagline}`;
 const pageDesc = description ?? site.description;
 const canonical = new URL(Astro.url.pathname, site.url).href;
@@ -60,6 +62,7 @@ const siteJsonLd = {
     <link rel="canonical" href={canonical} />
     <title>{pageTitle}</title>
     <meta name="description" content={pageDesc} />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={pageDesc} />
     <meta property="og:type" content="website" />

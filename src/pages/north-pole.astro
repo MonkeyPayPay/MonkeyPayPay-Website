@@ -1,0 +1,1262 @@
+---
+// SECRET + TEMPORARY: the family Christmas wish lists.
+// Unlisted on purpose: no nav/footer/⌘K link points here, it's not in the
+// sitemap, and it's noindex. Data lives in src/data/wishlist.ts.
+import '@fontsource/pacifico';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { wishlists } from '../data/wishlist';
+
+// Twinkle-light string across the top of the sky: two sagging swags of bulbs.
+const BULB_COLORS = ['#ff4d5e', '#ffd34d', '#3ee08f', '#4db8ff', '#ff8af0'];
+const PER_SWAG = 9;
+const bulbs = Array.from({ length: PER_SWAG * 2 }, (_, i) => {
+  const t = ((i % PER_SWAG) + 0.5) / PER_SWAG; // 0..1 along this swag
+  return {
+    x: ((i + 0.5) / (PER_SWAG * 2)) * 100, // % across the full width
+    y: 4 * 26 * t * (1 - t), // px of sag (parabola)
+    color: BULB_COLORS[i % BULB_COLORS.length],
+    delay: ((i * 0.37) % 2.2).toFixed(2),
+  };
+});
+---
+
+<BaseLayout
+  title="North Pole Wish Lists"
+  description="Our family's Christmas wish lists."
+  noindex
+>
+  <div class="np" data-np>
+    <canvas class="np__snow" data-np-snow aria-hidden="true"></canvas>
+    <canvas class="np__fx" data-np-fx aria-hidden="true"></canvas>
+
+    <!-- ===== Sky / hero ===== -->
+    <section class="np-hero">
+      <div class="np-lights" aria-hidden="true">
+        <svg class="np-lights__wire" viewBox="0 0 100 30" preserveAspectRatio="none">
+          <path d="M0 2 Q25 56 50 2 Q75 56 100 2" />
+        </svg>
+        {
+          bulbs.map((b) => (
+            <span
+              class="np-bulb"
+              style={`left:${b.x}%;top:${b.y}px;--c:${b.color};--d:${b.delay}s`}
+            />
+          ))
+        }
+      </div>
+
+      <div class="np-sleigh" aria-hidden="true">
+        <span class="np-sleigh__team">🦌🦌🦌<span class="np-sleigh__sled">🛷</span></span>
+      </div>
+
+      <div class="container np-hero__inner">
+        <div class="np-hero__copy">
+          <p class="np-eyebrow">Shh — top secret</p>
+          <h1 class="np-title">
+            The North Pole
+            <span class="np-title__script">Wish Lists</span>
+          </h1>
+          <p class="np-lead">
+            Santa’s helpers, start here. Pick a name tag, unwrap the ideas, and tap a
+            store to grab it.
+          </p>
+
+          <div class="np-count" data-np-count aria-live="off">
+            <div class="np-count__cell"><b data-u="d">--</b><span>days</span></div>
+            <div class="np-count__cell"><b data-u="h">--</b><span>hours</span></div>
+            <div class="np-count__cell"><b data-u="m">--</b><span>mins</span></div>
+            <div class="np-count__cell"><b data-u="s">--</b><span>secs</span></div>
+            <p class="np-count__label" data-np-count-label>until Christmas morning</p>
+          </div>
+        </div>
+
+        <button class="np-mascot" type="button" data-np-mascot aria-label="Tap the monkey for a little holiday magic">
+          <span class="np-mascot__glow" aria-hidden="true" />
+          <span class="mascot-sprite mascot-sprite--dance is-looping np-mascot__sprite" aria-hidden="true" />
+          <span class="np-mascot__hohoho" aria-hidden="true">Ho ho ho!</span>
+        </button>
+      </div>
+
+      <div class="np-drifts" aria-hidden="true" />
+    </section>
+
+    <!-- ===== Lists ===== -->
+    <section class="np-lists container">
+      <div class="np-tags" role="tablist" aria-label="Whose list?">
+        {
+          wishlists.map((p, i) => (
+            <button
+              class="np-tag"
+              role="tab"
+              type="button"
+              id={`tab-${p.id}`}
+              aria-controls={`list-${p.id}`}
+              aria-selected={i === 0 ? 'true' : 'false'}
+              tabindex={i === 0 ? 0 : -1}
+              data-np-tab={p.id}
+              style={`--ribbon:${p.ribbon};--sw:${i}`}
+            >
+              <span class="np-tag__string" aria-hidden="true" />
+              <span class="np-tag__card">
+                <span class="np-tag__hole" aria-hidden="true" />
+                <span class="np-tag__to">To:</span>
+                <span class="np-tag__name">{p.name}</span>
+                <span class="np-tag__line">{p.tagline}</span>
+              </span>
+            </button>
+          ))
+        }
+      </div>
+
+      {
+        wishlists.map((p, i) => (
+          <div
+            class="np-panel"
+            role="tabpanel"
+            id={`list-${p.id}`}
+            aria-labelledby={`tab-${p.id}`}
+            hidden={i !== 0}
+            data-np-panel={p.id}
+            style={`--ribbon:${p.ribbon}`}
+          >
+            {p.items.length > 0 ? (
+              <>
+                <div class="np-panel__bar">
+                  <h2 class="np-panel__title">
+                    {p.name}’s list <span class="np-panel__count">{p.items.length} gifts</span>
+                  </h2>
+                  <button class="np-surprise" type="button" data-np-surprise>
+                    <span aria-hidden="true">🎲</span> Surprise me
+                  </button>
+                </div>
+                <ul class="np-gifts" role="list">
+                  {p.items.map((item, n) => (
+                    <li class="np-gift" style={`--i:${n}`} data-np-gift>
+                      <div class="np-gift__wrap" aria-hidden="true">
+                        <span class="np-gift__paper np-gift__paper--l" />
+                        <span class="np-gift__paper np-gift__paper--r" />
+                        <span class="np-gift__bow">
+                          <i />
+                          <i />
+                          <b />
+                        </span>
+                        <span class="np-gift__hint">tap to unwrap</span>
+                      </div>
+                      <article class="np-gift__body">
+                        <span class="np-gift__icon" aria-hidden="true">
+                          {item.icon}
+                        </span>
+                        <h3 class="np-gift__title">{item.title}</h3>
+                        {item.note && <p class="np-gift__note">{item.note}</p>}
+                        {item.details && (
+                          <ul class="np-gift__chips" role="list" aria-label="Details">
+                            {item.details.map((d) => (
+                              <li>{d}</li>
+                            ))}
+                          </ul>
+                        )}
+                        <p class="np-gift__where">
+                          {item.links.length > 1 ? 'Grab it at' : 'Grab it'}
+                        </p>
+                        <div class="np-gift__links">
+                          {item.links.map((l, k) => (
+                            <a
+                              class:list={['np-store', { 'np-store--main': k === 0 }]}
+                              href={l.href}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              data-np-store
+                            >
+                              {l.label}
+                              <span class="np-store__arrow" aria-hidden="true">
+                                ↗
+                              </span>
+                              <span class="screen-reader-text"> (opens in a new tab)</span>
+                            </a>
+                          ))}
+                        </div>
+                      </article>
+                    </li>
+                  ))}
+                </ul>
+              </>
+            ) : (
+              <div class="np-letter">
+                <div class="np-letter__envelope" aria-hidden="true">
+                  <span class="np-letter__flap" />
+                  <span class="np-letter__seal">❄</span>
+                </div>
+                <h2 class="np-letter__title">{p.name}’s letter is still on its way</h2>
+                <p class="np-letter__text">
+                  The elves are still sorting through this one. Check back soon. It’ll pop
+                  up right here.
+                </p>
+              </div>
+            )}
+          </div>
+        ))
+      }
+    </section>
+  </div>
+</BaseLayout>
+
+<style>
+  /* ---------- Page shell: a snowy night, regardless of site theme ---------- */
+  .np {
+    --np-night: #070b1f;
+    --np-night-2: #0e1636;
+    --np-gold: #ffd76a;
+    --np-snow: #f4f7ff;
+    --np-ink: #1a1424;
+    position: relative;
+    isolation: isolate;
+    color: var(--np-snow);
+    background:
+      radial-gradient(1200px 520px at 80% -10%, rgba(77, 184, 255, 0.18), transparent 60%),
+      radial-gradient(900px 500px at 10% 10%, rgba(255, 77, 94, 0.12), transparent 60%),
+      linear-gradient(180deg, var(--np-night) 0%, var(--np-night-2) 55%, #141c40 100%);
+    overflow: hidden;
+    padding-bottom: clamp(3rem, 8vw, 6rem);
+  }
+  .np__snow,
+  .np__fx {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+  }
+  .np__snow { z-index: 0; }
+  .np__fx { z-index: 90; }
+  .np > section { position: relative; z-index: 1; }
+
+  /* ---------- Hero ---------- */
+  .np-hero {
+    padding-top: clamp(4.5rem, 10vw, 7rem);
+    padding-bottom: clamp(4rem, 9vw, 7rem);
+  }
+  .np-hero__inner {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    align-items: center;
+    gap: clamp(1.5rem, 4vw, 3rem);
+  }
+  .np-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 0 0 1rem;
+    padding: 0.35rem 0.9rem;
+    border-radius: 999px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--np-gold);
+    background: rgba(255, 215, 106, 0.1);
+    border: 1px solid rgba(255, 215, 106, 0.35);
+  }
+  .np-eyebrow::before { content: '🤫'; letter-spacing: 0; }
+  .np-title {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: var(--fs-display);
+    line-height: 0.98;
+    letter-spacing: -0.03em;
+  }
+  .np-title__script {
+    display: block;
+    margin-top: 0.15em;
+    font-family: 'Pacifico', cursive;
+    font-weight: 400;
+    letter-spacing: 0;
+    font-size: 0.92em;
+    line-height: 1.25;
+    padding-bottom: 0.1em;
+    background: linear-gradient(100deg, #ff4d5e 0%, #ffd76a 30%, #fff6d6 45%, #3ee08f 65%, #ff4d5e 100%);
+    background-size: 220% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: np-shimmer 6s linear infinite;
+    filter: drop-shadow(0 6px 24px rgba(255, 77, 94, 0.25));
+  }
+  @keyframes np-shimmer { to { background-position: -220% 0; } }
+  .np-lead {
+    max-width: 34rem;
+    margin: 1.25rem 0 0;
+    font-size: var(--fs-lead);
+    color: #c7cdf0;
+  }
+
+  /* countdown */
+  .np-count {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-top: 2rem;
+  }
+  .np-count__cell {
+    min-width: 4.4rem;
+    padding: 0.7rem 0.6rem 0.55rem;
+    text-align: center;
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(6px);
+  }
+  .np-count__cell b {
+    display: block;
+    font-family: var(--font-display);
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+    color: #fff;
+  }
+  .np-count__cell b.is-tick { animation: np-tick 400ms ease; }
+  @keyframes np-tick {
+    0% { transform: translateY(-6px); opacity: 0.3; }
+    100% { transform: none; opacity: 1; }
+  }
+  .np-count__cell span {
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #9aa3d6;
+  }
+  .np-count__label {
+    flex-basis: 100%;
+    margin: 0.3rem 0 0;
+    font-size: 0.9rem;
+    color: #9aa3d6;
+  }
+
+  /* lights */
+  .np-lights {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 70px;
+    pointer-events: none;
+  }
+  .np-lights__wire {
+    position: absolute;
+    inset: 0 0 auto 0;
+    width: 100%;
+    height: 30px;
+    overflow: visible;
+  }
+  .np-lights__wire path {
+    fill: none;
+    stroke: #1f2a4f;
+    stroke-width: 2.2;
+    vector-effect: non-scaling-stroke;
+  }
+  .np-bulb {
+    position: absolute;
+    width: 12px;
+    height: 18px;
+    margin-left: -6px;
+    margin-top: 4px;
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+    background: var(--c);
+    box-shadow: 0 0 10px 2px var(--c), 0 0 26px 6px color-mix(in oklab, var(--c) 45%, transparent);
+    animation: np-twinkle 2.2s ease-in-out infinite;
+    animation-delay: var(--d);
+  }
+  .np-bulb::before {
+    content: '';
+    position: absolute;
+    top: -5px;
+    left: 3px;
+    width: 6px;
+    height: 6px;
+    border-radius: 2px;
+    background: #39436b;
+  }
+  @keyframes np-twinkle {
+    0%, 100% { opacity: 1; filter: brightness(1.15); }
+    50% { opacity: 0.35; filter: brightness(0.7); box-shadow: 0 0 4px 0 var(--c); }
+  }
+
+  /* sleigh fly-by */
+  .np-sleigh {
+    position: absolute;
+    top: clamp(70px, 12vw, 110px);
+    left: 0;
+    width: 100%;
+    pointer-events: none;
+    overflow: hidden;
+    height: 60px;
+  }
+  .np-sleigh__team {
+    position: absolute;
+    left: 100%;
+    font-size: clamp(1.3rem, 2.4vw, 1.9rem);
+    white-space: nowrap;
+    filter: drop-shadow(0 0 10px rgba(255, 215, 106, 0.55));
+    animation: np-fly 16s linear infinite;
+    animation-delay: 2s;
+  }
+  .np-sleigh__team::after {
+    content: '✦ ✧ ✦ ✧';
+    margin-left: 0.3em;
+    font-size: 0.6em;
+    color: var(--np-gold);
+    letter-spacing: 0.3em;
+    opacity: 0.85;
+  }
+  .np-sleigh__sled { display: inline-block; transform: scaleX(-1); }
+  @keyframes np-fly {
+    0% { transform: translate(0, 18px); }
+    10% { transform: translate(-30vw, 0); }
+    20% { transform: translate(-60vw, 14px); }
+    32%, 100% { transform: translate(calc(-100vw - 100%), -6px); }
+  }
+
+  /* mascot */
+  .np-mascot {
+    position: relative;
+    justify-self: center;
+    display: grid;
+    place-items: center;
+    padding: 0;
+    border: 0;
+    background: none;
+    cursor: pointer;
+    color: inherit;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .np-mascot__glow {
+    position: absolute;
+    width: 120%;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255, 215, 106, 0.28), transparent 62%);
+    animation: np-breathe 4s ease-in-out infinite;
+  }
+  @keyframes np-breathe {
+    50% { transform: scale(1.08); opacity: 0.7; }
+  }
+  .np-mascot__sprite { position: relative; }
+  .np-mascot:hover .np-mascot__sprite,
+  .np-mascot:focus-visible .np-mascot__sprite { animation-play-state: running; }
+  .np-mascot__hohoho {
+    position: absolute;
+    top: 4%;
+    right: -6%;
+    padding: 0.4rem 0.8rem;
+    border-radius: 14px 14px 14px 4px;
+    font-family: 'Pacifico', cursive;
+    font-size: 1rem;
+    color: var(--np-ink);
+    background: #fff;
+    box-shadow: 0 10px 24px -10px rgba(0, 0, 0, 0.6);
+    opacity: 0;
+    transform: translateY(10px) scale(0.6) rotate(-6deg);
+    transition: opacity 260ms ease, transform 360ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .np-mascot.is-cheering .np-mascot__hohoho {
+    opacity: 1;
+    transform: translateY(0) scale(1) rotate(-6deg);
+  }
+  .np-mascot.is-cheering .np-mascot__sprite { animation-duration: 1.6s; }
+
+  /* snow drifts at the bottom of the hero */
+  .np-drifts {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -1px;
+    height: 70px;
+    background:
+      radial-gradient(60% 120% at 15% 100%, #e9eefc 49%, transparent 50%),
+      radial-gradient(50% 100% at 55% 100%, #dfe6fb 49%, transparent 50%),
+      radial-gradient(55% 130% at 92% 100%, #e9eefc 49%, transparent 50%);
+    opacity: 0.08;
+  }
+
+  /* ---------- Name tags (tabs) ---------- */
+  .np-tags {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: clamp(0.75rem, 3vw, 2rem);
+    margin-bottom: clamp(2rem, 5vw, 3rem);
+  }
+  .np-tag {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0;
+    border: 0;
+    background: none;
+    cursor: pointer;
+    color: var(--np-ink);
+    transform-origin: 50% 0;
+    animation: np-sway 5s ease-in-out infinite;
+    animation-delay: calc(var(--sw) * -1.3s);
+    -webkit-tap-highlight-color: transparent;
+  }
+  .np-tag:hover { animation: np-swing 900ms ease-out; }
+  @keyframes np-sway {
+    0%, 100% { transform: rotate(-2.5deg); }
+    50% { transform: rotate(2.5deg); }
+  }
+  @keyframes np-swing {
+    0% { transform: rotate(0); }
+    25% { transform: rotate(9deg); }
+    50% { transform: rotate(-6deg); }
+    75% { transform: rotate(3deg); }
+    100% { transform: rotate(0); }
+  }
+  .np-tag__string {
+    width: 2px;
+    height: 26px;
+    background: repeating-linear-gradient(180deg, var(--ribbon) 0 4px, #fff 4px 8px);
+    border-radius: 2px;
+  }
+  .np-tag__card {
+    position: relative;
+    display: grid;
+    justify-items: center;
+    min-width: 9.5rem;
+    padding: 1.4rem 1.2rem 0.95rem;
+    border-radius: 16px 16px 14px 14px;
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.0), rgba(0, 0, 0, 0.04)),
+      #fbf6ea;
+    box-shadow: 0 14px 30px -14px rgba(0, 0, 0, 0.7);
+    border: 2px solid transparent;
+    transition: transform 300ms cubic-bezier(0.34, 1.56, 0.64, 1), border-color 200ms ease, box-shadow 200ms ease;
+    clip-path: polygon(18% 0, 82% 0, 100% 16%, 100% 100%, 0 100%, 0 16%);
+  }
+  .np-tag__hole {
+    position: absolute;
+    top: 0.45rem;
+    width: 0.6rem;
+    height: 0.6rem;
+    border-radius: 50%;
+    background: var(--np-night-2);
+    box-shadow: inset 0 0 0 2px var(--ribbon);
+  }
+  .np-tag__to {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #8a7f6a;
+  }
+  .np-tag__name {
+    font-family: 'Pacifico', cursive;
+    font-size: 1.6rem;
+    line-height: 1.4;
+    color: var(--ribbon);
+  }
+  .np-tag__line {
+    font-size: 0.78rem;
+    color: #6d6553;
+  }
+  .np-tag[aria-selected='true'] .np-tag__card {
+    transform: translateY(6px) scale(1.06);
+    border-color: var(--ribbon);
+    box-shadow: 0 0 0 4px color-mix(in oklab, var(--ribbon) 30%, transparent), 0 20px 40px -14px rgba(0, 0, 0, 0.8);
+  }
+  .np-tag:not([aria-selected='true']) .np-tag__card { opacity: 0.82; }
+  .np-tag:focus-visible { outline: none; }
+  .np-tag:focus-visible .np-tag__card { outline: 3px solid var(--np-gold); outline-offset: 3px; }
+
+  /* ---------- Panels ---------- */
+  .np-panel:not([hidden]) { animation: np-panel-in 520ms cubic-bezier(0.22, 1, 0.36, 1); }
+  @keyframes np-panel-in {
+    from { opacity: 0; transform: translateY(18px) scale(0.98); }
+  }
+  .np-panel__bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  .np-panel__title {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: var(--fs-h2);
+    letter-spacing: -0.02em;
+  }
+  .np-panel__count {
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 0.4rem;
+    padding: 0.2rem 0.65rem;
+    border-radius: 999px;
+    font-family: var(--font-body);
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0;
+    background: color-mix(in oklab, var(--ribbon) 25%, transparent);
+    color: #fff;
+  }
+  .np-surprise {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.7rem 1.2rem;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 215, 106, 0.5);
+    background: rgba(255, 215, 106, 0.1);
+    color: var(--np-gold);
+    font: inherit;
+    font-weight: 700;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: transform 200ms ease, background 200ms ease;
+  }
+  .np-surprise:hover { transform: translateY(-2px) rotate(-2deg); background: rgba(255, 215, 106, 0.18); }
+  .np-surprise:active { transform: scale(0.96); }
+
+  /* ---------- Gifts ---------- */
+  .np-gifts {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
+    gap: clamp(1rem, 2.5vw, 1.6rem);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .np-gift {
+    position: relative;
+    border-radius: 22px;
+    perspective: 900px;
+  }
+  .np-gift.is-jiggle { animation: np-jiggle 800ms ease; }
+  @keyframes np-jiggle {
+    0%, 100% { transform: none; }
+    15% { transform: rotate(-4deg) scale(1.04); }
+    30% { transform: rotate(4deg) scale(1.06); }
+    45% { transform: rotate(-3deg) scale(1.04); }
+    60% { transform: rotate(2deg); }
+    75% { transform: rotate(-1deg); }
+  }
+  .np-gift__body {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 1.6rem 1.4rem 1.4rem;
+    border-radius: 22px;
+    background:
+      radial-gradient(140% 90% at 100% 0%, color-mix(in oklab, var(--ribbon) 22%, transparent), transparent 55%),
+      rgba(16, 22, 52, 0.82);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 24px 50px -28px rgba(0, 0, 0, 0.9);
+    backdrop-filter: blur(4px);
+    transition: transform 300ms cubic-bezier(0.22, 1, 0.36, 1), border-color 300ms ease;
+  }
+  .np-gift.is-open:hover .np-gift__body {
+    transform: translateY(-4px);
+    border-color: color-mix(in oklab, var(--ribbon) 60%, transparent);
+  }
+  .np-gift__icon {
+    display: grid;
+    place-items: center;
+    width: 3.4rem;
+    height: 3.4rem;
+    margin-bottom: 1rem;
+    border-radius: 16px;
+    font-size: 1.8rem;
+    background: color-mix(in oklab, var(--ribbon) 22%, rgba(255, 255, 255, 0.05));
+    border: 1px solid color-mix(in oklab, var(--ribbon) 45%, transparent);
+  }
+  .np-gift.is-open .np-gift__icon { animation: np-pop 600ms cubic-bezier(0.34, 1.56, 0.64, 1) both; animation-delay: 260ms; }
+  @keyframes np-pop {
+    from { transform: scale(0.2) rotate(-30deg); opacity: 0; }
+  }
+  .np-gift__title {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: var(--fs-h3);
+    line-height: 1.2;
+  }
+  .np-gift__note {
+    margin: 0.45rem 0 0;
+    color: #b8c0ea;
+    font-size: 0.95rem;
+  }
+  .np-gift__chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin: 0.9rem 0 0;
+    padding: 0;
+    list-style: none;
+  }
+  .np-gift__chips li {
+    padding: 0.25rem 0.65rem;
+    border-radius: 999px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px dashed rgba(255, 255, 255, 0.25);
+  }
+  .np-gift__where {
+    margin: auto 0 0.5rem;
+    padding-top: 1.2rem;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #8f98cc;
+  }
+  .np-gift__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  .np-store {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.55rem 0.95rem;
+    border-radius: 999px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-decoration: none;
+    color: #fff;
+    background: rgba(255, 255, 255, 0.07);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    transition: transform 200ms cubic-bezier(0.34, 1.56, 0.64, 1), background 200ms ease, border-color 200ms ease;
+  }
+  .np-store:hover { transform: translateY(-2px) scale(1.04); border-color: var(--ribbon); }
+  .np-store:active { transform: scale(0.95); }
+  .np-store--main {
+    background: var(--ribbon);
+    border-color: transparent;
+    box-shadow: 0 10px 24px -12px var(--ribbon);
+  }
+  .np-store--main:hover { border-color: #fff; }
+  .np-store__arrow { transition: transform 200ms ease; }
+  .np-store:hover .np-store__arrow { transform: translate(2px, -2px); }
+
+  /* wrapping paper — only drawn when JS can unwrap it (html.js is set in <head>) */
+  .np-gift__wrap { display: none; }
+  :global(html.js) .np-gift__wrap {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    display: block;
+    border-radius: 22px;
+    cursor: pointer;
+  }
+  :global(html.js) .np-gift.is-open .np-gift__wrap { pointer-events: none; }
+  .np-gift__paper {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 50.5%;
+    background-color: var(--ribbon);
+    background-image:
+      radial-gradient(circle at 25% 25%, rgba(255, 255, 255, 0.28) 0 3px, transparent 4px),
+      radial-gradient(circle at 75% 75%, rgba(255, 255, 255, 0.18) 0 2px, transparent 3px),
+      repeating-linear-gradient(45deg, rgba(0, 0, 0, 0.08) 0 10px, transparent 10px 22px);
+    background-size: 28px 28px, 28px 28px, auto;
+    transition: transform 900ms cubic-bezier(0.6, -0.2, 0.3, 1), opacity 700ms ease 250ms;
+    transition-delay: calc(var(--i) * 140ms);
+  }
+  /* the gold ribbon cross */
+  .np-gift__paper::before,
+  .np-gift__paper::after {
+    content: '';
+    position: absolute;
+    background: linear-gradient(90deg, #e6b94a, #ffe9a3 50%, #e6b94a);
+  }
+  .np-gift__paper::before { top: 0; bottom: 0; width: 14px; }
+  .np-gift__paper::after {
+    left: 0;
+    right: 0;
+    top: 34%;
+    height: 14px;
+    background: linear-gradient(180deg, #e6b94a, #ffe9a3 50%, #e6b94a);
+  }
+  .np-gift__paper--l { left: 0; border-radius: 22px 0 0 22px; }
+  .np-gift__paper--l::before { right: 0; width: 7px; }
+  .np-gift__paper--r { right: 0; border-radius: 0 22px 22px 0; }
+  .np-gift__paper--r::before { left: 0; width: 7px; }
+  .np-gift.is-open .np-gift__paper--l { transform: translateX(-115%) rotate(-14deg); opacity: 0; }
+  .np-gift.is-open .np-gift__paper--r { transform: translateX(115%) rotate(14deg); opacity: 0; }
+
+  .np-gift__bow {
+    position: absolute;
+    left: 50%;
+    top: 34%;
+    width: 0;
+    height: 0;
+    transition: transform 700ms cubic-bezier(0.5, -0.4, 0.4, 1), opacity 500ms ease 200ms;
+    transition-delay: calc(var(--i) * 140ms);
+  }
+  .np-gift__bow i {
+    position: absolute;
+    top: -16px;
+    width: 34px;
+    height: 26px;
+    border: 7px solid #ffd76a;
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+    background: rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+  }
+  .np-gift__bow i:first-child { right: 2px; transform: rotate(-24deg); }
+  .np-gift__bow i:nth-child(2) { left: 2px; transform: rotate(24deg); }
+  .np-gift__bow b {
+    position: absolute;
+    left: -9px;
+    top: -2px;
+    width: 18px;
+    height: 18px;
+    border-radius: 6px;
+    background: radial-gradient(circle at 35% 30%, #fff3c4, #e6b94a 70%);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  }
+  .np-gift:not(.is-open) .np-gift__bow { animation: np-bow-bob 2.6s ease-in-out infinite; animation-delay: calc(var(--i) * -0.4s); }
+  @keyframes np-bow-bob {
+    50% { transform: translateY(-4px) rotate(4deg); }
+  }
+  .np-gift.is-open .np-gift__bow { transform: translateY(-160px) rotate(220deg) scale(1.3); opacity: 0; }
+  .np-gift__hint {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 1rem;
+    text-align: center;
+    font-family: 'Pacifico', cursive;
+    font-size: 1.05rem;
+    color: #fff;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.45);
+    transition: opacity 200ms ease;
+  }
+  .np-gift.is-open .np-gift__hint { opacity: 0; }
+  :global(html.js) .np-gift:not(.is-open) .np-gift__body { opacity: 0; }
+  :global(html.js) .np-gift .np-gift__body { transition: opacity 500ms ease 300ms, transform 300ms cubic-bezier(0.22, 1, 0.36, 1), border-color 300ms ease; }
+  :global(html.js) .np-gift:not(.is-open):hover { animation: np-jiggle 700ms ease; }
+
+  /* ---------- Empty list: letter to Santa ---------- */
+  .np-letter {
+    max-width: 30rem;
+    margin: 0 auto;
+    padding: clamp(1.5rem, 4vw, 2.5rem) 0;
+    text-align: center;
+  }
+  .np-letter__envelope {
+    position: relative;
+    width: 150px;
+    height: 100px;
+    margin: 0 auto 1.6rem;
+    border-radius: 10px;
+    background: #fbf6ea;
+    box-shadow: 0 20px 40px -18px rgba(0, 0, 0, 0.8);
+    animation: np-float 3.4s ease-in-out infinite;
+    overflow: hidden;
+  }
+  .np-letter__envelope::before {
+    content: '';
+    position: absolute;
+    inset: auto 0 0 0;
+    height: 70%;
+    background: linear-gradient(160deg, transparent 49%, #efe6d0 50%), linear-gradient(200deg, transparent 49%, #efe6d0 50%);
+    background-size: 50% 100%;
+    background-position: left, right;
+    background-repeat: no-repeat;
+  }
+  .np-letter__flap {
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 60%;
+    background: #e9dfc6;
+    clip-path: polygon(0 0, 100% 0, 50% 100%);
+  }
+  .np-letter__seal {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    display: grid;
+    place-items: center;
+    width: 32px;
+    height: 32px;
+    margin: -20px 0 0 -16px;
+    border-radius: 50%;
+    background: var(--ribbon);
+    color: #fff;
+    font-size: 1rem;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    animation: np-spin 8s linear infinite;
+  }
+  @keyframes np-float {
+    0%, 100% { transform: translateY(0) rotate(-3deg); }
+    50% { transform: translateY(-10px) rotate(3deg); }
+  }
+  @keyframes np-spin { to { transform: rotate(360deg); } }
+  .np-letter__title {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: var(--fs-h3);
+  }
+  .np-letter__text { margin: 0.6rem 0 0; color: #b8c0ea; }
+
+  /* ---------- Phone ---------- */
+  @media (max-width: 760px) {
+    .np-hero__inner { grid-template-columns: 1fr; text-align: center; }
+    .np-lead { margin-inline: auto; }
+    .np-count { justify-content: center; }
+    .np-mascot { order: -1; }
+    .np-mascot__sprite { --fw: clamp(120px, 34vw, 170px); }
+    .np-tag__card { min-width: 7.2rem; padding-inline: 0.8rem; }
+    .np-tag__name { font-size: 1.3rem; }
+    .np-count__cell { min-width: 3.9rem; }
+  }
+
+  /* ---------- Reduced motion: keep it calm, everything visible ---------- */
+  @media (prefers-reduced-motion: reduce) {
+    .np *,
+    .np *::before,
+    .np *::after {
+      animation: none !important;
+      transition: none !important;
+    }
+    .np-sleigh { display: none; }
+  }
+</style>
+
+<script>
+  type Cleanup = () => void;
+  let cleanup: Cleanup | null = null;
+
+  const FESTIVE = ['#ff4d5e', '#ffd76a', '#3ee08f', '#4db8ff', '#ffffff', '#ff8af0'];
+
+  function initNorthPole() {
+    cleanup?.();
+    cleanup = null;
+    const root = document.querySelector<HTMLElement>('[data-np]');
+    if (!root) return;
+
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const disposers: Cleanup[] = [];
+    const on = (t: EventTarget, type: string, fn: EventListener, opts?: AddEventListenerOptions) => {
+      t.addEventListener(type, fn, opts);
+      disposers.push(() => t.removeEventListener(type, fn, opts));
+    };
+
+    /* ---------------- Snow + confetti canvases ---------------- */
+    const snowCv = root.querySelector<HTMLCanvasElement>('[data-np-snow]')!;
+    const fxCv = root.querySelector<HTMLCanvasElement>('[data-np-fx]')!;
+    const sctx = snowCv.getContext('2d')!;
+    const fctx = fxCv.getContext('2d')!;
+    let W = 0;
+    let H = 0;
+    let dpr = 1;
+
+    interface Flake { x: number; y: number; r: number; vy: number; phase: number; sway: number; a: number; }
+    interface Bit { x: number; y: number; vx: number; vy: number; rot: number; vr: number; w: number; h: number; c: string; life: number; star: boolean; }
+    let flakes: Flake[] = [];
+    const bits: Bit[] = [];
+    let wind = 0;
+    let windTarget = 0;
+
+    const makeFlake = (anyY: boolean): Flake => ({
+      x: Math.random() * W,
+      y: anyY ? Math.random() * H : -10,
+      r: Math.random() * 2.4 + 0.8,
+      vy: Math.random() * 0.6 + 0.35,
+      phase: Math.random() * Math.PI * 2,
+      sway: Math.random() * 0.6 + 0.2,
+      a: Math.random() * 0.5 + 0.45,
+    });
+
+    const resize = () => {
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      W = window.innerWidth;
+      H = window.innerHeight;
+      for (const cv of [snowCv, fxCv]) {
+        cv.width = W * dpr;
+        cv.height = H * dpr;
+      }
+      sctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      fctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      const target = reduce ? 0 : Math.round(Math.min(160, (W * H) / 9000));
+      while (flakes.length < target) flakes.push(makeFlake(true));
+      flakes.length = target;
+    };
+    resize();
+    on(window, 'resize', resize);
+
+    on(window, 'pointermove', ((e: PointerEvent) => {
+      windTarget = ((e.clientX / W) - 0.5) * 2.2;
+    }) as EventListener, { passive: true });
+
+    const burst = (x: number, y: number, count = 70, spread = 1) => {
+      if (reduce) return;
+      for (let i = 0; i < count; i++) {
+        const ang = Math.random() * Math.PI * 2;
+        const sp = (Math.random() * 7 + 3) * spread;
+        bits.push({
+          x, y,
+          vx: Math.cos(ang) * sp,
+          vy: Math.sin(ang) * sp - 4,
+          rot: Math.random() * Math.PI,
+          vr: (Math.random() - 0.5) * 0.4,
+          w: Math.random() * 6 + 4,
+          h: Math.random() * 4 + 3,
+          c: FESTIVE[(Math.random() * FESTIVE.length) | 0],
+          life: 1,
+          star: Math.random() < 0.25,
+        });
+      }
+      kick();
+    };
+
+    const drawStar = (ctx: CanvasRenderingContext2D, r: number) => {
+      ctx.beginPath();
+      for (let i = 0; i < 10; i++) {
+        const rad = i % 2 ? r * 0.45 : r;
+        const a = (i * Math.PI) / 5 - Math.PI / 2;
+        ctx.lineTo(Math.cos(a) * rad, Math.sin(a) * rad);
+      }
+      ctx.closePath();
+      ctx.fill();
+    };
+
+    let raf = 0;
+    let running = false;
+    let t = 0;
+    const frame = () => {
+      t += 1;
+      wind += (windTarget - wind) * 0.02;
+
+      sctx.clearRect(0, 0, W, H);
+      sctx.fillStyle = '#ffffff';
+      for (const f of flakes) {
+        f.y += f.vy * (1 + f.r * 0.25);
+        f.x += Math.sin(t * 0.01 + f.phase) * f.sway + wind * (0.4 + f.r * 0.2);
+        if (f.y > H + 6) Object.assign(f, makeFlake(false));
+        if (f.x > W + 6) f.x = -6;
+        else if (f.x < -6) f.x = W + 6;
+        sctx.globalAlpha = f.a;
+        sctx.beginPath();
+        sctx.arc(f.x, f.y, f.r, 0, Math.PI * 2);
+        sctx.fill();
+      }
+      sctx.globalAlpha = 1;
+
+      fctx.clearRect(0, 0, W, H);
+      for (let i = bits.length - 1; i >= 0; i--) {
+        const b = bits[i];
+        b.vy += 0.22;
+        b.vx *= 0.985;
+        b.vy *= 0.985;
+        b.x += b.vx;
+        b.y += b.vy;
+        b.rot += b.vr;
+        b.life -= 0.009;
+        if (b.life <= 0 || b.y > H + 20) { bits.splice(i, 1); continue; }
+        fctx.save();
+        fctx.globalAlpha = Math.min(1, b.life * 1.6);
+        fctx.translate(b.x, b.y);
+        fctx.rotate(b.rot);
+        fctx.fillStyle = b.c;
+        if (b.star) drawStar(fctx, b.w * 0.8);
+        else fctx.fillRect(-b.w / 2, -b.h / 2, b.w, b.h * Math.abs(Math.cos(b.rot * 2)) + 1);
+        fctx.restore();
+      }
+
+      if (document.hidden || (flakes.length === 0 && bits.length === 0)) {
+        running = false;
+        return;
+      }
+      raf = requestAnimationFrame(frame);
+    };
+    const kick = () => {
+      if (running || document.hidden) return;
+      running = true;
+      raf = requestAnimationFrame(frame);
+    };
+    kick();
+    on(document, 'visibilitychange', () => kick());
+    disposers.push(() => cancelAnimationFrame(raf));
+
+    const centerOf = (el: Element) => {
+      const r = el.getBoundingClientRect();
+      return { x: r.left + r.width / 2, y: r.top + r.height / 2 };
+    };
+
+    /* ---------------- Countdown ---------------- */
+    const countEl = root.querySelector<HTMLElement>('[data-np-count]');
+    if (countEl) {
+      const cells = {
+        d: countEl.querySelector<HTMLElement>('[data-u="d"]')!,
+        h: countEl.querySelector<HTMLElement>('[data-u="h"]')!,
+        m: countEl.querySelector<HTMLElement>('[data-u="m"]')!,
+        s: countEl.querySelector<HTMLElement>('[data-u="s"]')!,
+      };
+      const label = countEl.querySelector<HTMLElement>('[data-np-count-label]')!;
+      const tick = () => {
+        const now = new Date();
+        const y = now.getFullYear();
+        if (now.getMonth() === 11 && now.getDate() === 25) {
+          Object.values(cells).forEach((c) => (c.textContent = '🎄'));
+          label.textContent = 'Merry Christmas! 🎅';
+          return;
+        }
+        let target = new Date(y, 11, 25);
+        if (now > target) target = new Date(y + 1, 11, 25);
+        let diff = Math.max(0, Math.floor((target.getTime() - now.getTime()) / 1000));
+        const vals = {
+          d: Math.floor(diff / 86400),
+          h: Math.floor((diff %= 86400) / 3600),
+          m: Math.floor((diff %= 3600) / 60),
+          s: diff % 60,
+        };
+        (Object.keys(vals) as (keyof typeof vals)[]).forEach((k) => {
+          const next = k === 'd' ? String(vals[k]) : String(vals[k]).padStart(2, '0');
+          if (cells[k].textContent !== next) {
+            cells[k].textContent = next;
+            if (!reduce) {
+              cells[k].classList.remove('is-tick');
+              void cells[k].offsetWidth;
+              cells[k].classList.add('is-tick');
+            }
+          }
+        });
+      };
+      tick();
+      const iv = window.setInterval(tick, 1000);
+      disposers.push(() => clearInterval(iv));
+    }
+
+    /* ---------------- Mascot: "Ho ho ho!" ---------------- */
+    const mascot = root.querySelector<HTMLElement>('[data-np-mascot]');
+    if (mascot) {
+      let to = 0;
+      on(mascot, 'click', () => {
+        const c = centerOf(mascot);
+        burst(c.x, c.y, 110, 1.2);
+        mascot.classList.add('is-cheering');
+        clearTimeout(to);
+        to = window.setTimeout(() => mascot.classList.remove('is-cheering'), 1800);
+      });
+      disposers.push(() => clearTimeout(to));
+    }
+
+    /* ---------------- Gifts: unwrap on view / tap ---------------- */
+    const gifts = Array.from(root.querySelectorAll<HTMLElement>('[data-np-gift]'));
+    const unwrap = (g: HTMLElement, celebrate = true) => {
+      if (g.classList.contains('is-open')) return;
+      g.classList.add('is-open');
+      if (celebrate) {
+        const delay = Number(getComputedStyle(g).getPropertyValue('--i') || 0) * 140;
+        window.setTimeout(() => {
+          const c = centerOf(g);
+          burst(c.x, c.y - 30, 26, 0.6);
+        }, delay + 120);
+      }
+    };
+    if (reduce) {
+      gifts.forEach((g) => unwrap(g, false));
+    } else {
+      gifts.forEach((g) => {
+        const open = () => {
+          g.style.setProperty('--i', '0');
+          unwrap(g);
+        };
+        on(g.querySelector('.np-gift__wrap')!, 'click', open);
+        // keyboard users tabbing onto a still-wrapped gift's links unwrap it
+        on(g, 'focusin', open);
+      });
+      const io = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((en) => {
+            if (en.isIntersecting && en.intersectionRatio >= 0.4) {
+              window.setTimeout(() => unwrap(en.target as HTMLElement), 350);
+              io.unobserve(en.target);
+            }
+          });
+        },
+        { threshold: [0, 0.4, 1] },
+      );
+      gifts.forEach((g) => io.observe(g));
+      disposers.push(() => io.disconnect());
+    }
+
+    /* ---------------- Store links: confetti pop ---------------- */
+    root.querySelectorAll<HTMLElement>('[data-np-store]').forEach((a) => {
+      on(a, 'click', ((e: MouseEvent) => {
+        const p = e.clientX || e.clientY ? { x: e.clientX, y: e.clientY } : centerOf(a);
+        burst(p.x, p.y, 60, 0.9);
+      }) as EventListener);
+    });
+
+    /* ---------------- Name-tag tabs ---------------- */
+    const tabs = Array.from(root.querySelectorAll<HTMLButtonElement>('[data-np-tab]'));
+    const panels = Array.from(root.querySelectorAll<HTMLElement>('[data-np-panel]'));
+    const select = (id: string, focus = false) => {
+      tabs.forEach((tb) => {
+        const sel = tb.dataset.npTab === id;
+        tb.setAttribute('aria-selected', String(sel));
+        tb.tabIndex = sel ? 0 : -1;
+        if (sel && focus) tb.focus();
+      });
+      panels.forEach((p) => (p.hidden = p.dataset.npPanel !== id));
+      if (history.replaceState) history.replaceState(history.state, '', `#${id}`);
+    };
+    tabs.forEach((tb, i) => {
+      on(tb, 'click', () => {
+        const wasSelected = tb.getAttribute('aria-selected') === 'true';
+        select(tb.dataset.npTab!);
+        if (!wasSelected) {
+          const c = centerOf(tb);
+          burst(c.x, c.y, 40, 0.7);
+        }
+      });
+      on(tb, 'keydown', ((e: KeyboardEvent) => {
+        let n = -1;
+        if (e.key === 'ArrowRight') n = (i + 1) % tabs.length;
+        else if (e.key === 'ArrowLeft') n = (i - 1 + tabs.length) % tabs.length;
+        else if (e.key === 'Home') n = 0;
+        else if (e.key === 'End') n = tabs.length - 1;
+        if (n < 0) return;
+        e.preventDefault();
+        select(tabs[n].dataset.npTab!, true);
+      }) as EventListener);
+    });
+    const fromHash = location.hash.slice(1);
+    if (fromHash && tabs.some((tb) => tb.dataset.npTab === fromHash)) select(fromHash);
+
+    /* ---------------- Surprise me ---------------- */
+    root.querySelectorAll<HTMLElement>('[data-np-surprise]').forEach((btn) => {
+      on(btn, 'click', () => {
+        const panel = btn.closest<HTMLElement>('[data-np-panel]');
+        const pool = Array.from(panel?.querySelectorAll<HTMLElement>('[data-np-gift]') ?? []);
+        if (!pool.length) return;
+        const pick = pool[(Math.random() * pool.length) | 0];
+        pick.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'center' });
+        window.setTimeout(() => {
+          pick.style.setProperty('--i', '0');
+          unwrap(pick, false);
+          pick.classList.remove('is-jiggle');
+          void pick.offsetWidth;
+          pick.classList.add('is-jiggle');
+          const c = centerOf(pick);
+          burst(c.x, c.y, 120, 1.3);
+        }, reduce ? 0 : 550);
+      });
+    });
+
+    cleanup = () => disposers.forEach((d) => d());
+  }
+
+  document.addEventListener('astro:page-load', initNorthPole);
+  document.addEventListener('astro:before-swap', () => {
+    cleanup?.();
+    cleanup = null;
+  });
+</script>
