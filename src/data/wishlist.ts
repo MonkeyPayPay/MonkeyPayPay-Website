@@ -187,6 +187,8 @@ export const wishlists: WishPerson[] = [
     tagline: 'Dear Santa…',
     ribbon: '#2fb36b',
     sprite: '/north-pole/sprites/paisley.png',
+    // Cut from the owner's 6-frame sheet of Paisley standing, jumping + cheering.
+    photoSprite: { src: '/north-pole/sprites/paisley-photo.webp', frames: 6, aspect: 203 / 300 },
     items: [],
   },
 ];
