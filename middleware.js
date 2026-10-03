@@ -34,11 +34,12 @@ export default async function middleware(request) {
 
   // --- The family Christmas wish-list page (/north-pole) is public too ---
   // TEMPORARY: lets relatives open the list without the site password. Only
-  // that page plus what it needs to render are let through: the /_astro/
+  // that page plus what it needs to render are let through: the page and its
+  // own media folder (/north-pole/*: family sprites, family video), the /_astro/
   // bundles (CSS/JS/fonts only), its dancing-monkey sprite, and the favicons.
   // Delete this block when the wish-list page is retired.
   if (
-    /^\/north-pole(\/|\/index\.html)?$/.test(url.pathname) ||
+    /^\/north-pole(\/.*)?$/.test(url.pathname) ||
     url.pathname.startsWith('/_astro/') ||
     url.pathname === '/brand/anim/monkey-dance.webp' ||
     /^\/(favicon-(16|32)|apple-touch-icon)\.png$/.test(url.pathname)

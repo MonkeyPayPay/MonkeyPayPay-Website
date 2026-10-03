@@ -4,7 +4,7 @@
 // sitemap, and it's noindex. Data lives in src/data/wishlist.ts.
 import '@fontsource/pacifico';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { wishlists } from '../data/wishlist';
+import { wishlists, familyVideo } from '../data/wishlist';
 
 // Twinkle-light string across the top of the sky: two sagging swags of bulbs.
 const BULB_COLORS = ['#ff4d5e', '#ffd34d', '#3ee08f', '#4db8ff', '#ff8af0'];
@@ -77,6 +77,23 @@ const bulbs = Array.from({ length: PER_SWAG * 2 }, (_, i) => {
         </button>
       </div>
 
+      <div class="np-family container" aria-label="The family">
+        {
+          wishlists.map((p, i) => (
+            <button
+              class="np-family__member"
+              type="button"
+              data-np-wave
+              style={`--ribbon:${p.ribbon};--n:${i}`}
+              aria-label={`Wave hi to ${p.name}`}
+            >
+              <span class="np-sprite" style={`background-image:url(${p.sprite})`} aria-hidden="true" />
+              <span class="np-family__name">{p.name}</span>
+            </button>
+          ))
+        }
+      </div>
+
       <div class="np-drifts" aria-hidden="true" />
     </section>
 
@@ -119,20 +136,42 @@ const bulbs = Array.from({ length: PER_SWAG * 2 }, (_, i) => {
             data-np-panel={p.id}
             style={`--ribbon:${p.ribbon}`}
           >
-            {p.items.length > 0 ? (
-              <>
-                <div class="np-panel__bar">
-                  <h2 class="np-panel__title">
-                    {p.name}’s list <span class="np-panel__count">{p.items.length} gifts</span>
-                  </h2>
+            <div class="np-panel__bar">
+              <div class="np-panel__who">
+                <span
+                  class="np-sprite np-sprite--sm"
+                  style={`background-image:url(${p.sprite})`}
+                  data-np-panel-sprite
+                  aria-hidden="true"
+                />
+                <h2 class="np-panel__title">
+                  For {p.name}
+                  {p.items.length > 0 && (
+                    <span class="np-panel__count">{p.items.length} gifts</span>
+                  )}
+                </h2>
+              </div>
+              {p.items.length > 0 && (
+                <div class="np-panel__actions">
                   <button class="np-surprise" type="button" data-np-surprise>
                     <span aria-hidden="true">🎲</span> Surprise me
                   </button>
+                  <button class="np-surprise np-surprise--all" type="button" data-np-unwrap-all>
+                    <span aria-hidden="true">🎁</span> Unwrap them all
+                  </button>
                 </div>
+              )}
+            </div>
+            {p.items.length > 0 ? (
+              <>
                 <ul class="np-gifts" role="list">
                   {p.items.map((item, n) => (
                     <li class="np-gift" style={`--i:${n}`} data-np-gift>
-                      <div class="np-gift__wrap" aria-hidden="true">
+                      <button
+                        class="np-gift__wrap"
+                        type="button"
+                        aria-label={`Unwrap present ${n + 1} of ${p.items.length}`}
+                      >
                         <span class="np-gift__paper np-gift__paper--l" />
                         <span class="np-gift__paper np-gift__paper--r" />
                         <span class="np-gift__bow">
@@ -140,8 +179,10 @@ const bulbs = Array.from({ length: PER_SWAG * 2 }, (_, i) => {
                           <i />
                           <b />
                         </span>
-                        <span class="np-gift__hint">tap to unwrap</span>
-                      </div>
+                        <span class="np-gift__hint">
+                          <span aria-hidden="true">👆</span> Tap to unwrap
+                        </span>
+                      </button>
                       <article class="np-gift__body">
                         <span class="np-gift__icon" aria-hidden="true">
                           {item.icon}
@@ -186,7 +227,7 @@ const bulbs = Array.from({ length: PER_SWAG * 2 }, (_, i) => {
                   <span class="np-letter__flap" />
                   <span class="np-letter__seal">❄</span>
                 </div>
-                <h2 class="np-letter__title">{p.name}’s letter is still on its way</h2>
+                <h3 class="np-letter__title">{p.name}’s letter is still on its way</h3>
                 <p class="np-letter__text">
                   The elves are still sorting through this one. Check back soon. It’ll pop
                   up right here.
@@ -196,6 +237,52 @@ const bulbs = Array.from({ length: PER_SWAG * 2 }, (_, i) => {
           </div>
         ))
       }
+    </section>
+
+    <!-- ===== Family video ===== -->
+    <section class="np-video container" aria-labelledby="np-video-title">
+      <p class="np-eyebrow np-eyebrow--plain">Now playing</p>
+      <h2 class="np-video__title" id="np-video-title">{familyVideo.title}</h2>
+      <div class="np-tv">
+        <span class="np-tv__antenna" aria-hidden="true" />
+        <div class="np-tv__screen">
+          {
+            familyVideo.src ? (
+              <video
+                class="np-tv__media"
+                src={familyVideo.src}
+                poster={familyVideo.poster}
+                controls
+                playsinline
+                preload="metadata"
+              />
+            ) : familyVideo.youtubeId ? (
+              <iframe
+                class="np-tv__media"
+                src={`https://www.youtube-nocookie.com/embed/${familyVideo.youtubeId}?rel=0`}
+                title={familyVideo.title}
+                loading="lazy"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen
+              />
+            ) : (
+              <div class="np-tv__soon">
+                <div class="np-tv__static" aria-hidden="true" />
+                <div class="np-tv__cast" aria-hidden="true">
+                  {wishlists.map((p) => (
+                    <span class="np-sprite np-sprite--sm" style={`background-image:url(${p.sprite})`} />
+                  ))}
+                </div>
+                <p class="np-tv__msg">
+                  <span aria-hidden="true">🎬</span> Our family video is still being wrapped.
+                  <br />Check back soon!
+                </p>
+              </div>
+            )
+          }
+        </div>
+        <div class="np-tv__knobs" aria-hidden="true"><i /><i /></div>
+      </div>
     </section>
   </div>
 </BaseLayout>
@@ -552,7 +639,7 @@ const bulbs = Array.from({ length: PER_SWAG * 2 }, (_, i) => {
   }
   .np-tag__name {
     font-family: 'Pacifico', cursive;
-    font-size: 1.6rem;
+    font-size: 1.35rem;
     line-height: 1.4;
     color: var(--ribbon);
   }
@@ -748,8 +835,19 @@ const bulbs = Array.from({ length: PER_SWAG * 2 }, (_, i) => {
     inset: 0;
     z-index: 2;
     display: block;
+    width: 100%;
+    padding: 0;
+    border: 0;
     border-radius: 22px;
+    background: none;
+    color: inherit;
+    font: inherit;
     cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+  :global(html.js) .np-gift__wrap:focus-visible {
+    outline: 3px solid var(--np-gold);
+    outline-offset: 4px;
   }
   :global(html.js) .np-gift.is-open .np-gift__wrap { pointer-events: none; }
   .np-gift__paper {
@@ -826,15 +924,24 @@ const bulbs = Array.from({ length: PER_SWAG * 2 }, (_, i) => {
   .np-gift.is-open .np-gift__bow { transform: translateY(-160px) rotate(220deg) scale(1.3); opacity: 0; }
   .np-gift__hint {
     position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 1rem;
-    text-align: center;
+    left: 50%;
+    bottom: 1.1rem;
+    padding: 0.35rem 1rem 0.45rem;
+    border-radius: 999px;
+    white-space: nowrap;
     font-family: 'Pacifico', cursive;
     font-size: 1.05rem;
-    color: #fff;
-    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.45);
+    color: var(--np-ink);
+    background: #fff;
+    box-shadow: 0 8px 20px -8px rgba(0, 0, 0, 0.6);
+    transform: translateX(-50%);
     transition: opacity 200ms ease;
+    animation: np-hint 2.4s ease-in-out infinite;
+    animation-delay: calc(var(--i) * -0.3s);
+  }
+  @keyframes np-hint {
+    0%, 100% { transform: translateX(-50%) scale(1); }
+    50% { transform: translateX(-50%) scale(1.07); }
   }
   .np-gift.is-open .np-gift__hint { opacity: 0; }
   :global(html.js) .np-gift:not(.is-open) .np-gift__body { opacity: 0; }
@@ -904,6 +1011,210 @@ const bulbs = Array.from({ length: PER_SWAG * 2 }, (_, i) => {
   }
   .np-letter__text { margin: 0.6rem 0 0; color: #b8c0ea; }
 
+  /* ---------- 8-bit family sprites ----------
+     Each strip is 4 frames of 26×38 px: [idle, bob, wave-up, wave-out].
+     Idle loops frames 0–1; .is-waving plays frames 2–3 a few times. */
+  .np-sprite {
+    --px: 4;
+    --fw: calc(26px * var(--px));
+    display: block;
+    width: var(--fw);
+    height: calc(38px * var(--px));
+    background-repeat: no-repeat;
+    background-size: calc(var(--fw) * 4) 100%;
+    background-position: 0 0;
+    image-rendering: pixelated;
+    filter: drop-shadow(0 8px 10px rgba(0, 0, 0, 0.45));
+    animation: np-sprite-idle 0.9s steps(2) infinite;
+  }
+  .np-sprite--sm { --px: 2; }
+  .np-sprite.is-waving { animation: np-sprite-wave 0.36s steps(2) 5; }
+  @keyframes np-sprite-idle { to { background-position-x: calc(var(--fw) * -2); } }
+  @keyframes np-sprite-wave {
+    from { background-position-x: calc(var(--fw) * -2); }
+    to { background-position-x: calc(var(--fw) * -4); }
+  }
+
+  /* family line-up standing in the snow */
+  .np-family {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    gap: clamp(1.25rem, 5vw, 3.5rem);
+    margin-top: clamp(2rem, 5vw, 3rem);
+  }
+  .np-family__member {
+    display: grid;
+    justify-items: center;
+    gap: 0.5rem;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: inherit;
+    font: inherit;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .np-family__member .np-sprite { transition: transform 300ms cubic-bezier(0.34, 1.56, 0.64, 1); }
+  .np-family__member:hover .np-sprite { transform: translateY(-8px); }
+  .np-family__member:focus-visible { outline: 3px solid var(--np-gold); outline-offset: 6px; border-radius: 12px; }
+  .np-family__member.is-hop .np-sprite { animation: np-sprite-wave 0.36s steps(2) 3, np-hop 600ms cubic-bezier(0.3, 0, 0.3, 1); }
+  @keyframes np-hop {
+    40% { transform: translateY(-26px); }
+    70% { transform: translateY(0); }
+    85% { transform: translateY(-6px); }
+  }
+  .np-family__name {
+    padding: 0.2rem 0.7rem;
+    border-radius: 999px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: #fff;
+    background: color-mix(in oklab, var(--ribbon) 70%, #000);
+    box-shadow: 0 6px 14px -8px rgba(0, 0, 0, 0.7);
+    white-space: nowrap;
+  }
+
+  .np-panel__who {
+    display: flex;
+    align-items: flex-end;
+    gap: 0.9rem;
+  }
+  .np-panel__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+  }
+  .np-surprise--all {
+    border-color: color-mix(in oklab, var(--ribbon) 70%, #fff);
+    background: color-mix(in oklab, var(--ribbon) 25%, transparent);
+    color: #fff;
+  }
+  .np-surprise--all:hover { background: color-mix(in oklab, var(--ribbon) 40%, transparent); }
+
+  /* ---------- Family video: a retro TV ---------- */
+  .np-video {
+    margin-top: clamp(4rem, 9vw, 6rem);
+    text-align: center;
+  }
+  .np-eyebrow--plain::before { content: '📺'; }
+  .np-video__title {
+    margin: 0 0 clamp(3.5rem, 7vw, 4.5rem);
+    font-family: 'Pacifico', cursive;
+    font-weight: 400;
+    font-size: var(--fs-h2);
+    line-height: 1.4;
+    color: #fff;
+  }
+  .np-tv {
+    position: relative;
+    max-width: 820px;
+    margin: 0 auto;
+    padding: clamp(0.8rem, 2.4vw, 1.4rem);
+    padding-bottom: clamp(2.6rem, 6vw, 3.4rem);
+    border-radius: 28px;
+    background: linear-gradient(160deg, #b5232f, #7e1520);
+    box-shadow:
+      inset 0 2px 0 rgba(255, 255, 255, 0.25),
+      inset 0 -6px 0 rgba(0, 0, 0, 0.25),
+      0 30px 60px -24px rgba(0, 0, 0, 0.85);
+  }
+  .np-tv::before {
+    content: '';
+    position: absolute;
+    inset: -6px;
+    z-index: -1;
+    border-radius: 32px;
+    background: repeating-linear-gradient(-45deg, #fff 0 12px, #e23a4a 12px 24px);
+    opacity: 0.9;
+  }
+  .np-tv__antenna {
+    position: absolute;
+    left: 50%;
+    top: -4px;
+    width: 0;
+    height: 0;
+  }
+  .np-tv__antenna::before,
+  .np-tv__antenna::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    width: 4px;
+    height: 40px;
+    border-radius: 4px;
+    background: #39436b;
+    transform-origin: bottom;
+  }
+  .np-tv__antenna::before { transform: rotate(-28deg); }
+  .np-tv__antenna::after { transform: rotate(28deg); }
+  .np-tv__screen {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    border-radius: 18px;
+    background: #05070f;
+    box-shadow: inset 0 0 0 4px #2a0a10, inset 0 0 40px rgba(0, 0, 0, 0.8);
+  }
+  .np-tv__media {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+    background: #000;
+  }
+  .np-tv__soon {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-content: center;
+    justify-items: center;
+    gap: 1rem;
+    padding: 1rem;
+  }
+  .np-tv__static {
+    position: absolute;
+    inset: -50%;
+    opacity: 0.12;
+    background-image:
+      repeating-radial-gradient(circle at 17% 32%, #fff 0 1px, transparent 1px 3px),
+      repeating-radial-gradient(circle at 71% 64%, #fff 0 1px, transparent 1px 4px);
+    animation: np-static 0.25s steps(3) infinite;
+  }
+  @keyframes np-static {
+    33% { transform: translate(-3%, 2%); }
+    66% { transform: translate(2%, -3%); }
+  }
+  .np-tv__cast {
+    position: relative;
+    display: flex;
+    gap: 1rem;
+    align-items: flex-end;
+  }
+  .np-tv__msg {
+    position: relative;
+    margin: 0;
+    font-size: clamp(0.9rem, 2.2vw, 1.1rem);
+    color: #dfe4ff;
+  }
+  .np-tv__knobs {
+    position: absolute;
+    right: clamp(1rem, 3vw, 1.6rem);
+    bottom: clamp(0.7rem, 1.6vw, 0.95rem);
+    display: flex;
+    gap: 0.6rem;
+  }
+  .np-tv__knobs i {
+    width: clamp(14px, 2.6vw, 20px);
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 30%, #ffe9a3, #c9962f 70%);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+  }
+
   /* ---------- Phone ---------- */
   @media (max-width: 760px) {
     .np-hero__inner { grid-template-columns: 1fr; text-align: center; }
@@ -912,7 +1223,10 @@ const bulbs = Array.from({ length: PER_SWAG * 2 }, (_, i) => {
     .np-mascot { order: -1; }
     .np-mascot__sprite { --fw: clamp(120px, 34vw, 170px); }
     .np-tag__card { min-width: 7.2rem; padding-inline: 0.8rem; }
-    .np-tag__name { font-size: 1.3rem; }
+    .np-tag__name { font-size: 1.05rem; }
+    .np-tag__line { font-size: 0.7rem; }
+    .np-family { gap: 1rem; }
+    .np-family .np-sprite { --px: 3; }
     .np-count__cell { min-width: 3.9rem; }
   }
 
@@ -1147,44 +1461,84 @@ const bulbs = Array.from({ length: PER_SWAG * 2 }, (_, i) => {
       disposers.push(() => clearTimeout(to));
     }
 
-    /* ---------------- Gifts: unwrap on view / tap ---------------- */
+    /* ---------------- Gifts: closed until you tap them ---------------- */
     const gifts = Array.from(root.querySelectorAll<HTMLElement>('[data-np-gift]'));
+    const parts = (g: HTMLElement) => ({
+      wrap: g.querySelector<HTMLButtonElement>('.np-gift__wrap')!,
+      body: g.querySelector<HTMLElement>('.np-gift__body')!,
+    });
+    // While wrapped, the gift's contents can't be tabbed into or clicked.
+    gifts.forEach((g) => {
+      if (!g.classList.contains('is-open')) parts(g).body.inert = true;
+    });
     const unwrap = (g: HTMLElement, celebrate = true) => {
       if (g.classList.contains('is-open')) return;
+      const { wrap, body } = parts(g);
+      const hadFocus = document.activeElement === wrap;
       g.classList.add('is-open');
+      body.inert = false;
+      wrap.tabIndex = -1;
+      wrap.setAttribute('aria-hidden', 'true');
+      if (hadFocus) {
+        body.tabIndex = -1;
+        body.focus({ preventScroll: true });
+      }
       if (celebrate) {
         const delay = Number(getComputedStyle(g).getPropertyValue('--i') || 0) * 140;
         window.setTimeout(() => {
           const c = centerOf(g);
-          burst(c.x, c.y - 30, 26, 0.6);
+          burst(c.x, c.y - 30, 60, 0.9);
         }, delay + 120);
       }
     };
-    if (reduce) {
-      gifts.forEach((g) => unwrap(g, false));
-    } else {
-      gifts.forEach((g) => {
-        const open = () => {
-          g.style.setProperty('--i', '0');
-          unwrap(g);
-        };
-        on(g.querySelector('.np-gift__wrap')!, 'click', open);
-        // keyboard users tabbing onto a still-wrapped gift's links unwrap it
-        on(g, 'focusin', open);
+    gifts.forEach((g) => {
+      on(parts(g).wrap, 'click', () => {
+        g.style.setProperty('--i', '0');
+        unwrap(g);
       });
-      const io = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((en) => {
-            if (en.isIntersecting && en.intersectionRatio >= 0.4) {
-              window.setTimeout(() => unwrap(en.target as HTMLElement), 350);
-              io.unobserve(en.target);
-            }
-          });
-        },
-        { threshold: [0, 0.4, 1] },
-      );
-      gifts.forEach((g) => io.observe(g));
-      disposers.push(() => io.disconnect());
+    });
+    root.querySelectorAll<HTMLElement>('[data-np-unwrap-all]').forEach((btn) => {
+      on(btn, 'click', () => {
+        const panel = btn.closest<HTMLElement>('[data-np-panel]');
+        panel?.querySelectorAll<HTMLElement>('[data-np-gift]:not(.is-open)').forEach((g, n) => {
+          g.style.setProperty('--i', String(n));
+          unwrap(g);
+        });
+      });
+    });
+
+    /* ---------------- 8-bit family: wave + hop ---------------- */
+    const wave = (sprite: HTMLElement | null) => {
+      if (!sprite || reduce) return;
+      sprite.classList.remove('is-waving');
+      void sprite.offsetWidth;
+      sprite.classList.add('is-waving');
+    };
+    root.querySelectorAll<HTMLElement>('.np-sprite').forEach((sp) => {
+      on(sp, 'animationend', () => sp.classList.remove('is-waving'));
+    });
+    const members = Array.from(root.querySelectorAll<HTMLElement>('[data-np-wave]'));
+    members.forEach((m) => {
+      on(m, 'click', () => {
+        if (!reduce) {
+          m.classList.remove('is-hop');
+          void m.offsetWidth;
+          m.classList.add('is-hop');
+        }
+        const c = centerOf(m);
+        burst(c.x, c.y - 30, 50, 0.8);
+      });
+      on(m, 'animationend', ((e: AnimationEvent) => {
+        if (e.animationName.includes('np-hop')) m.classList.remove('is-hop');
+      }) as EventListener);
+    });
+    // every few seconds someone in the line-up waves on their own
+    if (!reduce && members.length) {
+      const iv = window.setInterval(() => {
+        const m = members[(Math.random() * members.length) | 0];
+        wave(m.querySelector<HTMLElement>('.np-sprite'));
+      }, 3200);
+      disposers.push(() => clearInterval(iv));
     }
 
     /* ---------------- Store links: confetti pop ---------------- */
@@ -1206,6 +1560,7 @@ const bulbs = Array.from({ length: PER_SWAG * 2 }, (_, i) => {
         if (sel && focus) tb.focus();
       });
       panels.forEach((p) => (p.hidden = p.dataset.npPanel !== id));
+      wave(root.querySelector<HTMLElement>(`[data-np-panel="${id}"] [data-np-panel-sprite]`));
       if (history.replaceState) history.replaceState(history.state, '', `#${id}`);
     };
     tabs.forEach((tb, i) => {

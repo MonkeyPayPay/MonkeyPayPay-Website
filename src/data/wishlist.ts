@@ -4,6 +4,10 @@
 // ⌘K palette, or sitemap) and the page is noindex. To retire it after the
 // holidays, delete src/pages/north-pole.astro and this file.
 //
+// Family video: drop an .mp4 into public/north-pole/ and set `familyVideo.src`
+// (e.g. '/north-pole/family.mp4'), OR paste an unlisted YouTube video's id into
+// `youtubeId`. Until one is set, the page shows a "coming soon" screen.
+//
 // To add a gift: push an item onto a person's `items`. Each item can list
 // several places to buy it (`links`); the first one is shown as the main button.
 
@@ -32,15 +36,18 @@ export interface WishPerson {
   tagline: string;
   /** Ribbon colour for this person's presents. */
   ribbon: string;
+  /** 8-bit sprite strip (4 frames: idle, bob, wave, wave) in public/north-pole/sprites/. */
+  sprite: string;
   items: WishItem[];
 }
 
 export const wishlists: WishPerson[] = [
   {
     id: 'dad',
-    name: 'Dad',
+    name: 'Paisley’s Dad',
     tagline: 'Desk upgrades & sharp shirts',
     ribbon: '#e23a4a',
+    sprite: '/north-pole/sprites/dad.png',
     items: [
       {
         title: 'Gift cards',
@@ -71,6 +78,19 @@ export const wishlists: WishPerson[] = [
             href: 'https://www.charlestyrwhitt.com/us/non-iron-stretch-trafalgar-weave-shirt---white/FOA0019WHT.html',
           },
         ],
+      },
+      {
+        title: 'Grunt Style American Flag shirt',
+        icon: '🇺🇸',
+        note: 'The patriotic flag tee, in white and in black.',
+        details: ['White', 'Black'],
+        links: [{ label: 'Grunt Style', href: 'https://share.google/1xorKN3HLTSRHgYD9' }],
+      },
+      {
+        title: 'Grunt Style “Still Standing” flag shirt',
+        icon: '🦅',
+        note: 'The Still Standing American Flag shirt.',
+        links: [{ label: 'Grunt Style', href: 'https://share.google/xIY55Bm79lusZZtge' }],
       },
       {
         title: 'Dell UltraSharp 40" curved monitor',
@@ -119,16 +139,66 @@ export const wishlists: WishPerson[] = [
   },
   {
     id: 'mom',
-    name: 'Mom',
-    tagline: 'List coming soon',
+    name: 'Paisley’s Mom',
+    tagline: 'Treat yourself, Mama',
     ribbon: '#e0218a',
-    items: [],
+    sprite: '/north-pole/sprites/mom.png',
+    items: [
+      {
+        title: 'Target gift card',
+        icon: '🎯',
+        note: 'Any amount, for whatever she wants.',
+        links: [{ label: 'Target', href: 'https://share.google/tbdksKbYzdBOzW30h' }],
+      },
+      {
+        title: 'Nails',
+        icon: '💅',
+        note: 'A nail appointment or gift card at her spot: 1160 E Imperial Hwy, Placentia, CA 92870.',
+        links: [
+          {
+            label: 'Find it on Maps',
+            href: 'https://www.google.com/maps/search/?api=1&query=1160+E+Imperial+Hwy%2C+Placentia%2C+CA+92870',
+          },
+        ],
+      },
+      {
+        title: 'MacBook Pro',
+        icon: '💻',
+        links: [{ label: 'Apple', href: 'https://share.google/GuZAtZ5nopRknjoAm' }],
+      },
+      {
+        title: 'New iPhone',
+        icon: '📱',
+        note: 'iPhone 18 Pro Max.',
+        details: ['256GB', 'Silver'],
+        links: [{ label: 'Apple', href: 'https://share.google/u7zpsbVbjgEu9A6Mv' }],
+      },
+      {
+        title: 'Coffee',
+        icon: '☕',
+        note: 'A Coffee Bean & Tea Leaf eGift card.',
+        links: [{ label: 'Coffee Bean & Tea Leaf', href: 'https://share.google/Z3hYARLjt8N7tOuql' }],
+      },
+    ],
   },
   {
     id: 'paisley',
     name: 'Paisley',
     tagline: 'Dear Santa…',
     ribbon: '#2fb36b',
+    sprite: '/north-pole/sprites/paisley.png',
     items: [],
   },
 ];
+
+export const familyVideo: {
+  /** Self-hosted file, e.g. '/north-pole/family.mp4' (keep it under ~50 MB). */
+  src?: string;
+  /** Optional still shown before it plays, e.g. '/north-pole/family-poster.jpg'. */
+  poster?: string;
+  /** Or an unlisted YouTube video id (the part after watch?v=). */
+  youtubeId?: string;
+  title: string;
+} = {
+  title: 'Merry Christmas from Paisley’s family',
+};
