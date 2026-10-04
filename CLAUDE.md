@@ -238,9 +238,11 @@ docs live in `README.md`.)
   "Opens Black Friday" (`.np.is-locked`). Client-side only (contents are in
   the HTML, `inert` while wrapped) — fine for family fun, not real secrecy.
   Verified with Playwright's clock: Nov 26 23:59 locked, Nov 27 00:01 opens.
-  **Family video — LIVE.** Owner's two silent 720p clips joined back to back
-  (Mom+Dad, then Paisley+dog; 23 s) → `public/north-pole/video/family.mp4`
-  (5.2 MB, H.264 faststart) + `family.webm` fallback (VP9 2.5 MB; also what
+  **Family video — LIVE.** Owner's silent 720p clips joined back to back in
+  story order: Mom+Dad → Paisley+Dusty (the dog) → Paisley+Dusty opening the
+  present in her room → Paisley caught by Mom+Dad (43 s) →
+  `public/north-pole/video/family.mp4` (8.9 MB, H.264 faststart) +
+  `family.webm` fallback (VP9 4.3 MB; also what
   the sandbox's open-source Chromium tests with) + `poster.webp`; ffmpeg
   recipe in that folder's README. TV starts on a dimmed poster with a "Tap the
   TV to play" pill (`[data-np-tvplay]`, video is `muted playsinline`, no
