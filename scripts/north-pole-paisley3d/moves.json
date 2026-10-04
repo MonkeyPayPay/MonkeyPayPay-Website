@@ -1,11 +1,73 @@
 [
-  {"name":"wave",   "clip":"wave_goodbye_02","from":3.4,"to":5.85,"loop":false},
-  {"name":"dance1", "clip":"dance_05","from":0,"to":2.83,"loop":true},
-  {"name":"dance2", "clip":"dance_02","from":4.5,"to":9.0,"loop":true},
-  {"name":"dance3", "clip":"dance_04","from":1.5,"to":5.5,"loop":true},
-  {"name":"cheer",  "clip":"cheer","from":0,"to":3.0,"loop":true},
-  {"name":"flip",   "clip":"flip","from":0.6,"to":4.1,"loop":false},
-  {"name":"jump",   "clip":"jump_down","from":1.0,"to":3.7,"loop":false},
-  {"name":"laugh",  "clip":"laugh_02","from":1.4,"to":4.6,"loop":false},
-  {"name":"walk",   "clip":"walk","from":0,"to":2.29,"loop":true,"side":true}
+  {
+    "name": "wave",
+    "clip": "wave_goodbye_02",
+    "from": 3.4,
+    "to": 5.85,
+    "loop": false
+  },
+  {
+    "name": "dance1",
+    "clip": "dance_05",
+    "from": 0,
+    "to": 2.83,
+    "loop": true
+  },
+  {
+    "name": "dance2",
+    "clip": "dance_02",
+    "from": 4.5,
+    "to": 9.0,
+    "loop": true
+  },
+  {
+    "name": "dance3",
+    "clip": "dance_04",
+    "from": 1.5,
+    "to": 5.5,
+    "loop": true
+  },
+  {
+    "name": "cheer",
+    "clip": "cheer",
+    "from": 0,
+    "to": 3.0,
+    "loop": true
+  },
+  {
+    "name": "flip",
+    "clip": "flip",
+    "from": 0.6,
+    "to": 4.1,
+    "loop": false
+  },
+  {
+    "name": "jump",
+    "clip": "jump_down",
+    "from": 1.0,
+    "to": 3.7,
+    "loop": false
+  },
+  {
+    "name": "laugh",
+    "clip": "laugh_02",
+    "from": 1.4,
+    "to": 4.6,
+    "loop": false
+  },
+  {
+    "name": "nono",
+    "clip": "angry_02",
+    "from": 0,
+    "to": 2.16,
+    "loop": false
+  },
+  {
+    "name": "walk",
+    "clip": "walk",
+    "from": 0,
+    "to": 2.29,
+    "loop": true,
+    "side": true
+  }
 ]

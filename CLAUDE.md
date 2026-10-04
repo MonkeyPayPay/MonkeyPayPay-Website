@@ -195,6 +195,16 @@ docs live in `README.md`.)
   lists first appear, cheers on unwrap, flips on "Unwrap them all", jumps on
   store clicks, laughs on "Surprise me"); and she **walks** across a snow strip
   under the TV at 0.507 m/s. Tap her anywhere = random flip/jump/cheer/laugh.
+  **Presents LOCKED until Black Friday (owner request).** Computed client-side
+  every click: day after the 4th Thursday of November, local midnight (2026 →
+  Fri Nov 27). Before then a tap shakes the present and Paisley pops up doing a
+  new `nono` move (Tripo clip angry_02, a fists-down stomp) with a speech
+  bubble ("No no! Not till Black Friday!" etc.); "Unwrap them all" shakes the
+  whole list; "Surprise me" shakes one. A "No peeking! Presents unlock on
+  Black Friday" banner (`[data-np-lockline]`) shows days left; hints read
+  "Opens Black Friday" (`.np.is-locked`). Client-side only (contents are in
+  the HTML, `inert` while wrapped) — fine for family fun, not real secrecy.
+  Verified with Playwright's clock: Nov 26 23:59 locked, Nov 27 00:01 opens.
   **Family video slot:** retro TV section; set `familyVideo.src` (mp4 in
   `public/north-pole/`) or `familyVideo.youtubeId` in wishlist.ts — shows
   "still being wrapped" until then. Amazon/Charles Tyrwhitt links were

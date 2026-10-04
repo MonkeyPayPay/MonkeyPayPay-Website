@@ -73,6 +73,15 @@
       "fps": 12,
       "loop": false
     },
+    "nono": {
+      "src": "/north-pole/paisley3d/nono.webp",
+      "frames": 26,
+      "cols": 8,
+      "fw": 144,
+      "fh": 270,
+      "fps": 12,
+      "loop": false
+    },
     "walk": {
       "src": "/north-pole/paisley3d/walk.webp",
       "frames": 27,
