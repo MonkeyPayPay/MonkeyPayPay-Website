@@ -182,6 +182,12 @@ docs live in `README.md`.)
   **All three family members now use photo sprites**; the 8-bit PNGs
   (`scripts/north-pole-sprites.mjs`) are unused fallbacks. Phone line-up uses
   `--px: 2.5` so the three fit at 390px. Shown in a hero line-up (tap = hop + wave), panel headers, and the TV.
+  **Paisley 3D animations (PENDING owner files):** owner rigged a 3D model of
+  Paisley in Tripo (studio.tripo3d.ai) and will export animated GLBs (idle,
+  wave, dances, jump/celebrate, walk, clap, point) or Mixamo FBX. Plan: render
+  them here offline (headless Chromium + three.js) into transparent webp sprite
+  strips, not live 3D. **Owner decision: use her 3D animations ONLY on the
+  wish-list page (/north-pole), nowhere else on the site.**
   **Family video slot:** retro TV section; set `familyVideo.src` (mp4 in
   `public/north-pole/`) or `familyVideo.youtubeId` in wishlist.ts — shows
   "still being wrapped" until then. Amazon/Charles Tyrwhitt links were
