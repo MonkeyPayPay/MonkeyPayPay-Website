@@ -238,13 +238,23 @@ docs live in `README.md`.)
   "Opens Black Friday" (`.np.is-locked`). Client-side only (contents are in
   the HTML, `inert` while wrapped) — fine for family fun, not real secrecy.
   Verified with Playwright's clock: Nov 26 23:59 locked, Nov 27 00:01 opens.
-  **Family video slot:** retro TV section; set `familyVideo.src` (mp4 in
-  `public/north-pole/`) or `familyVideo.youtubeId` in wishlist.ts — shows
-  "still being wrapped" until then. Amazon/Charles Tyrwhitt links were
+  **Family video — LIVE.** Owner's two silent 720p clips joined back to back
+  (Mom+Dad, then Paisley+dog; 23 s) → `public/north-pole/video/family.mp4`
+  (5.2 MB, H.264 faststart) + `family.webm` fallback (VP9 2.5 MB; also what
+  the sandbox's open-source Chromium tests with) + `poster.webp`; ffmpeg
+  recipe in that folder's README. TV starts on a dimmed poster with a "Tap the
+  TV to play" pill (`[data-np-tvplay]`, video is `muted playsinline`, no
+  controls). Tap → Paisley (char `paisley-tv`: side-view walk + **punch**
+  borrowed from the monkey's `box_01` clip, plus cheer/wave; atlases
+  `public/north-pole/paisley3d/tv/`) walks in from the TV's left, punches →
+  "BONK!" + screen shake + static flash + confetti → video plays (tap picture
+  = pause/resume). On end: dimmed last frame + "↻ Watch again" (replays the
+  whole bonk intro) and the corner Paisley pops up "That's my family! 🎄".
+  Reduced motion skips the intro. Amazon/Charles Tyrwhitt links were
   stripped of tracking/third-party affiliate params. **Public — skips the
   password gate** (allow-list block in `middleware.js`: `/north-pole` + everything
   under `/north-pole/*`, `/_astro/*`,
-  `monkey-dance.webp`, favicons). Live on production. **Retire after the holidays:** delete the page + data file.
+  `/brand/monkey3d/`, favicons). Live on production. **Retire after the holidays:** delete the page + data file.
 
 ## Domain / hosting facts
 

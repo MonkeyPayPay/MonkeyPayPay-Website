@@ -407,6 +407,46 @@
         "fps": 12,
         "loop": false
       }
+    },
+    "paisley-tv": {
+      "wave": {
+        "src": "/north-pole/paisley3d/tv/wave.webp",
+        "frames": 29,
+        "cols": 8,
+        "fw": 187,
+        "fh": 268,
+        "fps": 12,
+        "loop": false
+      },
+      "walk": {
+        "src": "/north-pole/paisley3d/tv/walk.webp",
+        "frames": 27,
+        "cols": 8,
+        "fw": 163,
+        "fh": 270,
+        "fps": 12,
+        "loop": true,
+        "speedMps": 0.507
+      },
+      "punch": {
+        "src": "/north-pole/paisley3d/tv/punch.webp",
+        "frames": 27,
+        "cols": 8,
+        "fw": 244,
+        "fh": 258,
+        "fps": 12,
+        "loop": false,
+        "speed": 0
+      },
+      "cheer": {
+        "src": "/north-pole/paisley3d/tv/cheer.webp",
+        "frames": 36,
+        "cols": 8,
+        "fw": 149,
+        "fh": 310,
+        "fps": 12,
+        "loop": true
+      }
     }
   }
 }

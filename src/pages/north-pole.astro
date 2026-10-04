@@ -290,14 +290,30 @@ const bulbs = Array.from({ length: PER_SWAG * 2 }, (_, i) => {
         <div class="np-tv__screen">
           {
             familyVideo.src ? (
-              <video
-                class="np-tv__media"
-                src={familyVideo.src}
-                poster={familyVideo.poster}
-                controls
-                playsinline
-                preload="metadata"
-              />
+              <div class="np-tvplay is-idle" data-np-tvplay>
+                <video
+                  class="np-tv__media"
+                  poster={familyVideo.poster}
+                  playsinline
+                  muted
+                  preload="metadata"
+                  data-np-video
+                >
+                  <source src={familyVideo.src} type="video/mp4" />
+                  {familyVideo.webm && <source src={familyVideo.webm} type="video/webm" />}
+                </video>
+                <button class="np-tvplay__cover" type="button" data-np-tvplay-go aria-label="Play our family video">
+                  <span class="np-tv__static" aria-hidden="true" />
+                  <span class="np-tvplay__cta">
+                    <span class="np-tvplay__icon" aria-hidden="true">▶</span>
+                    <span>Tap the TV to play</span>
+                  </span>
+                </button>
+                <span class="np-tvplay__bonk" aria-hidden="true">BONK!</span>
+                <button class="np-tvplay__again" type="button" data-np-tvplay-again hidden>
+                  <span aria-hidden="true">↻</span> Watch again
+                </button>
+              </div>
             ) : familyVideo.youtubeId ? (
               <iframe
                 class="np-tv__media"
@@ -330,6 +346,11 @@ const bulbs = Array.from({ length: PER_SWAG * 2 }, (_, i) => {
           }
         </div>
         <div class="np-tv__knobs" aria-hidden="true"><i /><i /></div>
+        {familyVideo.src && (
+          <span class="np-p3d np-tvhitter" data-np-p3d="tvhitter" data-who="paisley-tv" aria-hidden="true">
+            <canvas />
+          </span>
+        )}
       </div>
 
       <!-- Paisley strolls across the snow under the TV -->
@@ -1371,6 +1392,123 @@ const bulbs = Array.from({ length: PER_SWAG * 2 }, (_, i) => {
     gap: 1rem;
     padding: 1rem;
   }
+  /* ---- Tap-to-play family video (Paisley walks up and bonks the TV first) ---- */
+  .np-tvplay { position: absolute; inset: 0; }
+  .np-tvplay .np-tv__media { transition: filter 400ms ease; }
+  .np-tvplay.is-ended .np-tv__media { filter: brightness(0.45) saturate(0.8); }
+  .np-tvplay__cover {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+    padding: 0;
+    border: 0;
+    color: inherit;
+    font: inherit;
+    cursor: pointer;
+    background: radial-gradient(circle at 50% 50%, rgba(10, 14, 36, 0.35), rgba(5, 7, 15, 0.85)), transparent;
+    transition: opacity 450ms ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .np-tvplay.is-playing .np-tvplay__cover,
+  .np-tvplay.is-ended .np-tvplay__cover { opacity: 0; pointer-events: none; }
+  .np-tvplay.is-bonk .np-tv__static { opacity: 0.55; animation-duration: 0.08s; }
+  .np-tvplay__cta {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.7rem 1.3rem 0.8rem;
+    border-radius: 999px;
+    font-family: 'Pacifico', cursive;
+    font-size: clamp(1rem, 2.6vw, 1.35rem);
+    color: var(--np-ink);
+    background: #fff;
+    box-shadow: 0 14px 30px -12px rgba(0, 0, 0, 0.8);
+    white-space: nowrap;
+    animation: np-cta-pulse 2.4s ease-in-out infinite;
+  }
+  @keyframes np-cta-pulse { 50% { transform: scale(1.07); } }
+  .np-tvplay__icon {
+    display: grid;
+    place-items: center;
+    width: 1.9em;
+    height: 1.9em;
+    border-radius: 50%;
+    font-family: var(--font-body);
+    font-size: 0.8em;
+    color: #fff;
+    background: #e23a4a;
+  }
+  .np-tvplay__cover:focus-visible { outline: 3px solid var(--np-gold); outline-offset: -6px; }
+  .np-tvplay__bonk {
+    position: absolute;
+    left: 50%;
+    top: 46%;
+    z-index: 3;
+    font-family: 'Pacifico', cursive;
+    font-size: clamp(2rem, 8vw, 4.5rem);
+    color: var(--np-gold);
+    text-shadow: 0 4px 0 #b5232f, 0 10px 30px rgba(0, 0, 0, 0.7);
+    pointer-events: none;
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.3) rotate(-12deg);
+  }
+  .np-tvplay.is-bonk .np-tvplay__bonk { animation: np-bonk 700ms cubic-bezier(0.34, 1.56, 0.64, 1) forwards; }
+  @keyframes np-bonk {
+    0% { opacity: 0; transform: translate(-50%, -50%) scale(0.3) rotate(-12deg); }
+    35% { opacity: 1; transform: translate(-50%, -50%) scale(1.15) rotate(-8deg); }
+    80% { opacity: 1; transform: translate(-50%, -50%) scale(1) rotate(-8deg); }
+    100% { opacity: 0; transform: translate(-50%, -60%) scale(1.05) rotate(-8deg); }
+  }
+  .np-tv__screen.is-shake { animation: np-tvshake 480ms ease; }
+  @keyframes np-tvshake {
+    0%, 100% { transform: none; }
+    15% { transform: translate(6px, -2px) rotate(1.2deg); }
+    35% { transform: translate(-5px, 2px) rotate(-1deg); }
+    55% { transform: translate(3px, -1px) rotate(0.6deg); }
+    75% { transform: translate(-2px, 1px) rotate(-0.3deg); }
+  }
+  .np-tvplay__again {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    z-index: 3;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.4rem;
+    border: 0;
+    border-radius: 999px;
+    font: inherit;
+    font-weight: 700;
+    color: #fff;
+    background: #e23a4a;
+    box-shadow: 0 14px 30px -12px rgba(0, 0, 0, 0.8);
+    cursor: pointer;
+    white-space: nowrap;
+    transform: translate(-50%, -50%);
+    animation: np-panel-in 420ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .np-tvplay__again[hidden] { display: none; }
+  .np-tvplay__again:hover { background: #f04c5b; }
+  .np-tvplay__again span { font-size: 1.3em; line-height: 1; }
+  /* Paisley, side-on, walks in from the left and punches the TV */
+  .np-p3d.np-tvhitter {
+    --p3d-h: clamp(120px, 15vw, 170px);
+    position: absolute;
+    left: clamp(-110px, -7vw, -30px);
+    bottom: -4px;
+    z-index: 4;
+    opacity: 0;
+    transform: translateX(-90px);
+    transition: transform 1.1s linear, opacity 300ms ease;
+    pointer-events: none;
+  }
+  .np-p3d.np-tvhitter.is-in { opacity: 1; transform: translateX(0); }
+
   .np-tv__static {
     position: absolute;
     inset: -50%;
@@ -1426,6 +1564,7 @@ const bulbs = Array.from({ length: PER_SWAG * 2 }, (_, i) => {
     .np-family .np-p3d { --px: 2.5; }
     .np-walk { height: 120px; }
     .np-p3d--walk { --p3d-h: 96px; }
+    .np-p3d.np-tvhitter { --p3d-h: 100px; left: -6px; }
     .np-count__cell { min-width: 3.9rem; }
   }
 
@@ -1678,7 +1817,7 @@ const bulbs = Array.from({ length: PER_SWAG * 2 }, (_, i) => {
     p3d['lineup-mom']?.idle(PARENT_IDLE, 'wave');
     for (const k of ['panel-dad', 'panel-mom', 'tv-dad', 'tv-mom']) p3d[k]?.idle(PARENT_IDLE);
     for (const [k, pl] of Object.entries(p3d)) {
-      if (!['popup', 'walk', 'hero'].includes(k)) on(pl.box, 'click', () => pl.react(randomReaction()));
+      if (!['popup', 'walk', 'hero', 'tvhitter'].includes(k)) on(pl.box, 'click', () => pl.react(randomReaction()));
     }
     // the hero monkey: waves hello, then dances, blows hearts and takes a bow;
     // tapping her (the "Ho ho ho!" button) gets a laugh, flip, jump or heart
@@ -1753,6 +1892,67 @@ const bulbs = Array.from({ length: PER_SWAG * 2 }, (_, i) => {
         wio.observe(strip);
         disposers.push(() => { wio.disconnect(); cancelAnimationFrame(rafW); });
       }
+    }
+
+    /* ---------------- Family video: tap the TV → Paisley bonks it → it plays ---------------- */
+    const tvPlay = root.querySelector<HTMLElement>('[data-np-tvplay]');
+    if (tvPlay) {
+      const video = tvPlay.querySelector<HTMLVideoElement>('[data-np-video]')!;
+      const go = tvPlay.querySelector<HTMLElement>('[data-np-tvplay-go]')!;
+      const again = tvPlay.querySelector<HTMLElement>('[data-np-tvplay-again]')!;
+      const tvFrame = tvPlay.closest<HTMLElement>('.np-tv__screen'); // shakes on the bonk
+      const hitter = p3d.tvhitter;
+      const timers: number[] = [];
+      const wait = (ms: number) => new Promise<void>((r) => timers.push(window.setTimeout(r, ms)));
+      disposers.push(() => timers.forEach(clearTimeout));
+      let busy = false;
+      const playVideo = () => {
+        tvPlay.classList.remove('is-idle', 'is-ended');
+        tvPlay.classList.add('is-playing');
+        video.currentTime = 0;
+        video.play().catch(() => { video.controls = true; });
+      };
+      const bonk = () => {
+        tvPlay.classList.remove('is-bonk');
+        tvFrame?.classList.remove('is-shake');
+        void tvPlay.offsetWidth;
+        tvPlay.classList.add('is-bonk');
+        tvFrame?.classList.add('is-shake');
+        const c = centerOf(tvPlay);
+        burst(c.x, c.y, 70, 1);
+        timers.push(window.setTimeout(() => { tvPlay.classList.remove('is-bonk'); tvFrame?.classList.remove('is-shake'); }, 800));
+      };
+      const start = async () => {
+        if (busy) return;
+        busy = true;
+        again.hidden = true;
+        if (reduce || !hitter) { playVideo(); busy = false; return; }
+        // she walks in from the left…
+        hitter.box.classList.add('is-in');
+        await hitter.play('walk', { loops: Infinity });
+        await wait(1100);
+        // …winds up and punches the screen…
+        await hitter.play('punch', {
+          loops: 1,
+          onDone: () => hitter.play('cheer', { loops: 1, onDone: () => hitter.box.classList.remove('is-in') }),
+        });
+        await wait(650);
+        bonk();
+        // …and the picture comes on
+        await wait(300);
+        playVideo();
+        busy = false;
+      };
+      on(go, 'click', start);
+      on(again, 'click', () => { tvPlay.classList.remove('is-ended'); start(); });
+      // tap the picture to pause / resume
+      on(video, 'click', () => { if (tvPlay.classList.contains('is-playing')) video.paused ? video.play() : video.pause(); });
+      on(video, 'ended', () => {
+        tvPlay.classList.remove('is-playing');
+        tvPlay.classList.add('is-ended');
+        again.hidden = false;
+        pop('cheer', 'That’s my family! 🎄');
+      });
     }
 
     /* ---------------- Gifts: closed until you tap them ---------------- */

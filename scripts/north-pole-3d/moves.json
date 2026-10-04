@@ -341,5 +341,42 @@
         "loop": false
       }
     ]
+  },
+  "paisley-tv": {
+    "glb": "paisley.glb",
+    "lend": "monkey.glb",
+    "out": "paisley3d/tv",
+    "moves": [
+      {
+        "name": "wave",
+        "clip": "wave_goodbye_02",
+        "from": 3.4,
+        "to": 5.85,
+        "loop": false
+      },
+      {
+        "name": "walk",
+        "clip": "walk",
+        "from": 0,
+        "to": 2.29,
+        "loop": true,
+        "side": true
+      },
+      {
+        "name": "punch",
+        "clip": "box_01.001",
+        "from": 0,
+        "to": 2.25,
+        "loop": false,
+        "side": true
+      },
+      {
+        "name": "cheer",
+        "clip": "cheer",
+        "from": 0,
+        "to": 3.0,
+        "loop": true
+      }
+    ]
   }
 }

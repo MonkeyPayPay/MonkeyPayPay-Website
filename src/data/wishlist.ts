@@ -209,6 +209,8 @@ export const wishlists: WishPerson[] = [
 export const familyVideo: {
   /** Self-hosted file, e.g. '/north-pole/family.mp4' (keep it under ~50 MB). */
   src?: string;
+  /** Optional WebM fallback for browsers without H.264. */
+  webm?: string;
   /** Optional still shown before it plays, e.g. '/north-pole/family-poster.jpg'. */
   poster?: string;
   /** Or an unlisted YouTube video id (the part after watch?v=). */
@@ -216,4 +218,9 @@ export const familyVideo: {
   title: string;
 } = {
   title: 'Merry Christmas from Paisley’s family',
+  // Owner's two clips joined back to back (Mom + Dad, then Paisley + the dog),
+  // 23 s, silent, 720p. Re-make: see public/north-pole/video/README.md.
+  src: '/north-pole/video/family.mp4',
+  webm: '/north-pole/video/family.webm',
+  poster: '/north-pole/video/poster.webp',
 };
