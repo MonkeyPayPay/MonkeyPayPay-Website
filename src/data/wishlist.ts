@@ -57,6 +57,8 @@ export const wishlists: WishPerson[] = [
     tagline: 'Desk upgrades & sharp shirts',
     ribbon: '#e23a4a',
     sprite: '/north-pole/sprites/dad.png',
+    // Cut from Dad's 6-frame floss-dance sheet (Santa hat, open black shirt, jeans).
+    photoSprite: { src: '/north-pole/sprites/dad-photo.webp', frames: 6, aspect: 259 / 300, height: 58 },
     items: [
       {
         title: 'Gift cards',

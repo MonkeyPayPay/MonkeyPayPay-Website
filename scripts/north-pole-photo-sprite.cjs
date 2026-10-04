@@ -72,6 +72,31 @@ const CW = BLACK ? 504 : 500, CH = BLACK ? 503 : 502;
       }
       if (comp.length >= (BLACK ? 150 : 600)) comp.forEach((c) => (bgMask[c] = 1));
     }
+    // black backdrop: dark clothing's deepest shadows can be as black as the
+    // backdrop, so the flood bites notches into it. Close those notches, but
+    // only between dark-clothing pixels (gaps beside bare skin stay open).
+    if (BLACK) {
+      const R = 6, dark = new Uint8Array(CW * CH);
+      for (let k = 0; k < CW * CH; k++) {
+        if (!bgMask[k] && Math.max(px[k * 4], px[k * 4 + 1], px[k * 4 + 2]) < 60) dark[k] = 1;
+      }
+      const morph = (src, grow) => { // separable square dilate (grow) / erode; outside the cell counts as empty
+        const tmp = new Uint8Array(CW * CH), out = new Uint8Array(CW * CH);
+        for (let y = 0; y < CH; y++) for (let x = 0; x < CW; x++) {
+          let v = grow ? 0 : 1;
+          for (let d = -R; d <= R; d++) { const xx = x + d, sv = xx < 0 || xx >= CW ? 0 : src[y * CW + xx]; v = grow ? v | sv : v & sv; }
+          tmp[y * CW + x] = v;
+        }
+        for (let y = 0; y < CH; y++) for (let x = 0; x < CW; x++) {
+          let v = grow ? 0 : 1;
+          for (let d = -R; d <= R; d++) { const yy = y + d, tv = yy < 0 || yy >= CH ? 0 : tmp[yy * CW + x]; v = grow ? v | tv : v & tv; }
+          out[y * CW + x] = v;
+        }
+        return out;
+      };
+      const closed = morph(morph(dark, true), false);
+      for (let k = 0; k < CW * CH; k++) if (closed[k] && bgMask[k]) bgMask[k] = 0;
+    }
     // drop small opaque islands (shadow slivers) not attached to her
     {
       const lab = new Int32Array(CW * CH).fill(-1), sizes = [];

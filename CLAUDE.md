@@ -174,9 +174,14 @@ docs live in `README.md`.)
   Santa hat, black romper, silver boots) -> `mom-photo.webp` (214x300 frames),
   cut with the script's `black` mode (key = max channel <= 6; black clothing
   sits >= ~10), `photoSprite.height: 56` so she stands taller than Paisley (42).
-  **Dad is still the generic 8-bit placeholder** — owner said they'll upload a
-  sheet for him too; run `node scripts/north-pole-photo-sprite.cjs <sheet> dad
-  [black]` and add `photoSprite` to his entry. Shown in a hero line-up (tap = hop + wave), panel headers, and the TV.
+  **Dad has a PHOTO sprite too** (owner's 6-frame floss-dance sheet on black,
+  white frame numbers in the corners — dropped by the small-island step) ->
+  `dad-photo.webp` (259x300 frames), `photoSprite.height: 58`. His black shirt's
+  deepest shadows hit 0, so black mode now also does a 6px "closing" that fills
+  notches only between dark-clothing pixels (outside the cell counts as empty).
+  **All three family members now use photo sprites**; the 8-bit PNGs
+  (`scripts/north-pole-sprites.mjs`) are unused fallbacks. Phone line-up uses
+  `--px: 2.5` so the three fit at 390px. Shown in a hero line-up (tap = hop + wave), panel headers, and the TV.
   **Family video slot:** retro TV section; set `familyVideo.src` (mp4 in
   `public/north-pole/`) or `familyVideo.youtubeId` in wishlist.ts — shows
   "still being wrapped" until then. Amazon/Charles Tyrwhitt links were
