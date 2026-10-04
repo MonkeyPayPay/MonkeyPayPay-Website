@@ -1,12 +1,12 @@
-// Paisley's 3D animations for the wish-list page (/north-pole only).
+// The family's 3D animations for the wish-list page (/north-pole only).
 //
-// Each move is pre-rendered from her rigged Tripo model (paisley.glb) into a
-// transparent atlas webp — frames in a grid, all at the same scale with her
-// feet on the bottom edge. This player draws one frame at a time onto a
+// Each move is pre-rendered from that person's rigged Tripo model (see
+// scripts/north-pole-3d) into a transparent atlas webp — frames in a grid, all
+// at the same scale with their feet on the bottom edge. This player draws one frame at a time onto a
 // <canvas> inside a fixed-size box, so a tall move (the jump) rises out of the
 // top instead of shrinking her. Atlases load on first use and are shared.
 
-import data from '../data/paisley3d.json';
+import data from '../data/family3d.json';
 
 export interface Move {
   src: string;
@@ -18,17 +18,15 @@ export interface Move {
   loop: boolean;
   speedMps?: number;
 }
-export type MoveName = keyof typeof data.moves;
+export type Who = keyof typeof data.chars;
 
-const MOVES = data.moves as Record<string, Move>;
-/** Output pixels per metre in every atlas. */
+const CHARS = data.chars as Record<string, Record<string, Move>>;
+/** Output pixels per model unit in every atlas. */
 export const SCALE = data.scale;
-/** The standing (wave) frame height defines the box size. */
-const BASE_FH = MOVES.wave.fh;
 
 const images = new Map<string, Promise<HTMLImageElement>>();
-export function loadMove(name: string): Promise<HTMLImageElement> {
-  const m = MOVES[name];
+export function loadMove(who: string, name: string): Promise<HTMLImageElement> {
+  const m = CHARS[who][name];
   let p = images.get(m.src);
   if (!p) {
     p = new Promise((resolve, reject) => {
@@ -49,7 +47,7 @@ interface PlayOpts {
   onDone?: () => void;
 }
 
-export class Paisley3D {
+export class Family3D {
   readonly box: HTMLElement;
   private canvas: HTMLCanvasElement;
   private ctx: CanvasRenderingContext2D;
@@ -67,8 +65,14 @@ export class Paisley3D {
   private seqIndex = 0;
   readonly reduce: boolean;
 
-  constructor(box: HTMLElement, reduce = false) {
+  readonly who: string;
+  private moves: Record<string, Move>;
+
+  /** `who` defaults to the box's data-who ("paisley", "dad", "mom"). */
+  constructor(box: HTMLElement, reduce = false, who = box.dataset.who || 'paisley') {
     this.box = box;
+    this.who = who;
+    this.moves = CHARS[who];
     this.reduce = reduce;
     this.canvas = box.querySelector('canvas') ?? box.appendChild(document.createElement('canvas'));
     this.ctx = this.canvas.getContext('2d')!;
@@ -89,7 +93,8 @@ export class Paisley3D {
 
   /** Display pixels per atlas pixel, from the box's CSS height. */
   get k(): number {
-    return this.box.clientHeight / BASE_FH;
+    // the standing (wave) frame fills the box's height
+    return this.box.clientHeight / this.moves.wave.fh;
   }
   /** Display pixels per metre (for moving her across the page at walking pace). */
   get pxPerMetre(): number {
@@ -98,9 +103,10 @@ export class Paisley3D {
 
   async play(name: string, opts: PlayOpts = {}): Promise<void> {
     const token = ++this.token;
-    const img = await loadMove(name);
+    if (!this.moves[name]) name = 'cheer'; // a move this person doesn't have
+    const img = await loadMove(this.who, name);
     if (token !== this.token) return; // superseded while loading
-    const m = MOVES[name];
+    const m = this.moves[name];
     this.move = m;
     this.img = img;
     this.opts = opts;
@@ -130,7 +136,7 @@ export class Paisley3D {
     if (start) this.play(start, { onDone: next });
     else next();
     // warm the rest of the sequence after the first move is up
-    const warm = () => seq.forEach(([n]) => loadMove(n).catch(() => {}));
+    const warm = () => seq.forEach(([n]) => this.moves[n] && loadMove(this.who, n).catch(() => {}));
     if ('requestIdleCallback' in window) window.requestIdleCallback(warm);
     else setTimeout(warm, 1500);
   }
@@ -177,7 +183,7 @@ export class Paisley3D {
 }
 
 /** Real walking pace of the walk cycle (from her planted-foot speed), m/s. */
-export const WALK_SPEED = MOVES.walk.speedMps ?? 0.5;
+export const WALK_SPEED = CHARS.paisley.walk.speedMps ?? 0.5;
 
 /** Her everyday routine: a wave, then dances with the odd cheer and giggle. */
 export const IDLE: [string, number][] = [
@@ -187,6 +193,14 @@ export const IDLE: [string, number][] = [
   ['dance3', 1],
   ['laugh', 1],
   ['dance1', 1],
+];
+/** Mom and Dad's routine (they have two dances each). */
+export const PARENT_IDLE: [string, number][] = [
+  ['dance1', 2],
+  ['dance2', 1],
+  ['cheer', 1],
+  ['dance1', 1],
+  ['laugh', 1],
 ];
 /** Big moves for taps and celebrations. */
 export const REACTIONS = ['flip', 'jump', 'cheer', 'laugh'];

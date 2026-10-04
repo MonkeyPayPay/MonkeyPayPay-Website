@@ -1,0 +1,228 @@
+{
+  "scale": 260,
+  "chars": {
+    "paisley": {
+      "wave": {
+        "src": "/north-pole/paisley3d/wave.webp",
+        "frames": 29,
+        "cols": 8,
+        "fw": 187,
+        "fh": 268,
+        "fps": 12,
+        "loop": false
+      },
+      "dance1": {
+        "src": "/north-pole/paisley3d/dance1.webp",
+        "frames": 34,
+        "cols": 8,
+        "fw": 210,
+        "fh": 249,
+        "fps": 12,
+        "loop": true
+      },
+      "dance2": {
+        "src": "/north-pole/paisley3d/dance2.webp",
+        "frames": 54,
+        "cols": 8,
+        "fw": 236,
+        "fh": 272,
+        "fps": 12,
+        "loop": true
+      },
+      "dance3": {
+        "src": "/north-pole/paisley3d/dance3.webp",
+        "frames": 48,
+        "cols": 8,
+        "fw": 227,
+        "fh": 285,
+        "fps": 12,
+        "loop": true
+      },
+      "cheer": {
+        "src": "/north-pole/paisley3d/cheer.webp",
+        "frames": 36,
+        "cols": 8,
+        "fw": 149,
+        "fh": 310,
+        "fps": 12,
+        "loop": true
+      },
+      "flip": {
+        "src": "/north-pole/paisley3d/flip.webp",
+        "frames": 42,
+        "cols": 8,
+        "fw": 247,
+        "fh": 290,
+        "fps": 12,
+        "loop": false
+      },
+      "jump": {
+        "src": "/north-pole/paisley3d/jump.webp",
+        "frames": 32,
+        "cols": 8,
+        "fw": 154,
+        "fh": 383,
+        "fps": 12,
+        "loop": false
+      },
+      "laugh": {
+        "src": "/north-pole/paisley3d/laugh.webp",
+        "frames": 38,
+        "cols": 8,
+        "fw": 184,
+        "fh": 268,
+        "fps": 12,
+        "loop": false
+      },
+      "nono": {
+        "src": "/north-pole/paisley3d/nono.webp",
+        "frames": 26,
+        "cols": 8,
+        "fw": 144,
+        "fh": 270,
+        "fps": 12,
+        "loop": false
+      },
+      "walk": {
+        "src": "/north-pole/paisley3d/walk.webp",
+        "frames": 27,
+        "cols": 8,
+        "fw": 163,
+        "fh": 270,
+        "fps": 12,
+        "loop": true,
+        "speedMps": 0.507
+      }
+    },
+    "dad": {
+      "dance1": {
+        "src": "/north-pole/dad3d/dance1.webp",
+        "frames": 34,
+        "cols": 8,
+        "fw": 218,
+        "fh": 245,
+        "fps": 12,
+        "loop": true
+      },
+      "dance2": {
+        "src": "/north-pole/dad3d/dance2.webp",
+        "frames": 48,
+        "cols": 8,
+        "fw": 245,
+        "fh": 270,
+        "fps": 12,
+        "loop": true
+      },
+      "wave": {
+        "src": "/north-pole/dad3d/wave.webp",
+        "frames": 29,
+        "cols": 8,
+        "fw": 191,
+        "fh": 277,
+        "fps": 12,
+        "loop": false
+      },
+      "cheer": {
+        "src": "/north-pole/dad3d/cheer.webp",
+        "frames": 36,
+        "cols": 8,
+        "fw": 141,
+        "fh": 323,
+        "fps": 12,
+        "loop": true
+      },
+      "flip": {
+        "src": "/north-pole/dad3d/flip.webp",
+        "frames": 42,
+        "cols": 8,
+        "fw": 245,
+        "fh": 304,
+        "fps": 12,
+        "loop": false
+      },
+      "jump": {
+        "src": "/north-pole/dad3d/jump.webp",
+        "frames": 32,
+        "cols": 8,
+        "fw": 149,
+        "fh": 392,
+        "fps": 12,
+        "loop": false
+      },
+      "laugh": {
+        "src": "/north-pole/dad3d/laugh.webp",
+        "frames": 38,
+        "cols": 8,
+        "fw": 183,
+        "fh": 266,
+        "fps": 12,
+        "loop": false
+      }
+    },
+    "mom": {
+      "dance1": {
+        "src": "/north-pole/mom3d/dance1.webp",
+        "frames": 34,
+        "cols": 8,
+        "fw": 203,
+        "fh": 245,
+        "fps": 12,
+        "loop": true
+      },
+      "dance2": {
+        "src": "/north-pole/mom3d/dance2.webp",
+        "frames": 48,
+        "cols": 8,
+        "fw": 223,
+        "fh": 298,
+        "fps": 12,
+        "loop": true
+      },
+      "wave": {
+        "src": "/north-pole/mom3d/wave.webp",
+        "frames": 29,
+        "cols": 8,
+        "fw": 182,
+        "fh": 276,
+        "fps": 12,
+        "loop": false
+      },
+      "cheer": {
+        "src": "/north-pole/mom3d/cheer.webp",
+        "frames": 36,
+        "cols": 8,
+        "fw": 136,
+        "fh": 321,
+        "fps": 12,
+        "loop": true
+      },
+      "flip": {
+        "src": "/north-pole/mom3d/flip.webp",
+        "frames": 42,
+        "cols": 8,
+        "fw": 236,
+        "fh": 306,
+        "fps": 12,
+        "loop": false
+      },
+      "jump": {
+        "src": "/north-pole/mom3d/jump.webp",
+        "frames": 32,
+        "cols": 8,
+        "fw": 153,
+        "fh": 399,
+        "fps": 12,
+        "loop": false
+      },
+      "laugh": {
+        "src": "/north-pole/mom3d/laugh.webp",
+        "frames": 38,
+        "cols": 8,
+        "fw": 175,
+        "fh": 266,
+        "fps": 12,
+        "loop": false
+      }
+    }
+  }
+}

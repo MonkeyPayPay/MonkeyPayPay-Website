@@ -15,9 +15,20 @@ const spriteStyle = (p: Person) =>
     ? `background-image:url(${p.photoSprite.src});--ar:${p.photoSprite.aspect.toFixed(4)};--hs:${p.photoSprite.height ?? 42}px`
     : `background-image:url(${p.sprite})`;
 
-// Paisley is the 3D-animated one (her rigged model, rendered to atlases by
-// scripts/north-pole-paisley3d — see src/scripts/paisley3d.ts). Wish-list page only.
-const is3D = (p: Person) => p.id === 'paisley';
+// Everyone is 3D-animated: rigged Tripo models rendered to atlases by
+// scripts/north-pole-3d, played by src/scripts/family3d.ts. Wish-list page only.
+// Dad and Mom stand taller than Paisley (box height multiplier).
+const FAMILY_3D: Record<string, { key: string; scale: number }> = {
+  paisley: { key: '', scale: 1 },
+  dad: { key: '-dad', scale: 1.6 },
+  mom: { key: '-mom', scale: 1.5 },
+};
+const is3D = (p: Person) => p.id in FAMILY_3D;
+const p3dAttrs = (p: Person, role: string) => ({
+  'data-np-p3d': role + FAMILY_3D[p.id].key,
+  'data-who': p.id,
+  style: `--p3d-scale:${FAMILY_3D[p.id].scale}`,
+});
 
 // Twinkle-light string across the top of the sky: two sagging swags of bulbs.
 const BULB_COLORS = ['#ff4d5e', '#ffd34d', '#3ee08f', '#4db8ff', '#ff8af0'];
@@ -101,7 +112,7 @@ const bulbs = Array.from({ length: PER_SWAG * 2 }, (_, i) => {
               aria-label={`Wave hi to ${p.name}`}
             >
               {is3D(p) ? (
-                <span class="np-p3d np-p3d--lineup" data-np-p3d="lineup" aria-hidden="true">
+                <span class="np-p3d np-p3d--lineup" {...p3dAttrs(p, 'lineup')} aria-hidden="true">
                   <canvas />
                 </span>
               ) : (
@@ -158,7 +169,7 @@ const bulbs = Array.from({ length: PER_SWAG * 2 }, (_, i) => {
             <div class="np-panel__bar">
               <div class="np-panel__who">
                 {is3D(p) ? (
-                  <span class="np-p3d np-p3d--sm" data-np-p3d="panel" aria-hidden="true">
+                  <span class="np-p3d np-p3d--sm" {...p3dAttrs(p, 'panel')} aria-hidden="true">
                     <canvas />
                   </span>
                 ) : (
@@ -302,7 +313,7 @@ const bulbs = Array.from({ length: PER_SWAG * 2 }, (_, i) => {
                 <div class="np-tv__cast" aria-hidden="true">
                   {wishlists.map((p) =>
                     is3D(p) ? (
-                      <span class="np-p3d np-p3d--sm" data-np-p3d="tv">
+                      <span class="np-p3d np-p3d--sm" {...p3dAttrs(p, 'tv')}>
                         <canvas />
                       </span>
                     ) : (
@@ -1189,14 +1200,14 @@ const bulbs = Array.from({ length: PER_SWAG * 2 }, (_, i) => {
 
   /* ---------- Paisley in 3D ----------
      A fixed-size box (her standing height); the canvas inside is sized per
-     move by src/scripts/paisley3d.ts and anchored bottom-centre, so tall moves
+     move by src/scripts/family3d.ts and anchored bottom-centre, so tall moves
      (the jump) rise out of the top without shifting the layout. */
   .np-p3d {
     --p3d-h: calc(38px * var(--px, 4));
     position: relative;
     display: block;
-    width: calc(var(--p3d-h) * 0.62);
-    height: var(--p3d-h);
+    width: calc(var(--p3d-h) * 0.62 * var(--p3d-scale, 1));
+    height: calc(var(--p3d-h) * var(--p3d-scale, 1));
     cursor: pointer;
   }
   .np-p3d canvas {
@@ -1430,7 +1441,7 @@ const bulbs = Array.from({ length: PER_SWAG * 2 }, (_, i) => {
 </style>
 
 <script>
-  import { Paisley3D, IDLE, REACTIONS, WALK_SPEED } from '../scripts/paisley3d';
+  import { Family3D, IDLE, PARENT_IDLE, REACTIONS, WALK_SPEED } from '../scripts/family3d';
   type Cleanup = () => void;
   let cleanup: Cleanup | null = null;
 
@@ -1650,9 +1661,9 @@ const bulbs = Array.from({ length: PER_SWAG * 2 }, (_, i) => {
     }
 
     /* ---------------- Paisley in 3D (this page only) ---------------- */
-    const p3d: Record<string, Paisley3D> = {};
+    const p3d: Record<string, Family3D> = {};
     root.querySelectorAll<HTMLElement>('[data-np-p3d]').forEach((box) => {
-      const pl = new Paisley3D(box, reduce);
+      const pl = new Family3D(box, reduce);
       p3d[box.dataset.npP3d!] = pl;
       disposers.push(() => pl.destroy());
     });
@@ -1661,9 +1672,12 @@ const bulbs = Array.from({ length: PER_SWAG * 2 }, (_, i) => {
     p3d.lineup?.idle(IDLE, 'wave');
     p3d.panel?.idle(IDLE);
     p3d.tv?.idle([['dance1', 2], ['dance3', 1], ['dance2', 1]]);
-    for (const k of ['lineup', 'panel', 'tv']) {
-      const pl = p3d[k];
-      if (pl) on(pl.box, 'click', () => pl.react(randomReaction()));
+    // Mom + Dad: wave hello in the line-up too, then their own routine
+    p3d['lineup-dad']?.idle(PARENT_IDLE, 'wave');
+    p3d['lineup-mom']?.idle(PARENT_IDLE, 'wave');
+    for (const k of ['panel-dad', 'panel-mom', 'tv-dad', 'tv-mom']) p3d[k]?.idle(PARENT_IDLE);
+    for (const [k, pl] of Object.entries(p3d)) {
+      if (k !== 'popup' && k !== 'walk') on(pl.box, 'click', () => pl.react(randomReaction()));
     }
 
     // corner pop-up: slides up, does one move, slides back down
@@ -1890,6 +1904,7 @@ const bulbs = Array.from({ length: PER_SWAG * 2 }, (_, i) => {
       wave(root.querySelector<HTMLElement>(`[data-np-panel="${id}"] [data-np-panel-sprite]`));
       // opening her tab: she jumps, cheers, then dances
       if (id === 'paisley') p3d.panel?.react('jump', () => p3d.panel?.react('cheer'));
+      else p3d[`panel-${id}`]?.react('cheer');
       if (history.replaceState) history.replaceState(history.state, '', `#${id}`);
     };
     tabs.forEach((tb, i) => {

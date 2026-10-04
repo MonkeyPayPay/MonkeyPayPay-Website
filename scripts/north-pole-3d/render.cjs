@@ -1,24 +1,32 @@
-// Renders each move in moves.json into a bottom-aligned atlas webp + manifest.
+// Renders each family member's moves (moves.json) into bottom-aligned atlas
+// webps + one manifest, src/data/family3d.json. Optional args: names to render
+// (default: everyone), e.g. `node render.cjs dad mom`.
 // Usage: see README.md in this folder. Run from the repo root.
 let chromium;
 try { ({ chromium } = require('playwright')); } catch { ({ chromium } = require('/opt/node-tools/node_modules/playwright')); }
 const sharp = require('sharp');
 const fs = require('fs');
 const path = require('path');
-const MOVES = require('./moves.json');
+const CHARS = require('./moves.json');
 const ROOT = path.resolve(__dirname, '../..');
-const OUT = path.join(ROOT, 'public/north-pole/paisley3d');
-const PAGE = 'http://localhost:8765/scripts/north-pole-paisley3d/index.html';
+const PAGE = 'http://localhost:8765/scripts/north-pole-3d/index.html';
+const MANIFEST = path.join(ROOT, 'src/data/family3d.json');
 const S = 260, SS = 2, FPS = 12, COLS = 8, PAD = 0.03; // px per metre (output), supersample
 (async () => {
-  fs.mkdirSync(OUT, { recursive: true });
   const b = await chromium.launch({ args: ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist'] });
+  const only = process.argv.slice(2);
+  const family = fs.existsSync(MANIFEST) ? JSON.parse(fs.readFileSync(MANIFEST, 'utf8')) : { scale: S, chars: {} };
+  for (const [who, cfg] of Object.entries(CHARS)) {
+  if (only.length && !only.includes(who)) continue;
+  const OUT = path.join(ROOT, 'public/north-pole', cfg.out);
+  fs.mkdirSync(OUT, { recursive: true });
   const p = await b.newPage();
   await p.goto(PAGE); await p.waitForFunction(() => window.ready);
-  await p.evaluate(() => api.load());
+  await p.evaluate(([g, l]) => api.load('./' + g, l ? './' + l : null), [cfg.glb, cfg.lend]);
   const travel = await p.evaluate(() => window.travel);
   const manifest = {};
-  for (const m of MOVES) {
+  console.log('==', who);
+  for (const m of cfg.moves) {
     const yaw = m.side ? -Math.PI / 2 : 0;
     const bd = await p.evaluate((m) => {
       api.setClip(m.clip); let mxY = 0, mxH = 0;
@@ -39,12 +47,15 @@ const S = 260, SS = 2, FPS = 12, COLS = 8, PAD = 0.03; // px per metre (output),
       .composite(frames.map((input, i) => ({ input, left: (i % cols) * fw, top: Math.floor(i / cols) * fh })))
       .webp({ quality: 82, alphaQuality: 90, effort: 6 }).toFile(`${OUT}/${m.name}.webp`);
     const kb = (fs.statSync(`${OUT}/${m.name}.webp`).size / 1024).toFixed(0);
-    manifest[m.name] = { src: `/north-pole/paisley3d/${m.name}.webp`, frames: n, cols, fw, fh, fps: FPS, loop: m.loop };
+    manifest[m.name] = { src: `/north-pole/${cfg.out}/${m.name}.webp`, frames: n, cols, fw, fh, fps: FPS, loop: m.loop };
     if (m.side) { const tr = travel[m.clip]; manifest[m.name].speed = +(Math.hypot(tr.dz, tr.dx) / tr.dur * S).toFixed(1); }
     console.log(m.name.padEnd(8), `${n} frames ${fw}x${fh}`, kb + 'KB', manifest[m.name].speed ? 'speed ' + manifest[m.name].speed + 'px/s' : '');
   }
-  // walking pace measured from her planted foot (see README) — keep it on re-render
+  // Paisley's walking pace, measured from her planted foot (see README)
   if (manifest.walk) { manifest.walk.speedMps = 0.507; delete manifest.walk.speed; }
-  fs.writeFileSync(path.join(ROOT, 'src/data/paisley3d.json'), JSON.stringify({ scale: S, moves: manifest }, null, 2) + '\n');
+  family.chars[who] = manifest;
+  await p.close();
+  }
+  fs.writeFileSync(MANIFEST, JSON.stringify(family, null, 2) + '\n');
   await b.close();
 })();

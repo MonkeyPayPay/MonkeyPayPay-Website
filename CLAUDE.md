@@ -182,14 +182,22 @@ docs live in `README.md`.)
   **All three family members now use photo sprites**; the 8-bit PNGs
   (`scripts/north-pole-sprites.mjs`) are unused fallbacks. Phone line-up uses
   `--px: 2.5` so the three fit at 390px. Shown in a hero line-up (tap = hop + wave), panel headers, and the TV.
-  **Paisley 3D animations (DONE, wish-list page ONLY — owner decision).**
-  Owner's rigged Tripo model `scripts/north-pole-paisley3d/paisley.glb` (22
-  baked clips, mixamorig skeleton). Rendered offline (headless Chromium +
-  three.js, see that folder's README/render.cjs/moves.json) into 9 transparent
-  atlas webps in `public/north-pole/paisley3d/` (wave, dance1-3, cheer, flip,
-  jump, laugh, walk[side view]) + manifest `src/data/paisley3d.json`; played by
-  `src/scripts/paisley3d.ts` (canvas player, lazy-loads atlases, pauses
-  off-screen, still frame under reduced motion). On the page: replaces her
+  **Family 3D animations (DONE, wish-list page ONLY — owner decision).**
+  Owner's rigged Tripo models in `scripts/north-pole-3d/` — `paisley.glb` (22
+  baked clips), `dad.glb` (dance_05, dance_03), `mom.glb` (greet_03, laugh_02,
+  frozen clap); all share the same 65-bone mixamorig rig + ~1-unit height, so
+  parents BORROW Paisley's clips (quaternion tracks only; Hips translation
+  rescaled by rest-hip-height ratio; other position/scale tracks dropped).
+  Rendered offline (headless Chromium + three.js; folder README, render.cjs,
+  per-person moves.json) into atlas webps in `public/north-pole/{paisley3d,
+  dad3d,mom3d}/` + one manifest `src/data/family3d.json`; played by
+  `src/scripts/family3d.ts` (`Family3D` canvas player, data-who per box,
+  lazy-loads, pauses off-screen, still frame under reduced motion). Parents
+  have dance1/dance2/wave/cheer/flip/jump/laugh; display boxes scaled
+  (`--p3d-scale`: dad 1.6, mom 1.5 × Paisley) since every model renders at
+  the same px/unit. All three are 3D in the line-up (parents wave then dance),
+  panel headers (Mom/Dad cheer on their tab) and the TV; the photo sprites are
+  now unused fallbacks. Paisley-only extras below. On the page: replaces her
   photo sprite in the hero line-up (waves, then dances), her panel header
   (jump+cheer when her tab opens) and the TV; a corner **pop-up** (waves when
   lists first appear, cheers on unwrap, flips on "Unwrap them all", jumps on

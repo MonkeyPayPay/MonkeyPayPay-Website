@@ -18,12 +18,36 @@ const rim = new THREE.DirectionalLight(0xbfd4ff, 0.6); rim.position.set(-2, 1.5,
 let model, mixer, clips = {}, action, hips, hipsRest;
 const cam = new THREE.OrthographicCamera(-1, 1, 1, -1, 0.01, 50);
 window.api = {
-  async load() {
-    const g = await new GLTFLoader().loadAsync('./paisley.glb');
+  // url: the character's model. lend: another model on the same rig whose
+  // clips are borrowed (rotations only; hips height rescaled to this body).
+  async load(url = './paisley.glb', lend = null) {
+    const loader = new GLTFLoader();
+    const g = await loader.loadAsync(url);
     model = g.scene; scene.add(model);
     model.traverse(o => { if (o.isMesh) { o.frustumCulled = false; if (o.material) { o.material.side = THREE.FrontSide; } } if (o.isBone && /Hips$/.test(o.name)) hips = o; });
     mixer = new THREE.AnimationMixer(model);
-    for (const c of g.animations) {
+    const all = [...g.animations];
+    if (lend) {
+      const l = await loader.loadAsync(lend);
+      let lendHips; l.scene.traverse(o => { if (o.isBone && /Hips$/.test(o.name)) lendHips = o; });
+      const from = lendHips.position.clone(), to = hips.position.clone(), k = to.y / from.y;
+      for (const c of l.animations) {
+        if (all.some(a => a.name === c.name)) continue; // the character's own version wins
+        const tracks = [];
+        for (const tr of c.tracks) {
+          if (/\.quaternion$/.test(tr.name)) tracks.push(tr);
+          else if (/Hips\.position$/.test(tr.name)) {
+            const t2 = tr.clone(), v = t2.values;
+            for (let i = 0; i < v.length; i += 3) {
+              v[i] = to.x + (v[i] - from.x) * k; v[i + 1] = to.y + (v[i + 1] - from.y) * k; v[i + 2] = to.z + (v[i + 2] - from.z) * k;
+            }
+            tracks.push(t2);
+          }
+        }
+        all.push(new THREE.AnimationClip(c.name, c.duration, tracks));
+      }
+    }
+    for (const c of all) {
       // play every move in place: keep the hips' up/down, drop forward/side travel
       for (const tr of c.tracks) if (/Hips\.position$/.test(tr.name)) {
         const v = tr.values, x0 = v[0], z0 = v[2];
@@ -32,7 +56,7 @@ window.api = {
       }
       clips[c.name] = c;
     }
-    return g.animations.map(c => [c.name, c.duration]);
+    return all.map(c => [c.name, c.duration]);
   },
   setClip(name) {
     mixer.stopAllAction();
