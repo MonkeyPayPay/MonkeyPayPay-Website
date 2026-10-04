@@ -2,6 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import DonateButton from '../components/DonateButton.astro';
 import { site } from '../data/site';
+import Monkey3D from '../components/Monkey3D.astro';
 ---
 
 <BaseLayout
@@ -15,11 +16,13 @@ import { site } from '../data/site';
       <p class="story__eyebrow reveal">The story behind the name</p>
       <h1 class="story__title reveal">For Paisley</h1>
 
-      <span
-        class="story__mascot reveal mascot-sprite mascot-sprite--dance is-looping"
-        role="img"
-        aria-label="The MonkeyPayPay mascot dancing ballet"
-      ></span>
+      <Monkey3D
+        class="story__mascot reveal"
+        start="heart"
+        idle={[['dance1', 2], ['dance2', 1], ['heart', 1], ['dance3', 1]]}
+        taps={['flip', 'laugh', 'heart']}
+        label="The MonkeyPayPay mascot dancing"
+      />
 
       <div class="story__body">
         <p class="reveal">
@@ -60,11 +63,12 @@ import { site } from '../data/site';
       </div>
 
       <aside class="story__support reveal" id="support">
-        <span
-          class="story__celebrate mascot-sprite mascot-sprite--rain"
-          role="img"
-          aria-label="The MonkeyPayPay mascot making it rain with dollar bills"
-        ></span>
+        <Monkey3D
+          class="story__celebrate"
+          idle={[['cheer', 1], ['heart', 1], ['jump', 1]]}
+          taps={['flip', 'cheer', 'heart']}
+          label="The MonkeyPayPay mascot cheering"
+        />
         <h2 class="story__support-title">Help write Paisley’s next chapter</h2>
         <p>
           Enjoying the apps, or just want to cheer us on? Anything at all helps —

@@ -62,6 +62,9 @@ export class Family3D {
   private token = 0;
   private io: IntersectionObserver;
   private seq: [string, number][] = [];
+  /** Nothing downloads until the box first scrolls into view. */
+  private seen = false;
+  private pending: (() => void)[] = [];
   private seqIndex = 0;
   readonly reduce: boolean;
 
@@ -80,6 +83,10 @@ export class Family3D {
     this.io = new IntersectionObserver(([e]) => {
       const was = this.visible;
       this.visible = e.isIntersecting;
+      if (this.visible && !this.seen) {
+        this.seen = true;
+        this.pending.splice(0).forEach((f) => f());
+      }
       if (this.visible && !was) {
         this.t0 += performance.now() - this.pausedAt;
         this.tick();
@@ -127,6 +134,10 @@ export class Family3D {
 
   /** Loop through a sequence of [move, loops] forever, starting at a random spot. */
   idle(seq: [string, number][], start?: string) {
+    if (!this.seen) {
+      this.pending = [() => this.idle(seq, start)];
+      return;
+    }
     this.seq = seq;
     this.seqIndex = Math.floor(Math.random() * seq.length);
     const next = () => {

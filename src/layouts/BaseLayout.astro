@@ -102,6 +102,7 @@ const siteJsonLd = {
 
     <script>
       import { initInteractions } from '../scripts/interactions';
+      import { initMonkeys, destroyMonkeys } from '../scripts/monkey3d';
       interface InitWindow extends Window {
         __mppInteractions?: boolean;
       }
@@ -109,6 +110,8 @@ const siteJsonLd = {
       if (!iw.__mppInteractions) {
         iw.__mppInteractions = true;
         document.addEventListener('astro:page-load', initInteractions);
+        document.addEventListener('astro:page-load', initMonkeys);
+        document.addEventListener('astro:before-swap', destroyMonkeys);
       }
     </script>
   </body>

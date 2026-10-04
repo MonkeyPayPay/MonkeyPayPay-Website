@@ -226,7 +226,7 @@
     },
     "monkey": {
       "wave": {
-        "src": "/north-pole/monkey3d/wave.webp",
+        "src": "/brand/monkey3d/wave.webp",
         "frames": 33,
         "cols": 8,
         "fw": 255,
@@ -235,7 +235,7 @@
         "loop": false
       },
       "heart": {
-        "src": "/north-pole/monkey3d/heart.webp",
+        "src": "/brand/monkey3d/heart.webp",
         "frames": 43,
         "cols": 8,
         "fw": 318,
@@ -244,7 +244,7 @@
         "loop": false
       },
       "bow": {
-        "src": "/north-pole/monkey3d/bow.webp",
+        "src": "/brand/monkey3d/bow.webp",
         "frames": 36,
         "cols": 8,
         "fw": 171,
@@ -253,7 +253,7 @@
         "loop": false
       },
       "dance1": {
-        "src": "/north-pole/monkey3d/dance1.webp",
+        "src": "/brand/monkey3d/dance1.webp",
         "frames": 34,
         "cols": 8,
         "fw": 241,
@@ -262,7 +262,7 @@
         "loop": true
       },
       "dance2": {
-        "src": "/north-pole/monkey3d/dance2.webp",
+        "src": "/brand/monkey3d/dance2.webp",
         "frames": 48,
         "cols": 8,
         "fw": 265,
@@ -271,7 +271,7 @@
         "loop": true
       },
       "dance3": {
-        "src": "/north-pole/monkey3d/dance3.webp",
+        "src": "/brand/monkey3d/dance3.webp",
         "frames": 48,
         "cols": 8,
         "fw": 200,
@@ -280,7 +280,7 @@
         "loop": true
       },
       "cheer": {
-        "src": "/north-pole/monkey3d/cheer.webp",
+        "src": "/brand/monkey3d/cheer.webp",
         "frames": 36,
         "cols": 8,
         "fw": 230,
@@ -289,7 +289,7 @@
         "loop": true
       },
       "flip": {
-        "src": "/north-pole/monkey3d/flip.webp",
+        "src": "/brand/monkey3d/flip.webp",
         "frames": 42,
         "cols": 8,
         "fw": 368,
@@ -298,7 +298,7 @@
         "loop": false
       },
       "laugh": {
-        "src": "/north-pole/monkey3d/laugh.webp",
+        "src": "/brand/monkey3d/laugh.webp",
         "frames": 42,
         "cols": 8,
         "fw": 239,
@@ -307,11 +307,103 @@
         "loop": false
       },
       "jump": {
-        "src": "/north-pole/monkey3d/jump.webp",
+        "src": "/brand/monkey3d/jump.webp",
         "frames": 27,
         "cols": 8,
         "fw": 174,
         "fh": 383,
+        "fps": 12,
+        "loop": false
+      },
+      "oops": {
+        "src": "/brand/monkey3d/oops.webp",
+        "frames": 36,
+        "cols": 8,
+        "fw": 182,
+        "fh": 342,
+        "fps": 12,
+        "loop": false
+      },
+      "game": {
+        "src": "/brand/monkey3d/game.webp",
+        "frames": 72,
+        "cols": 8,
+        "fw": 200,
+        "fh": 301,
+        "fps": 12,
+        "loop": true
+      },
+      "chop": {
+        "src": "/brand/monkey3d/chop.webp",
+        "frames": 60,
+        "cols": 8,
+        "fw": 247,
+        "fh": 331,
+        "fps": 12,
+        "loop": false
+      }
+    },
+    "monkey-sm": {
+      "wave": {
+        "src": "/brand/monkey3d/sm/wave.webp",
+        "frames": 33,
+        "cols": 8,
+        "fw": 116,
+        "fh": 155,
+        "fps": 12,
+        "loop": false
+      },
+      "heart": {
+        "src": "/brand/monkey3d/sm/heart.webp",
+        "frames": 43,
+        "cols": 8,
+        "fw": 145,
+        "fh": 155,
+        "fps": 12,
+        "loop": false
+      },
+      "cheer": {
+        "src": "/brand/monkey3d/sm/cheer.webp",
+        "frames": 36,
+        "cols": 8,
+        "fw": 104,
+        "fh": 150,
+        "fps": 12,
+        "loop": true
+      },
+      "laugh": {
+        "src": "/brand/monkey3d/sm/laugh.webp",
+        "frames": 42,
+        "cols": 8,
+        "fw": 109,
+        "fh": 154,
+        "fps": 12,
+        "loop": false
+      },
+      "jump": {
+        "src": "/brand/monkey3d/sm/jump.webp",
+        "frames": 27,
+        "cols": 8,
+        "fw": 79,
+        "fh": 174,
+        "fps": 12,
+        "loop": false
+      },
+      "game": {
+        "src": "/brand/monkey3d/sm/game.webp",
+        "frames": 72,
+        "cols": 8,
+        "fw": 91,
+        "fh": 137,
+        "fps": 12,
+        "loop": true
+      },
+      "chop": {
+        "src": "/brand/monkey3d/sm/chop.webp",
+        "frames": 60,
+        "cols": 8,
+        "fw": 112,
+        "fh": 151,
         "fps": 12,
         "loop": false
       }

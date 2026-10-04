@@ -190,7 +190,7 @@
   },
   "monkey": {
     "glb": "monkey.glb",
-    "out": "monkey3d",
+    "out": "/brand/monkey3d",
     "scale": 330,
     "moves": [
       {
@@ -261,6 +261,83 @@
         "clip": "jump.001",
         "from": 0,
         "to": 2.29,
+        "loop": false
+      },
+      {
+        "name": "oops",
+        "clip": "scratch.001",
+        "from": 3.2,
+        "to": 6.2,
+        "loop": false
+      },
+      {
+        "name": "game",
+        "clip": "play_video_game.001",
+        "from": 2.0,
+        "to": 8.0,
+        "loop": true
+      },
+      {
+        "name": "chop",
+        "clip": "chop.001",
+        "from": 1.0,
+        "to": 6.0,
+        "loop": false
+      }
+    ]
+  },
+  "monkey-sm": {
+    "glb": "monkey.glb",
+    "out": "/brand/monkey3d/sm",
+    "scale": 150,
+    "moves": [
+      {
+        "name": "wave",
+        "clip": "greet_04.001",
+        "from": 0,
+        "to": 2.79,
+        "loop": false
+      },
+      {
+        "name": "heart",
+        "clip": "heart_pose.001",
+        "from": 1.0,
+        "to": 4.6,
+        "loop": false
+      },
+      {
+        "name": "cheer",
+        "clip": "cheer.001",
+        "from": 0,
+        "to": 3.0,
+        "loop": true
+      },
+      {
+        "name": "laugh",
+        "clip": "laugh_01.001",
+        "from": 1.0,
+        "to": 4.5,
+        "loop": false
+      },
+      {
+        "name": "jump",
+        "clip": "jump.001",
+        "from": 0,
+        "to": 2.29,
+        "loop": false
+      },
+      {
+        "name": "game",
+        "clip": "play_video_game.001",
+        "from": 2.0,
+        "to": 8.0,
+        "loop": true
+      },
+      {
+        "name": "chop",
+        "clip": "chop.001",
+        "from": 1.0,
+        "to": 6.0,
         "loop": false
       }
     ]

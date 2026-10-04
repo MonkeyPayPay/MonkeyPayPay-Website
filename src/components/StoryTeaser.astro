@@ -1,5 +1,6 @@
 ---
 import DonateButton from './DonateButton.astro';
+import Monkey3D from './Monkey3D.astro';
 ---
 
 <section class="teaser">
@@ -14,7 +15,7 @@ import DonateButton from './DonateButton.astro';
       <a class="btn btn--ghost" href="/story">Read her story</a>
       <span class="teaser__donate">
         <DonateButton />
-        <span class="teaser__swing" aria-hidden="true"></span>
+        <Monkey3D who="monkey-sm" class="teaser__swing" idle={[['heart', 1], ['cheer', 1]]} />
       </span>
     </div>
   </div>

@@ -1,0 +1,28 @@
+---
+// The 3D MonkeyPayPay mascot (pre-rendered from her rigged model — see
+// scripts/north-pole-3d and src/scripts/family3d.ts). Drop-in for any spot that
+// used a 2D monkey sprite. The box's height sets her size; she plays `start`
+// once (if given), then loops through `idle`. Tapping her plays one of `taps`.
+interface Props {
+  /** "monkey" (hero-size atlases) or "monkey-sm" (small spots). */
+  who?: 'monkey' | 'monkey-sm';
+  idle: [string, number][];
+  start?: string;
+  taps?: string[];
+  class?: string;
+  label?: string;
+}
+const { who = 'monkey', idle, start, taps = [], class: cls = '', label } = Astro.props;
+---
+
+<span
+  class:list={['m3d', cls]}
+  data-m3d
+  data-who={who}
+  data-idle={JSON.stringify(idle)}
+  data-start={start}
+  data-taps={JSON.stringify(taps)}
+  role={label ? 'img' : undefined}
+  aria-label={label}
+  aria-hidden={label ? undefined : 'true'}
+><canvas></canvas></span>

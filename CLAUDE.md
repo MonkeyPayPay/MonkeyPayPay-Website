@@ -127,6 +127,25 @@ docs live in `README.md`.)
       (React + Express/WebSocket, seeded "Harbor & Vine" demo) to a host that
       supports WebSockets — Render/Railway/Fly — then set `program.demoUrl` to
       flip the "Try the demo" button live.
+- **3D monkey site-wide (owner request) — replaces ALL 2D monkey sprites.**
+  `<Monkey3D>` (`src/components/Monkey3D.astro`: who, idle seq, start, taps)
+  booted by `src/scripts/monkey3d.ts` on every page (BaseLayout,
+  astro:page-load) using the `Family3D` player from `src/scripts/family3d.ts`
+  (starts + downloads only when first scrolled into view). Atlases:
+  `public/brand/monkey3d/` (hero size, 330px/unit: wave, heart, bow, dance1-3,
+  cheer, flip, laugh, jump, oops[scratch], game[play_video_game],
+  chop) + `public/brand/monkey3d/sm/` (150px/unit for small spots), rendered
+  by `scripts/north-pole-3d/render.cjs` (chars `monkey`, `monkey-sm`; out
+  paths starting with "/" are under public/). Placements: home hero (wave →
+  dances/heart/bow, tap = laugh/flip/jump/heart), filter-bar hopper (jumps on
+  each hop via filters.ts → `el.m3d.react('jump')`), StoryTeaser (under
+  Support button), story top + support card, 404 (oops = puzzled), program
+  cards (`programs.ts` `mascot.move`: Mise=chop, Prometheus=game). Base
+  `.m3d` CSS uses `:where()` (zero specificity) so each spot's absolute
+  positioning wins. Old `public/brand/anim/*` sprite strips + `.mascot-sprite*`
+  CSS were deleted (in git history). The Cuddle Crush heart-slam mascot is a
+  different character and stays a 2D sprite. Middleware allow-lists
+  `/brand/monkey3d/` for the public wish-list page.
 - **Live metrics (real only — nothing fabricated):**
   - **Visitor counter** — subtle, bottom of the footer (`.footer__visits`). Backed
     by **Vercel KV** via the serverless function `api/visits.js` (uses the
@@ -202,8 +221,8 @@ docs live in `README.md`.)
   bow, dance1-3, cheer, flip, laugh, jump); replaces the dance sprite in the
   hero (`.np-p3d--hero`, data-who="monkey"): waves, then dances/hearts/bows;
   tapping the "Ho ho ho!" button = laugh/flip/jump/heart. **Owner may want
-  this 3D monkey on ALL pages if they like it** — not done yet (other pages
-  still use the 2D sprite mascots). Paisley-only extras below. On the page: replaces her
+  the 3D monkey site-wide** — DONE (see "3D monkey site-wide" below).
+  Paisley-only extras below. On the page: replaces her
   photo sprite in the hero line-up (waves, then dances), her panel header
   (jump+cheer when her tab opens) and the TV; a corner **pop-up** (waves when
   lists first appear, cheers on unwrap, flips on "Unwrap them all", jumps on
@@ -357,6 +376,8 @@ docs live in `README.md`.)
      which are smaller). Poses in `public/brand/`: `monkey-wave.webp` = hero,
      `monkey-ballet.webp` = story page (top), `monkey-404.webp` = 404 page,
      `monkey-celebrate.webp` = story support card (by the donate button),
+     [NOTE: all monkey sprites below are now SUPERSEDED by the 3D monkey —
+     see "3D monkey site-wide"; anim/ strips deleted],
      `monkey-apps.webp` = saved/unused (crowded the homepage next to the hero).
      **Tier-B character animation (DONE):** real frame-by-frame sprite animation
      of the monkey mascot. Owner supplied painted frame strips (on magenta) via

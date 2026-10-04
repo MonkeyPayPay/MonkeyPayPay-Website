@@ -18,6 +18,8 @@ function perch(monkey: HTMLElement, btn: HTMLElement, hop: boolean): void {
     monkey.classList.remove('is-hopping');
     void monkey.offsetWidth; // reflow so the animation restarts every hop
     monkey.classList.add('is-hopping');
+    // the 3D monkey jumps as she hops (see Monkey3D / monkey3d.ts)
+    (monkey.querySelector('[data-m3d]') as (HTMLElement & { m3d?: { react(n: string): void } }) | null)?.m3d?.react('jump');
     window.setTimeout(() => monkey.classList.remove('is-hopping'), 700);
   }
 }

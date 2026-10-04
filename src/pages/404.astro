@@ -1,13 +1,15 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import Monkey3D from '../components/Monkey3D.astro';
 ---
 
 <BaseLayout title="Page not found" description="This page could not be found.">
   <section class="notfound container">
-    <span
-      class="notfound__mascot reveal mascot-sprite mascot-sprite--shrug"
-      role="img"
-      aria-label="The MonkeyPayPay mascot looking puzzled"
+    <Monkey3D
+      class="notfound__mascot reveal"
+      idle={[['oops', 2], ['laugh', 1]]}
+      taps={['oops', 'laugh', 'flip']}
+      label="The MonkeyPayPay mascot looking puzzled"
     />
     <h1 class="notfound__title reveal">404</h1>
     <p class="notfound__text reveal">

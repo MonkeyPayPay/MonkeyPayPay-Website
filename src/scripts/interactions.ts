@@ -29,7 +29,7 @@ export function initInteractions(): void {
   // is handled purely by the hover-to-play CSS, so we skip this there.
   const canHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
   const loops = document.querySelectorAll<HTMLElement>(
-    '.mascot-sprite, .cc-mascot, .program__mascot, .teaser__swing',
+    '.cc-mascot',
   );
   if (!canHover && 'IntersectionObserver' in window && loops.length) {
     const pauseIO = new IntersectionObserver(

@@ -15,6 +15,7 @@ const statusLabel = {
 
 // Optional animated monkey mascot parked in the card corner (per-program).
 const mascot = program.mascot;
+import Monkey3D from './Monkey3D.astro';
 ---
 
 <article class:list={['program', 'reveal', { 'program--mascot': !!mascot }]}>
@@ -69,11 +70,7 @@ const mascot = program.mascot;
 
   {
     mascot && (
-      <span
-        class="program__mascot"
-        aria-hidden="true"
-        style={`aspect-ratio:${mascot.aspect};background-image:url('${mascot.src}');`}
-      />
+      <Monkey3D who="monkey-sm" class="program__mascot" idle={[[mascot.move, 1]]} />
     )
   }
 </article>

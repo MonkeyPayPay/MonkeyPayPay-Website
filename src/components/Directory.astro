@@ -3,6 +3,7 @@ import { usedCategories, appsByCategory } from '../data/apps';
 import AppCard from './AppCard.astro';
 
 const cats = usedCategories();
+import Monkey3D from './Monkey3D.astro';
 ---
 
 <section class="directory" id="apps">
@@ -20,7 +21,7 @@ const cats = usedCategories();
           {/* Mascot that perches on the active filter and hops to the one you pick.
               The inner .filter-monkey__art is the swap point for a Rive canvas. */}
           <span class="filter-monkey" data-filter-monkey aria-hidden="true">
-            <span class="filter-monkey__art"></span>
+            <Monkey3D who="monkey-sm" class="filter-monkey__art" idle={[['wave', 1], ['cheer', 1], ['laugh', 1]]} />
           </span>
           <button class="filter is-active" type="button" data-filter="all" role="tab" aria-selected="true">
             All
