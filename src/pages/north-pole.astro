@@ -15,6 +15,10 @@ const spriteStyle = (p: Person) =>
     ? `background-image:url(${p.photoSprite.src});--ar:${p.photoSprite.aspect.toFixed(4)};--hs:${p.photoSprite.height ?? 42}px`
     : `background-image:url(${p.sprite})`;
 
+// Paisley is the 3D-animated one (her rigged model, rendered to atlases by
+// scripts/north-pole-paisley3d — see src/scripts/paisley3d.ts). Wish-list page only.
+const is3D = (p: Person) => p.id === 'paisley';
+
 // Twinkle-light string across the top of the sky: two sagging swags of bulbs.
 const BULB_COLORS = ['#ff4d5e', '#ffd34d', '#3ee08f', '#4db8ff', '#ff8af0'];
 const PER_SWAG = 9;
@@ -96,7 +100,13 @@ const bulbs = Array.from({ length: PER_SWAG * 2 }, (_, i) => {
               style={`--ribbon:${p.ribbon};--n:${i}`}
               aria-label={`Wave hi to ${p.name}`}
             >
-              <span class={spriteClass(p)} style={spriteStyle(p)} aria-hidden="true" />
+              {is3D(p) ? (
+                <span class="np-p3d np-p3d--lineup" data-np-p3d="lineup" aria-hidden="true">
+                  <canvas />
+                </span>
+              ) : (
+                <span class={spriteClass(p)} style={spriteStyle(p)} aria-hidden="true" />
+              )}
               <span class="np-family__name">{p.name}</span>
             </button>
           ))
@@ -147,12 +157,18 @@ const bulbs = Array.from({ length: PER_SWAG * 2 }, (_, i) => {
           >
             <div class="np-panel__bar">
               <div class="np-panel__who">
-                <span
-                  class={spriteClass(p, 'np-sprite--sm')}
-                  style={spriteStyle(p)}
-                  data-np-panel-sprite
-                  aria-hidden="true"
-                />
+                {is3D(p) ? (
+                  <span class="np-p3d np-p3d--sm" data-np-p3d="panel" aria-hidden="true">
+                    <canvas />
+                  </span>
+                ) : (
+                  <span
+                    class={spriteClass(p, 'np-sprite--sm')}
+                    style={spriteStyle(p)}
+                    data-np-panel-sprite
+                    aria-hidden="true"
+                  />
+                )}
                 <h2 class="np-panel__title">
                   For {p.name}
                   {p.items.length > 0 && (
@@ -278,9 +294,15 @@ const bulbs = Array.from({ length: PER_SWAG * 2 }, (_, i) => {
               <div class="np-tv__soon">
                 <div class="np-tv__static" aria-hidden="true" />
                 <div class="np-tv__cast" aria-hidden="true">
-                  {wishlists.map((p) => (
-                    <span class={spriteClass(p, 'np-sprite--sm')} style={spriteStyle(p)} />
-                  ))}
+                  {wishlists.map((p) =>
+                    is3D(p) ? (
+                      <span class="np-p3d np-p3d--sm" data-np-p3d="tv">
+                        <canvas />
+                      </span>
+                    ) : (
+                      <span class={spriteClass(p, 'np-sprite--sm')} style={spriteStyle(p)} />
+                    ),
+                  )}
                 </div>
                 <p class="np-tv__msg">
                   <span aria-hidden="true">🎬</span> Our family video is still being wrapped.
@@ -292,7 +314,17 @@ const bulbs = Array.from({ length: PER_SWAG * 2 }, (_, i) => {
         </div>
         <div class="np-tv__knobs" aria-hidden="true"><i /><i /></div>
       </div>
+
+      <!-- Paisley strolls across the snow under the TV -->
+      <div class="np-walk" aria-hidden="true">
+        <span class="np-p3d np-p3d--walk" data-np-p3d="walk"><canvas /></span>
+      </div>
     </section>
+
+    <!-- Paisley pops up from the corner to celebrate unwraps and gift picks -->
+    <button class="np-popup" type="button" data-np-popup tabindex="-1" aria-hidden="true">
+      <span class="np-p3d np-p3d--popup" data-np-p3d="popup"><canvas /></span>
+    </button>
   </div>
 </BaseLayout>
 
@@ -1117,6 +1149,71 @@ const bulbs = Array.from({ length: PER_SWAG * 2 }, (_, i) => {
   }
   .np-surprise--all:hover { background: color-mix(in oklab, var(--ribbon) 40%, transparent); }
 
+  /* ---------- Paisley in 3D ----------
+     A fixed-size box (her standing height); the canvas inside is sized per
+     move by src/scripts/paisley3d.ts and anchored bottom-centre, so tall moves
+     (the jump) rise out of the top without shifting the layout. */
+  .np-p3d {
+    --p3d-h: calc(38px * var(--px, 4));
+    position: relative;
+    display: block;
+    width: calc(var(--p3d-h) * 0.62);
+    height: var(--p3d-h);
+    cursor: pointer;
+  }
+  .np-p3d canvas {
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%);
+    pointer-events: none;
+    filter: drop-shadow(0 10px 12px rgba(0, 0, 0, 0.45));
+  }
+  .np-p3d--sm { --px: 2; }
+  .np-family .np-p3d { --px: 4; }
+
+  .np-walk {
+    position: relative;
+    height: 150px;
+    margin-top: 1.5rem;
+    overflow: hidden;
+    border-radius: 0 0 40px 40px;
+    background: radial-gradient(120% 60% at 50% 100%, rgba(233, 238, 252, 0.14), transparent 70%);
+  }
+  .np-walk::after { /* the snow she walks on */
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 18px;
+    background: linear-gradient(180deg, rgba(233, 238, 252, 0.22), rgba(233, 238, 252, 0.08));
+    border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+  }
+  .np-p3d--walk {
+    --p3d-h: 120px;
+    position: absolute;
+    left: 0;
+    bottom: 10px;
+    will-change: transform;
+  }
+
+  .np-popup {
+    position: fixed;
+    right: clamp(8px, 3vw, 28px);
+    bottom: 0;
+    z-index: 95;
+    padding: 0;
+    border: 0;
+    background: none;
+    cursor: pointer;
+    transform: translateY(115%);
+    transition: transform 520ms cubic-bezier(0.34, 1.4, 0.64, 1);
+    -webkit-tap-highlight-color: transparent;
+  }
+  .np-popup.is-up { transform: translateY(0); }
+  .np-p3d--popup { --p3d-h: clamp(110px, 18vw, 170px); }
+
   /* ---------- Family video: a retro TV ---------- */
   .np-video {
     margin-top: clamp(4rem, 9vw, 6rem);
@@ -1250,6 +1347,9 @@ const bulbs = Array.from({ length: PER_SWAG * 2 }, (_, i) => {
     .np-tag__line { font-size: 0.7rem; }
     .np-family { gap: 1rem; }
     .np-family .np-sprite { --px: 2.5; }
+    .np-family .np-p3d { --px: 2.5; }
+    .np-walk { height: 120px; }
+    .np-p3d--walk { --p3d-h: 96px; }
     .np-count__cell { min-width: 3.9rem; }
   }
 
@@ -1266,6 +1366,7 @@ const bulbs = Array.from({ length: PER_SWAG * 2 }, (_, i) => {
 </style>
 
 <script>
+  import { Paisley3D, IDLE, REACTIONS, WALK_SPEED } from '../scripts/paisley3d';
   type Cleanup = () => void;
   let cleanup: Cleanup | null = null;
 
@@ -1484,6 +1585,82 @@ const bulbs = Array.from({ length: PER_SWAG * 2 }, (_, i) => {
       disposers.push(() => clearTimeout(to));
     }
 
+    /* ---------------- Paisley in 3D (this page only) ---------------- */
+    const p3d: Record<string, Paisley3D> = {};
+    root.querySelectorAll<HTMLElement>('[data-np-p3d]').forEach((box) => {
+      const pl = new Paisley3D(box, reduce);
+      p3d[box.dataset.npP3d!] = pl;
+      disposers.push(() => pl.destroy());
+    });
+    const randomReaction = () => REACTIONS[(Math.random() * REACTIONS.length) | 0];
+    // line-up: says hi, then dances; the panel + TV copies just dance
+    p3d.lineup?.idle(IDLE, 'wave');
+    p3d.panel?.idle(IDLE);
+    p3d.tv?.idle([['dance1', 2], ['dance3', 1], ['dance2', 1]]);
+    for (const k of ['lineup', 'panel', 'tv']) {
+      const pl = p3d[k];
+      if (pl) on(pl.box, 'click', () => pl.react(randomReaction()));
+    }
+
+    // corner pop-up: slides up, does one move, slides back down
+    const popup = root.querySelector<HTMLElement>('[data-np-popup]');
+    let hideT = 0;
+    const pop = (move: string) => {
+      const pl = p3d.popup;
+      if (reduce || !pl || !popup) return;
+      clearTimeout(hideT);
+      popup.classList.add('is-up');
+      pl.play(move, {
+        loops: 1,
+        onDone: () => { hideT = window.setTimeout(() => popup.classList.remove('is-up'), 300); },
+      });
+    };
+    disposers.push(() => clearTimeout(hideT));
+    if (popup) {
+      on(popup, 'click', () => {
+        const c = centerOf(popup);
+        burst(c.x, c.y, 50, 0.8);
+        pop(randomReaction());
+      });
+      // first time someone reaches the lists, she pops up to wave hello
+      const lists = root.querySelector('.np-lists');
+      if (lists) {
+        const hello = new IntersectionObserver(([e]) => {
+          if (e.isIntersecting) { hello.disconnect(); window.setTimeout(() => pop('wave'), 600); }
+        }, { threshold: 0.2 });
+        hello.observe(lists);
+        disposers.push(() => hello.disconnect());
+      }
+    }
+
+    // the walk: strolls left→right across the snow at her real walking pace
+    const walker = p3d.walk;
+    if (walker) {
+      walker.play('walk', { loops: Infinity });
+      const strip = walker.box.parentElement!;
+      if (reduce) {
+        walker.box.style.left = '50%';
+        walker.box.style.transform = 'translateX(-50%)';
+      } else {
+        let x = -walker.box.offsetWidth, last = 0, rafW = 0;
+        const step = (now: number) => {
+          const dt = last ? Math.min(0.05, (now - last) / 1000) : 0;
+          last = now;
+          x += WALK_SPEED * walker.pxPerMetre * dt;
+          if (x > strip.clientWidth + 20) x = -walker.box.offsetWidth - 40;
+          walker.box.style.transform = `translateX(${x}px)`;
+          rafW = requestAnimationFrame(step);
+        };
+        const wio = new IntersectionObserver(([e]) => {
+          cancelAnimationFrame(rafW);
+          last = 0;
+          if (e.isIntersecting) rafW = requestAnimationFrame(step);
+        });
+        wio.observe(strip);
+        disposers.push(() => { wio.disconnect(); cancelAnimationFrame(rafW); });
+      }
+    }
+
     /* ---------------- Gifts: closed until you tap them ---------------- */
     const gifts = Array.from(root.querySelectorAll<HTMLElement>('[data-np-gift]'));
     const parts = (g: HTMLElement) => ({
@@ -1507,6 +1684,7 @@ const bulbs = Array.from({ length: PER_SWAG * 2 }, (_, i) => {
         body.focus({ preventScroll: true });
       }
       if (celebrate) {
+        pop('cheer');
         const delay = Number(getComputedStyle(g).getPropertyValue('--i') || 0) * 140;
         window.setTimeout(() => {
           const c = centerOf(g);
@@ -1527,6 +1705,7 @@ const bulbs = Array.from({ length: PER_SWAG * 2 }, (_, i) => {
           g.style.setProperty('--i', String(n));
           unwrap(g);
         });
+        pop('flip');
       });
     });
 
@@ -1569,6 +1748,7 @@ const bulbs = Array.from({ length: PER_SWAG * 2 }, (_, i) => {
       on(a, 'click', ((e: MouseEvent) => {
         const p = e.clientX || e.clientY ? { x: e.clientX, y: e.clientY } : centerOf(a);
         burst(p.x, p.y, 60, 0.9);
+        pop('jump');
       }) as EventListener);
     });
 
@@ -1584,6 +1764,8 @@ const bulbs = Array.from({ length: PER_SWAG * 2 }, (_, i) => {
       });
       panels.forEach((p) => (p.hidden = p.dataset.npPanel !== id));
       wave(root.querySelector<HTMLElement>(`[data-np-panel="${id}"] [data-np-panel-sprite]`));
+      // opening her tab: she jumps, cheers, then dances
+      if (id === 'paisley') p3d.panel?.react('jump', () => p3d.panel?.react('cheer'));
       if (history.replaceState) history.replaceState(history.state, '', `#${id}`);
     };
     tabs.forEach((tb, i) => {
@@ -1625,6 +1807,7 @@ const bulbs = Array.from({ length: PER_SWAG * 2 }, (_, i) => {
           pick.classList.add('is-jiggle');
           const c = centerOf(pick);
           burst(c.x, c.y, 120, 1.3);
+          pop('laugh');
         }, reduce ? 0 : 550);
       });
     });

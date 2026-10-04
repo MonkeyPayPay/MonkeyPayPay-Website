@@ -182,12 +182,19 @@ docs live in `README.md`.)
   **All three family members now use photo sprites**; the 8-bit PNGs
   (`scripts/north-pole-sprites.mjs`) are unused fallbacks. Phone line-up uses
   `--px: 2.5` so the three fit at 390px. Shown in a hero line-up (tap = hop + wave), panel headers, and the TV.
-  **Paisley 3D animations (PENDING owner files):** owner rigged a 3D model of
-  Paisley in Tripo (studio.tripo3d.ai) and will export animated GLBs (idle,
-  wave, dances, jump/celebrate, walk, clap, point) or Mixamo FBX. Plan: render
-  them here offline (headless Chromium + three.js) into transparent webp sprite
-  strips, not live 3D. **Owner decision: use her 3D animations ONLY on the
-  wish-list page (/north-pole), nowhere else on the site.**
+  **Paisley 3D animations (DONE, wish-list page ONLY — owner decision).**
+  Owner's rigged Tripo model `scripts/north-pole-paisley3d/paisley.glb` (22
+  baked clips, mixamorig skeleton). Rendered offline (headless Chromium +
+  three.js, see that folder's README/render.cjs/moves.json) into 9 transparent
+  atlas webps in `public/north-pole/paisley3d/` (wave, dance1-3, cheer, flip,
+  jump, laugh, walk[side view]) + manifest `src/data/paisley3d.json`; played by
+  `src/scripts/paisley3d.ts` (canvas player, lazy-loads atlases, pauses
+  off-screen, still frame under reduced motion). On the page: replaces her
+  photo sprite in the hero line-up (waves, then dances), her panel header
+  (jump+cheer when her tab opens) and the TV; a corner **pop-up** (waves when
+  lists first appear, cheers on unwrap, flips on "Unwrap them all", jumps on
+  store clicks, laughs on "Surprise me"); and she **walks** across a snow strip
+  under the TV at 0.507 m/s. Tap her anywhere = random flip/jump/cheer/laugh.
   **Family video slot:** retro TV section; set `familyVideo.src` (mp4 in
   `public/north-pole/`) or `familyVideo.youtubeId` in wishlist.ts — shows
   "still being wrapped" until then. Amazon/Charles Tyrwhitt links were

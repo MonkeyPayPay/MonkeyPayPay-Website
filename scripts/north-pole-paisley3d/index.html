@@ -1,0 +1,71 @@
+<!doctype html><html><head><meta charset="utf-8">
+<!-- Offline renderer for Paisley's 3D moves; driven by render.cjs (see README.md). -->
+<style>html,body{margin:0;background:transparent}canvas{display:block}</style>
+<script type="importmap">{"imports":{"three":"/node_modules/three/build/three.module.js","three/addons/":"/node_modules/three/examples/jsm/"}}</script>
+</head><body>
+<script type="module">
+import * as THREE from 'three';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, preserveDrawingBuffer: true });
+renderer.setClearColor(0x000000, 0);
+renderer.outputColorSpace = THREE.SRGBColorSpace;
+renderer.toneMapping = THREE.NoToneMapping;
+document.body.appendChild(renderer.domElement);
+const scene = new THREE.Scene();
+scene.add(new THREE.HemisphereLight(0xffffff, 0xb9a89a, 1.9));
+const key = new THREE.DirectionalLight(0xffffff, 1.3); key.position.set(1.2, 2.2, 3); scene.add(key);
+const rim = new THREE.DirectionalLight(0xbfd4ff, 0.6); rim.position.set(-2, 1.5, -2); scene.add(rim);
+let model, mixer, clips = {}, action, hips, hipsRest;
+const cam = new THREE.OrthographicCamera(-1, 1, 1, -1, 0.01, 50);
+window.api = {
+  async load() {
+    const g = await new GLTFLoader().loadAsync('./paisley.glb');
+    model = g.scene; scene.add(model);
+    model.traverse(o => { if (o.isMesh) { o.frustumCulled = false; if (o.material) { o.material.side = THREE.FrontSide; } } if (o.isBone && /Hips$/.test(o.name)) hips = o; });
+    mixer = new THREE.AnimationMixer(model);
+    for (const c of g.animations) {
+      // play every move in place: keep the hips' up/down, drop forward/side travel
+      for (const tr of c.tracks) if (/Hips\.position$/.test(tr.name)) {
+        const v = tr.values, x0 = v[0], z0 = v[2];
+        (window.travel ||= {})[c.name] = { dz: v[v.length - 1] - z0, dx: v[v.length - 3] - x0, dur: c.duration };
+        for (let i = 0; i < v.length; i += 3) { v[i] = x0; v[i + 2] = z0; }
+      }
+      clips[c.name] = c;
+    }
+    return g.animations.map(c => [c.name, c.duration]);
+  },
+  setClip(name) {
+    mixer.stopAllAction();
+    action = mixer.clipAction(clips[name]); action.reset().play();
+  },
+  pose(t) { mixer.setTime(t); model.updateMatrixWorld(true); },
+  // world-space bounds of the skinned mesh at time t (sampled vertices)
+  bounds(t) {
+    this.pose(t);
+    const box = new THREE.Box3(), v = new THREE.Vector3();
+    model.traverse(o => { if (o.isSkinnedMesh) {
+      const p = o.geometry.attributes.position;
+      for (let i = 0; i < p.count; i += 7) { v.fromBufferAttribute(p, i); o.applyBoneTransform(i, v); v.applyMatrix4(o.matrixWorld); box.expandByPoint(v); }
+    }});
+    return [box.min.x, box.min.y, box.min.z, box.max.x, box.max.y, box.max.z];
+  },
+  // frame: world rect [x0,x1] x [y0,y1] onto a w x h canvas, front view
+  setView(x0, x1, y0, y1, w, h, yaw = 0) {
+    renderer.setSize(w, h, false); renderer.setPixelRatio(1);
+    cam.left = x0; cam.right = x1; cam.top = y1; cam.bottom = y0; cam.updateProjectionMatrix();
+    const r = 6; cam.position.set(Math.sin(yaw) * r, 0, Math.cos(yaw) * r); cam.lookAt(0, 0, 0);
+    cam.position.y = 0; cam.updateMatrixWorld();
+  },
+  // world z/y of each foot over a clip (to derive walking speed)
+  feet(name, dur, step) {
+    this.setClip(name); const res = [];
+    const bones = {}; model.traverse(o => { if (o.isBone && /(Left|Right)Foot$/.test(o.name)) bones[o.name.includes('Left') ? 'L' : 'R'] = o; });
+    const v = new THREE.Vector3();
+    for (let t = 0; t < dur; t += step) { this.pose(t); const row = { t };
+      for (const k of ['L', 'R']) { bones[k].getWorldPosition(v); row[k] = [v.y, v.z]; } res.push(row); }
+    return res;
+  },
+  render(t) { this.pose(t); renderer.render(scene, cam); return renderer.domElement.toDataURL('image/png'); },
+};
+window.ready = true;
+</script></body></html>
