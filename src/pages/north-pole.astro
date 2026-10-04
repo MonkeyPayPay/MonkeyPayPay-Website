@@ -12,7 +12,7 @@ const spriteClass = (p: Person, size = '') =>
   ['np-sprite', size, p.photoSprite ? 'np-sprite--photo' : ''].filter(Boolean).join(' ');
 const spriteStyle = (p: Person) =>
   p.photoSprite
-    ? `background-image:url(${p.photoSprite.src});--ar:${p.photoSprite.aspect.toFixed(4)}`
+    ? `background-image:url(${p.photoSprite.src});--ar:${p.photoSprite.aspect.toFixed(4)};--hs:${p.photoSprite.height ?? 42}px`
     : `background-image:url(${p.sprite})`;
 
 // Twinkle-light string across the top of the sky: two sagging swags of bulbs.
@@ -1069,7 +1069,7 @@ const bulbs = Array.from({ length: PER_SWAG * 2 }, (_, i) => {
   /* Paisley's photo sprite: 6 real frames (stand, jump, cheer…), a bit
      shorter than the grown-ups, looping like she's bouncing in the snow. */
   .np-sprite--photo {
-    --h: calc(42px * var(--px));
+    --h: calc(var(--hs, 42px) * var(--px));
     --fw: calc(var(--h) * var(--ar));
     height: var(--h);
     background-size: calc(var(--fw) * 6) 100%;

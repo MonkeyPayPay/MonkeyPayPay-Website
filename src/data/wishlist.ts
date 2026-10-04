@@ -38,6 +38,15 @@ export interface WishPerson {
   ribbon: string;
   /** 8-bit sprite strip (4 frames: idle, bob, wave, wave) in public/north-pole/sprites/. */
   sprite: string;
+  /** Optional animated photo strip used instead of `sprite` (see scripts/north-pole-photo-sprite.cjs). */
+  photoSprite?: {
+    src: string;
+    frames: number;
+    /** Frame width ÷ height. */
+    aspect: number;
+    /** On-screen height in "sprite pixels" (×2–4 by context). Default 42; grown-ups taller. */
+    height?: number;
+  };
   items: WishItem[];
 }
 
@@ -143,6 +152,8 @@ export const wishlists: WishPerson[] = [
     tagline: 'Treat yourself, Mama',
     ribbon: '#e0218a',
     sprite: '/north-pole/sprites/mom.png',
+    // Cut from Mom's 6-frame dance sheet (Santa hat, silver boots).
+    photoSprite: { src: '/north-pole/sprites/mom-photo.webp', frames: 6, aspect: 214 / 300, height: 56 },
     items: [
       {
         title: 'Target gift card',

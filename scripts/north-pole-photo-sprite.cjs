@@ -2,15 +2,20 @@
 // backdrop, like Paisley's) into a transparent 6-frame strip for /north-pole.
 // Keys out the backdrop + floor shadows, clears gaps between arms/body, and
 // crops every frame to one shared box so jump height is preserved.
-//   node scripts/north-pole-photo-sprite.cjs <sheet.png> <name>
+// Also handles a pure-black backdrop with thin grey gutters (Mom's sheet): pass
+// "black" as the 3rd argument.
+//   node scripts/north-pole-photo-sprite.cjs <sheet.png> <name> [beige|black]
 //   -> public/north-pole/sprites/<name>-photo.webp (then set photoSprite in wishlist.ts)
 const sharp = require('sharp');
 const SRC = process.argv[2];
 const NAME = process.argv[3] || 'paisley';
+const BLACK = process.argv[4] === 'black';
 if (!SRC) { console.error('usage: node scripts/north-pole-photo-sprite.cjs <sheet.png> <name>'); process.exit(1); }
 const OUT = `public/north-pole/sprites/${NAME}-photo.webp`;
-const CELLS = [[0, 0], [514, 0], [1029, 0], [0, 516], [514, 516], [1029, 516]].map(([x, y]) => [x + 3, y + 3]);
-const CW = 500, CH = 502;
+const CELLS = BLACK
+  ? [[3, 3], [516, 3], [1028, 3], [3, 515], [516, 515], [1028, 515]] // 2px grey gutters
+  : [[0, 0], [514, 0], [1029, 0], [0, 516], [514, 516], [1029, 516]].map(([x, y]) => [x + 3, y + 3]);
+const CW = BLACK ? 504 : 500, CH = BLACK ? 503 : 502;
 (async () => {
   const { data, info } = await sharp(SRC).removeAlpha().raw().toBuffer({ resolveWithObject: true });
   const W = info.width;
@@ -32,6 +37,8 @@ const CW = 500, CH = 502;
     }
     const isBg = (x, y, T) => {
       const i = (y * CW + x) * 4, r = px[i], g = px[i + 1], b = px[i + 2], [br, bg, bb] = bgRow[y];
+      // black backdrop is pure 0,0,0; even black clothing sits at ~10+
+      if (BLACK) return Math.max(r, g, b) <= (T >= 80 ? 6 : 4);
       const dist = Math.hypot(r - br, g - bg, b - bb);
       // the backdrop + its floor shadows: warm, low-chroma, light-to-mid tone.
       // (dress whites/pinks are cool, skin is high-chroma, hair is dark)
@@ -63,7 +70,7 @@ const CW = 500, CH = 502;
           seen[nk] = 1; st.push([nx, ny]);
         }
       }
-      if (comp.length >= 600) comp.forEach((c) => (bgMask[c] = 1));
+      if (comp.length >= (BLACK ? 150 : 600)) comp.forEach((c) => (bgMask[c] = 1));
     }
     // drop small opaque islands (shadow slivers) not attached to her
     {
@@ -89,7 +96,8 @@ const CW = 500, CH = 502;
       if (bgMask[k]) { px[k * 4 + 3] = 0; continue; }
       let nb = 0;
       for (const [dx, dy] of [[1, 0], [-1, 0], [0, 1], [0, -1]]) { const nx = x + dx, ny = y + dy; if (nx >= 0 && ny >= 0 && nx < CW && ny < CH && bgMask[ny * CW + nx]) nb++; }
-      if (nb >= 2) px[k * 4 + 3] = 150; else if (nb === 1) px[k * 4 + 3] = 215;
+      if (BLACK && nb) px[k * 4 + 3] = Math.min(255, Math.max(px[k * 4], px[k * 4 + 1], px[k * 4 + 2]) * 14);
+      else if (nb >= 2) px[k * 4 + 3] = 150; else if (nb === 1) px[k * 4 + 3] = 215;
     }
     frames.push(px);
   }
