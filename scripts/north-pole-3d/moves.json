@@ -187,5 +187,82 @@
         "loop": false
       }
     ]
+  },
+  "monkey": {
+    "glb": "monkey.glb",
+    "out": "monkey3d",
+    "scale": 330,
+    "moves": [
+      {
+        "name": "wave",
+        "clip": "greet_04.001",
+        "from": 0,
+        "to": 2.79,
+        "loop": false
+      },
+      {
+        "name": "heart",
+        "clip": "heart_pose.001",
+        "from": 1.0,
+        "to": 4.6,
+        "loop": false
+      },
+      {
+        "name": "bow",
+        "clip": "bow.001",
+        "from": 1.5,
+        "to": 4.5,
+        "loop": false
+      },
+      {
+        "name": "dance1",
+        "clip": "dance_05.001",
+        "from": 0,
+        "to": 2.83,
+        "loop": true
+      },
+      {
+        "name": "dance2",
+        "clip": "dance_04.001",
+        "from": 1.5,
+        "to": 5.5,
+        "loop": true
+      },
+      {
+        "name": "dance3",
+        "clip": "dance_06.001",
+        "from": 3.5,
+        "to": 7.5,
+        "loop": true
+      },
+      {
+        "name": "cheer",
+        "clip": "cheer.001",
+        "from": 0,
+        "to": 3.0,
+        "loop": true
+      },
+      {
+        "name": "flip",
+        "clip": "flip.001",
+        "from": 0.6,
+        "to": 4.1,
+        "loop": false
+      },
+      {
+        "name": "laugh",
+        "clip": "laugh_01.001",
+        "from": 1.0,
+        "to": 4.5,
+        "loop": false
+      },
+      {
+        "name": "jump",
+        "clip": "jump.001",
+        "from": 0,
+        "to": 2.29,
+        "loop": false
+      }
+    ]
   }
 }

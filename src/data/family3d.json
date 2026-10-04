@@ -223,6 +223,98 @@
         "fps": 12,
         "loop": false
       }
+    },
+    "monkey": {
+      "wave": {
+        "src": "/north-pole/monkey3d/wave.webp",
+        "frames": 33,
+        "cols": 8,
+        "fw": 255,
+        "fh": 342,
+        "fps": 12,
+        "loop": false
+      },
+      "heart": {
+        "src": "/north-pole/monkey3d/heart.webp",
+        "frames": 43,
+        "cols": 8,
+        "fw": 318,
+        "fh": 341,
+        "fps": 12,
+        "loop": false
+      },
+      "bow": {
+        "src": "/north-pole/monkey3d/bow.webp",
+        "frames": 36,
+        "cols": 8,
+        "fw": 171,
+        "fh": 342,
+        "fps": 12,
+        "loop": false
+      },
+      "dance1": {
+        "src": "/north-pole/monkey3d/dance1.webp",
+        "frames": 34,
+        "cols": 8,
+        "fw": 241,
+        "fh": 323,
+        "fps": 12,
+        "loop": true
+      },
+      "dance2": {
+        "src": "/north-pole/monkey3d/dance2.webp",
+        "frames": 48,
+        "cols": 8,
+        "fw": 265,
+        "fh": 339,
+        "fps": 12,
+        "loop": true
+      },
+      "dance3": {
+        "src": "/north-pole/monkey3d/dance3.webp",
+        "frames": 48,
+        "cols": 8,
+        "fw": 200,
+        "fh": 341,
+        "fps": 12,
+        "loop": true
+      },
+      "cheer": {
+        "src": "/north-pole/monkey3d/cheer.webp",
+        "frames": 36,
+        "cols": 8,
+        "fw": 230,
+        "fh": 331,
+        "fps": 12,
+        "loop": true
+      },
+      "flip": {
+        "src": "/north-pole/monkey3d/flip.webp",
+        "frames": 42,
+        "cols": 8,
+        "fw": 368,
+        "fh": 357,
+        "fps": 12,
+        "loop": false
+      },
+      "laugh": {
+        "src": "/north-pole/monkey3d/laugh.webp",
+        "frames": 42,
+        "cols": 8,
+        "fw": 239,
+        "fh": 339,
+        "fps": 12,
+        "loop": false
+      },
+      "jump": {
+        "src": "/north-pole/monkey3d/jump.webp",
+        "frames": 27,
+        "cols": 8,
+        "fw": 174,
+        "fh": 383,
+        "fps": 12,
+        "loop": false
+      }
     }
   }
 }

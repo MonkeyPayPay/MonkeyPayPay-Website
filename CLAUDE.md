@@ -197,7 +197,13 @@ docs live in `README.md`.)
   (`--p3d-scale`: dad 1.6, mom 1.5 × Paisley) since every model renders at
   the same px/unit. All three are 3D in the line-up (parents wave then dance),
   panel headers (Mom/Dad cheer on their tab) and the TV; the photo sprites are
-  now unused fallbacks. Paisley-only extras below. On the page: replaces her
+  now unused fallbacks. **Hero monkey is 3D too** (`monkey.glb`, 85 clips,
+  rendered at 330 px/unit → `public/north-pole/monkey3d/`: wave, heart,
+  bow, dance1-3, cheer, flip, laugh, jump); replaces the dance sprite in the
+  hero (`.np-p3d--hero`, data-who="monkey"): waves, then dances/hearts/bows;
+  tapping the "Ho ho ho!" button = laugh/flip/jump/heart. **Owner may want
+  this 3D monkey on ALL pages if they like it** — not done yet (other pages
+  still use the 2D sprite mascots). Paisley-only extras below. On the page: replaces her
   photo sprite in the hero line-up (waves, then dances), her panel header
   (jump+cheer when her tab opens) and the TV; a corner **pop-up** (waves when
   lists first appear, cheers on unwrap, flips on "Unwrap them all", jumps on

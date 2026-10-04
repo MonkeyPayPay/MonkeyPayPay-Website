@@ -11,11 +11,11 @@ const CHARS = require('./moves.json');
 const ROOT = path.resolve(__dirname, '../..');
 const PAGE = 'http://localhost:8765/scripts/north-pole-3d/index.html';
 const MANIFEST = path.join(ROOT, 'src/data/family3d.json');
-const S = 260, SS = 2, FPS = 12, COLS = 8, PAD = 0.03; // px per metre (output), supersample
+const BASE_S = 260, SS = 2, FPS = 12, COLS = 8, PAD = 0.03; // px per metre (output), supersample
 (async () => {
   const b = await chromium.launch({ args: ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist'] });
   const only = process.argv.slice(2);
-  const family = fs.existsSync(MANIFEST) ? JSON.parse(fs.readFileSync(MANIFEST, 'utf8')) : { scale: S, chars: {} };
+  const family = fs.existsSync(MANIFEST) ? JSON.parse(fs.readFileSync(MANIFEST, 'utf8')) : { scale: BASE_S, chars: {} };
   for (const [who, cfg] of Object.entries(CHARS)) {
   if (only.length && !only.includes(who)) continue;
   const OUT = path.join(ROOT, 'public/north-pole', cfg.out);
@@ -26,6 +26,7 @@ const S = 260, SS = 2, FPS = 12, COLS = 8, PAD = 0.03; // px per metre (output),
   const travel = await p.evaluate(() => window.travel);
   const manifest = {};
   console.log('==', who);
+  const S = cfg.scale || BASE_S; // px per model unit (the hero monkey renders bigger)
   for (const m of cfg.moves) {
     const yaw = m.side ? -Math.PI / 2 : 0;
     const bd = await p.evaluate((m) => {

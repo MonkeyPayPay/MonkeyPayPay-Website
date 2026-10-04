@@ -96,7 +96,7 @@ const bulbs = Array.from({ length: PER_SWAG * 2 }, (_, i) => {
 
         <button class="np-mascot" type="button" data-np-mascot aria-label="Tap the monkey for a little holiday magic">
           <span class="np-mascot__glow" aria-hidden="true" />
-          <span class="mascot-sprite mascot-sprite--dance is-looping np-mascot__sprite" aria-hidden="true" />
+          <span class="np-p3d np-p3d--hero" data-np-p3d="hero" data-who="monkey" aria-hidden="true"><canvas /></span>
           <span class="np-mascot__hohoho" aria-hidden="true">Ho ho ho!</span>
         </button>
       </div>
@@ -587,9 +587,11 @@ const bulbs = Array.from({ length: PER_SWAG * 2 }, (_, i) => {
   @keyframes np-breathe {
     50% { transform: scale(1.08); opacity: 0.7; }
   }
-  .np-mascot__sprite { position: relative; }
-  .np-mascot:hover .np-mascot__sprite,
-  .np-mascot:focus-visible .np-mascot__sprite { animation-play-state: running; }
+  /* the 3D MonkeyPayPay mascot (her rigged model, see scripts/north-pole-3d) */
+  .np-p3d.np-p3d--hero {
+    --p3d-h: clamp(220px, 27vw, 340px);
+    width: calc(var(--p3d-h) * 0.8);
+  }
   .np-mascot__hohoho {
     position: absolute;
     top: 4%;
@@ -609,7 +611,6 @@ const bulbs = Array.from({ length: PER_SWAG * 2 }, (_, i) => {
     opacity: 1;
     transform: translateY(0) scale(1) rotate(-6deg);
   }
-  .np-mascot.is-cheering .np-mascot__sprite { animation-duration: 1.6s; }
 
   /* snow drifts at the bottom of the hero */
   .np-drifts {
@@ -1416,7 +1417,7 @@ const bulbs = Array.from({ length: PER_SWAG * 2 }, (_, i) => {
     .np-lead { margin-inline: auto; }
     .np-count { justify-content: center; }
     .np-mascot { order: -1; }
-    .np-mascot__sprite { --fw: clamp(120px, 34vw, 170px); }
+    .np-p3d.np-p3d--hero { --p3d-h: clamp(180px, 50vw, 230px); }
     .np-tag__card { min-width: 7.2rem; padding-inline: 0.8rem; }
     .np-tag__name { font-size: 1.05rem; }
     .np-tag__line { font-size: 0.7rem; }
@@ -1677,7 +1678,16 @@ const bulbs = Array.from({ length: PER_SWAG * 2 }, (_, i) => {
     p3d['lineup-mom']?.idle(PARENT_IDLE, 'wave');
     for (const k of ['panel-dad', 'panel-mom', 'tv-dad', 'tv-mom']) p3d[k]?.idle(PARENT_IDLE);
     for (const [k, pl] of Object.entries(p3d)) {
-      if (k !== 'popup' && k !== 'walk') on(pl.box, 'click', () => pl.react(randomReaction()));
+      if (!['popup', 'walk', 'hero'].includes(k)) on(pl.box, 'click', () => pl.react(randomReaction()));
+    }
+    // the hero monkey: waves hello, then dances, blows hearts and takes a bow;
+    // tapping her (the "Ho ho ho!" button) gets a laugh, flip, jump or heart
+    const hero = p3d.hero;
+    if (hero) {
+      hero.idle([['dance1', 2], ['heart', 1], ['dance2', 1], ['cheer', 1], ['dance3', 1], ['bow', 1]], 'wave');
+      const mascotBtn = root.querySelector<HTMLElement>('[data-np-mascot]');
+      const HERO_TAPS = ['laugh', 'flip', 'jump', 'heart'];
+      if (mascotBtn) on(mascotBtn, 'click', () => hero.react(HERO_TAPS[(Math.random() * HERO_TAPS.length) | 0]));
     }
 
     // corner pop-up: slides up, does one move, slides back down
