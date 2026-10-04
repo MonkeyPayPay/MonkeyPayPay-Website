@@ -240,9 +240,11 @@ docs live in `README.md`.)
   Verified with Playwright's clock: Nov 26 23:59 locked, Nov 27 00:01 opens.
   **Family video — LIVE.** Owner's silent 720p clips joined back to back in
   story order: Mom+Dad → Paisley+Dusty (the dog) → Paisley+Dusty opening the
-  present in her room → Paisley caught by Mom+Dad (43 s) →
-  `public/north-pole/video/family.mp4` (8.9 MB, H.264 faststart) +
-  `family.webm` fallback (VP9 4.3 MB; also what
+  present in her room → Paisley caught by Mom+Dad → Santa's sleigh +
+  "Merry Christmas" end card (letterboxed; AI card has baked-in typos
+  "CHRKSTMAS"/"Oiien Fannlly" — owner told, fix pending their call) (49 s) →
+  `public/north-pole/video/family.mp4` (10.3 MB, H.264 faststart) +
+  `family.webm` fallback (VP9 5.2 MB; also what
   the sandbox's open-source Chromium tests with) + `poster.webp`; ffmpeg
   recipe in that folder's README. TV starts on a dimmed poster with a "Tap the
   TV to play" pill (`[data-np-tvplay]`, video is `muted playsinline`, no
