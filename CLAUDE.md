@@ -241,10 +241,10 @@ docs live in `README.md`.)
   **Family video — LIVE.** Owner's silent 720p clips joined back to back in
   story order: Mom+Dad → Paisley+Dusty (the dog) → Paisley+Dusty opening the
   present in her room → Paisley caught by Mom+Dad → Santa's sleigh +
-  "Merry Christmas" end card (letterboxed; AI card has baked-in typos
-  "CHRKSTMAS"/"Oiien Fannlly" — owner told, fix pending their call) (49 s) →
-  `public/north-pole/video/family.mp4` (10.3 MB, H.264 faststart) +
-  `family.webm` fallback (VP9 5.2 MB; also what
+  "Merry Christmas! From Paisley & the O'Brien Family" end card (owner's
+  corrected 1280x720 re-make; the first version had AI typos) (49 s) →
+  `public/north-pole/video/family.mp4` (10.4 MB, H.264 faststart) +
+  `family.webm` fallback (VP9 5.4 MB; also what
   the sandbox's open-source Chromium tests with) + `poster.webp`; ffmpeg
   recipe in that folder's README. TV starts on a dimmed poster with a "Tap the
   TV to play" pill (`[data-np-tvplay]`, video is `muted playsinline`, no
@@ -252,7 +252,7 @@ docs live in `README.md`.)
   borrowed from the monkey's `box_01` clip, plus cheer/wave; atlases
   `public/north-pole/paisley3d/tv/`) walks in from the TV's left, punches →
   "BONK!" + screen shake + static flash + confetti → video plays (tap picture
-  = pause/resume). On end: dimmed last frame + "↻ Watch again" (replays the
+  = pause/resume). On end: last frame (end card) + "↻ Watch again" (replays the
   whole bonk intro) and the corner Paisley pops up "That's my family! 🎄".
   Reduced motion skips the intro. Amazon/Charles Tyrwhitt links were
   stripped of tracking/third-party affiliate params. **Public — skips the
