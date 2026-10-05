@@ -254,7 +254,24 @@ docs live in `README.md`.)
   "BONK!" + screen shake + static flash + confetti → video plays (tap picture
   = pause/resume). On end: last frame (end card) + "↻ Watch again" (replays the
   whole bonk intro) and the corner Paisley pops up "That's my family! 🎄".
-  Reduced motion skips the intro. Amazon/Charles Tyrwhitt links were
+  Reduced motion skips the intro.
+  **NEXT — add ElevenLabs sound to the family video (owner asked, set up the
+  key).** Env var `ELEVENLABS_API_KEY` (must start with `sk_`; the first value
+  was a key *ID* → 400 "api_key_id_used_as_api_key"; owner replaced it, which
+  only loads in a NEW session). api.elevenlabs.io is reachable. Plan agreed
+  with owner: generate via API (Sound Effects `/v1/sound-generation`, Music
+  `/v1/music`; maybe a TTS "Merry Christmas from the O'Briens!" if owner
+  picks a voice) → soft Christmas music bed for the full 49 s + timed SFX per
+  scene (0–8 s parents: snoring → jingle-bell wake-up; 8–23 s Paisley+Dusty:
+  little footsteps, happy bark; 23–33 s present: paper ripping, delighted
+  gasp; 33–43 s caught: door creak + "uh-oh" sting; 43–49 s end card: sleigh
+  bells + "Ho ho ho!") → mix with ffmpeg (music ducked under SFX, loudnorm
+  ~-16 LUFS) and mux AAC into family.mp4 / Opus into family.webm (rebuild
+  video from original clips per video/README.md). Page: remove `muted`, keep
+  the tap-gesture flow (call video.play() inside the tap handler then pause to
+  unlock audio on iOS before the punch delay), add a 🔊/🔇 toggle on the TV.
+  Owner keeps the KlingAI watermark (buys credits, no subscription; don't
+  remove it). Amazon/Charles Tyrwhitt links were
   stripped of tracking/third-party affiliate params. **Public — skips the
   password gate** (allow-list block in `middleware.js`: `/north-pole` + everything
   under `/north-pole/*`, `/_astro/*`,
