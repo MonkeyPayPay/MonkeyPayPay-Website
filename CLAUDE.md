@@ -255,21 +255,25 @@ docs live in `README.md`.)
   = pause/resume). On end: last frame (end card) + "↻ Watch again" (replays the
   whole bonk intro) and the corner Paisley pops up "That's my family! 🎄".
   Reduced motion skips the intro.
-  **NEXT — add ElevenLabs sound to the family video (owner asked, set up the
-  key).** Env var `ELEVENLABS_API_KEY` (must start with `sk_`; the first value
-  was a key *ID* → 400 "api_key_id_used_as_api_key"; owner replaced it, which
-  only loads in a NEW session). api.elevenlabs.io is reachable. Plan agreed
-  with owner: generate via API (Sound Effects `/v1/sound-generation`, Music
-  `/v1/music`; maybe a TTS "Merry Christmas from the O'Briens!" if owner
-  picks a voice) → soft Christmas music bed for the full 49 s + timed SFX per
-  scene (0–8 s parents: snoring → jingle-bell wake-up; 8–23 s Paisley+Dusty:
-  little footsteps, happy bark; 23–33 s present: paper ripping, delighted
-  gasp; 33–43 s caught: door creak + "uh-oh" sting; 43–49 s end card: sleigh
-  bells + "Ho ho ho!") → mix with ffmpeg (music ducked under SFX, loudnorm
-  ~-16 LUFS) and mux AAC into family.mp4 / Opus into family.webm (rebuild
-  video from original clips per video/README.md). Page: remove `muted`, keep
-  the tap-gesture flow (call video.play() inside the tap handler then pause to
-  unlock audio on iOS before the punch delay), add a 🔊/🔇 toggle on the TV.
+  **Family video SOUND (DONE, ElevenLabs).** 12 API clips (Music API 50 s
+  instrumental lullaby + Sound Effects API: snore, jingle, steps, bark, rip,
+  gasp, creak, uhoh, sleigh, hohoho; ~1,035 credits incl. 2 retries) kept as
+  stems in `scripts/north-pole-audio/stems/` (not deployed) with `gen.sh`
+  (one SFX; plan max 4 concurrent requests) + `mix.sh` (music -11 dB, sidechain-
+  ducked under SFX, loudnorm ~-16 LUFS/-1.5 dBTP). Cue sheet + mux commands in
+  `public/north-pole/video/README.md`. The audio was muxed into the EXISTING
+  family.mp4 (AAC 128k) / family.webm (Opus 96k) with `-c:v copy` (picture
+  byte-identical; original clips weren't in that session). Note the real
+  scene 1 is parents placing presents → falling asleep (snore), and the
+  "jingle wake-up" is the cut to Paisley at ~7.3 s. Both "paws" generations
+  came back near-silent → the hallway reuses the footsteps stem, slowed.
+  Page: `<video>` no longer `muted`; the tap calls `unlockAudio()` (play()
+  then pause until the real start — must stay before the first `await` in
+  `start()`, iOS needs play() inside the gesture); if sound is still blocked
+  it falls back to muted play. 🔊/🔇 button `[data-np-tvmute]` top-right of
+  the screen (mute choice persists across "Watch again"). Tested in
+  Playwright Chromium (`--autoplay-policy=user-gesture-required`, desktop +
+  390px); no WebKit in the sandbox, so iPhone wasn't tested on a device.
   Owner keeps the KlingAI watermark (buys credits, no subscription; don't
   remove it). Amazon/Charles Tyrwhitt links were
   stripped of tracking/third-party affiliate params. **Public — skips the

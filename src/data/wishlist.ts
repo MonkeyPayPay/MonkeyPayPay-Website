@@ -218,8 +218,8 @@ export const familyVideo: {
   title: string;
 } = {
   title: 'Merry Christmas from Paisley’s family',
-  // Owner's two clips joined back to back (Mom + Dad, then Paisley + the dog),
-  // 23 s, silent, 720p. Re-make: see public/north-pole/video/README.md.
+  // Owner's five clips joined back to back (49 s, 720p) with an ElevenLabs
+  // music + sound-effects track. Re-make: see public/north-pole/video/README.md.
   src: '/north-pole/video/family.mp4',
   webm: '/north-pole/video/family.webm',
   poster: '/north-pole/video/poster.webp',

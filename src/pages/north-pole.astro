@@ -295,7 +295,6 @@ const bulbs = Array.from({ length: PER_SWAG * 2 }, (_, i) => {
                   class="np-tv__media"
                   poster={familyVideo.poster}
                   playsinline
-                  muted
                   preload="metadata"
                   data-np-video
                 >
@@ -312,6 +311,9 @@ const bulbs = Array.from({ length: PER_SWAG * 2 }, (_, i) => {
                 <span class="np-tvplay__bonk" aria-hidden="true">BONK!</span>
                 <button class="np-tvplay__again" type="button" data-np-tvplay-again hidden>
                   <span aria-hidden="true">↻</span> Watch again
+                </button>
+                <button class="np-tvplay__mute" type="button" data-np-tvmute aria-pressed="false" aria-label="Mute the video">
+                  <span aria-hidden="true">🔊</span>
                 </button>
               </div>
             ) : familyVideo.youtubeId ? (
@@ -1497,6 +1499,29 @@ const bulbs = Array.from({ length: PER_SWAG * 2 }, (_, i) => {
   .np-tvplay__again[hidden] { display: none; }
   .np-tvplay__again:hover { background: #f04c5b; }
   .np-tvplay__again span { font-size: 1.3em; line-height: 1; }
+  /* sound on/off, tucked in the screen's top-right corner (clear of the KlingAI mark, bottom-right) */
+  .np-tvplay__mute {
+    position: absolute;
+    top: 4%;
+    right: 3%;
+    z-index: 3;
+    display: grid;
+    place-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    padding: 0;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    border-radius: 999px;
+    font-size: 1.25rem;
+    line-height: 1;
+    color: #fff;
+    background: rgba(5, 7, 15, 0.55);
+    backdrop-filter: blur(6px);
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .np-tvplay__mute:hover { background: rgba(5, 7, 15, 0.8); }
+  .np-tvplay__mute:focus-visible { outline: 3px solid var(--np-gold); outline-offset: 2px; }
   /* Paisley, side-on, walks in from the left and punches the TV */
   .np-p3d.np-tvhitter {
     --p3d-h: clamp(120px, 15vw, 170px);
@@ -1568,6 +1593,7 @@ const bulbs = Array.from({ length: PER_SWAG * 2 }, (_, i) => {
     .np-p3d--walk { --p3d-h: 96px; }
     .np-p3d.np-tvhitter { --p3d-h: 100px; left: -6px; }
     .np-tvplay__again { top: 3%; padding: 0.4rem 0.85rem; font-size: 0.8rem; }
+    .np-tvplay__mute { width: 2.3rem; height: 2.3rem; font-size: 1.05rem; top: 3%; }
     .np-count__cell { min-width: 3.9rem; }
   }
 
@@ -1908,12 +1934,33 @@ const bulbs = Array.from({ length: PER_SWAG * 2 }, (_, i) => {
       const timers: number[] = [];
       const wait = (ms: number) => new Promise<void>((r) => timers.push(window.setTimeout(r, ms)));
       disposers.push(() => timers.forEach(clearTimeout));
+      const muteBtn = tvPlay.querySelector<HTMLButtonElement>('[data-np-tvmute]');
       let busy = false;
+      let showing = false; // true once the real playback has started
+      const syncMute = () => {
+        if (!muteBtn) return;
+        muteBtn.setAttribute('aria-pressed', String(video.muted));
+        muteBtn.setAttribute('aria-label', video.muted ? 'Turn the sound on' : 'Mute the video');
+        muteBtn.firstElementChild!.textContent = video.muted ? '🔇' : '🔊';
+      };
+      // iPhones only allow sound if play() runs inside the tap itself, but the
+      // video starts ~3 s later (after Paisley's punch). So start it right away
+      // in the tap, then pause it until the real start (this "unlocks" audio).
+      const unlockAudio = () => {
+        showing = false;
+        video.play().then(() => { if (!showing) { video.pause(); video.currentTime = 0; } }).catch(() => {});
+      };
       const playVideo = () => {
+        showing = true;
         tvPlay.classList.remove('is-idle', 'is-ended');
         tvPlay.classList.add('is-playing');
         video.currentTime = 0;
-        video.play().catch(() => { video.controls = true; });
+        video.play().catch(() => {
+          // sound blocked by the browser → play silently; the 🔇 button turns it on
+          video.muted = true;
+          syncMute();
+          video.play().catch(() => { video.controls = true; });
+        });
       };
       const bonk = () => {
         tvPlay.classList.remove('is-bonk');
@@ -1929,6 +1976,7 @@ const bulbs = Array.from({ length: PER_SWAG * 2 }, (_, i) => {
         if (busy) return;
         busy = true;
         again.hidden = true;
+        unlockAudio(); // must stay before the first await (still inside the tap)
         if (reduce || !hitter) { playVideo(); busy = false; return; }
         // she walks in from the left…
         hitter.box.classList.add('is-in');
@@ -1947,6 +1995,8 @@ const bulbs = Array.from({ length: PER_SWAG * 2 }, (_, i) => {
         busy = false;
       };
       on(go, 'click', start);
+      if (muteBtn) on(muteBtn, 'click', () => { video.muted = !video.muted; syncMute(); });
+      syncMute();
       on(again, 'click', () => { tvPlay.classList.remove('is-ended'); start(); });
       // tap the picture to pause / resume
       on(video, 'click', () => { if (tvPlay.classList.contains('is-playing')) video.paused ? video.play() : video.pause(); });
