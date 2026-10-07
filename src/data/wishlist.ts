@@ -81,12 +81,12 @@ export const wishlists: WishPerson[] = [
       {
         title: 'Non-iron dress shirts',
         icon: '👔',
-        note: 'Charles Tyrwhitt Trafalgar weave, one white and one black.',
+        note: 'Charles Tyrwhitt Non-Iron Stretch Poplin, one white and one black.',
         details: ['White & Black', 'Slim fit', '17.5 neck', '36 sleeve', 'Button'],
         links: [
           {
             label: 'Charles Tyrwhitt',
-            href: 'https://www.charlestyrwhitt.com/us/non-iron-stretch-trafalgar-weave-shirt---white/FOA0019WHT.html',
+            href: 'https://share.google/gtKy0ucsMYrEDMNWK',
           },
         ],
       },
