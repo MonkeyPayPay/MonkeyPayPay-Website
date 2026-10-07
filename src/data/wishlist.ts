@@ -95,11 +95,11 @@ export const wishlists: WishPerson[] = [
         ],
       },
       {
-        title: 'World’s Most Comfortable Dress Shoe',
+        title: 'Amberjack “The Regent” dress shoe',
         icon: '👞',
-        note: 'Black dress shoes, size 12, regular width.',
+        note: 'Billed as the world’s most comfortable dress shoe. Black, size 12, regular width.',
         details: ['Black', 'Size 12', 'Regular width'],
-        links: [{ label: 'Shop the shoe', href: 'https://share.google/1c6jAJl1OZSZ6zFzx' }],
+        links: [{ label: 'Amberjack', href: 'https://share.google/1c6jAJl1OZSZ6zFzx' }],
       },
       {
         title: 'Grunt Style American Flag shirt',
