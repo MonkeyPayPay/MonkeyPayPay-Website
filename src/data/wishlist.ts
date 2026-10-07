@@ -95,6 +95,13 @@ export const wishlists: WishPerson[] = [
         ],
       },
       {
+        title: 'World’s Most Comfortable Dress Shoe',
+        icon: '👞',
+        note: 'Black dress shoes, size 12, regular width.',
+        details: ['Black', 'Size 12', 'Regular width'],
+        links: [{ label: 'Shop the shoe', href: 'https://share.google/1c6jAJl1OZSZ6zFzx' }],
+      },
+      {
         title: 'Grunt Style American Flag shirt',
         icon: '🇺🇸',
         note: 'The patriotic flag tee, in white and in black.',
