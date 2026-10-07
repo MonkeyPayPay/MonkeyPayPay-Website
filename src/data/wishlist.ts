@@ -85,8 +85,12 @@ export const wishlists: WishPerson[] = [
         details: ['White & Black', 'Slim fit', '17.5 neck', '36 sleeve', 'Button'],
         links: [
           {
-            label: 'Charles Tyrwhitt',
+            label: 'White · Charles Tyrwhitt',
             href: 'https://share.google/gtKy0ucsMYrEDMNWK',
+          },
+          {
+            label: 'Black · Charles Tyrwhitt',
+            href: 'https://www.charlestyrwhitt.com/us/non-iron-stretch-poplin-shirt---black/FON0709BLK.html',
           },
         ],
       },
