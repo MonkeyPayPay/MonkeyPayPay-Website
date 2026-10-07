@@ -90,7 +90,7 @@ export const wishlists: WishPerson[] = [
           },
           {
             label: 'Black · Charles Tyrwhitt',
-            href: 'https://www.charlestyrwhitt.com/us/non-iron-stretch-poplin-shirt---black/FON0709BLK.html',
+            href: 'https://share.google/2zL14ta8tZg827xJf',
           },
         ],
       },
