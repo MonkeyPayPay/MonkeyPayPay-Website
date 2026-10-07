@@ -207,7 +207,13 @@ const bulbs = Array.from({ length: PER_SWAG * 2 }, (_, i) => {
                 </p>
                 <ul class="np-gifts" role="list">
                   {p.items.map((item, n) => (
-                    <li class="np-gift" style={`--i:${n}`} data-np-gift>
+                    <li class:list={['np-gift', { 'np-gift--jack': p.id === 'paisley' }]} style={`--i:${n}`} data-np-gift>
+                      {p.id === 'paisley' && (
+                        /* she jumps out of the box and dances when it's opened */
+                        <span class="np-p3d np-gift__jack" data-np-p3d={`gift-${n}`} data-who="paisley" aria-hidden="true">
+                          <canvas />
+                        </span>
+                      )}
                       <button
                         class="np-gift__wrap"
                         type="button"
@@ -238,8 +244,27 @@ const bulbs = Array.from({ length: PER_SWAG * 2 }, (_, i) => {
                             ))}
                           </ul>
                         )}
+                        {p.id === 'paisley' && (
+                          item.video ? (
+                            <video
+                              class="np-gift__video"
+                              src={item.video}
+                              poster={item.poster}
+                              muted
+                              loop
+                              playsinline
+                              controls
+                              preload="none"
+                              data-np-giftvideo
+                            />
+                          ) : (
+                            <div class="np-gift__video np-gift__video--soon">
+                              <span aria-hidden="true">🎬</span> Paisley’s video coming soon
+                            </div>
+                          )
+                        )}
                         <p class="np-gift__where">
-                          {item.links.length > 1 ? 'Grab it at' : 'Grab it'}
+                          {item.links.length === 0 ? 'Link coming soon' : item.links.length > 1 ? 'Grab it at' : 'Grab it'}
                         </p>
                         <div class="np-gift__links">
                           {item.links.map((l, k) => (
@@ -805,6 +830,53 @@ const bulbs = Array.from({ length: PER_SWAG * 2 }, (_, i) => {
     perspective: 900px;
   }
   .np-gift.is-jiggle { animation: np-jiggle 800ms ease; }
+  /* Paisley's presents: she springs out of the box and dances, then hops away */
+  .np-gift .np-gift__jack {
+    --p3d-h: clamp(130px, 34vw, 180px);
+    position: absolute;
+    left: 50%;
+    bottom: 12%;
+    z-index: 3;
+    opacity: 0;
+    transform: translate(-50%, 30%) scale(0.2);
+    transform-origin: 50% 100%;
+    pointer-events: none;
+    transition: transform 520ms cubic-bezier(0.34, 1.56, 0.64, 1), opacity 240ms ease;
+  }
+  .np-gift.is-jack .np-gift__jack {
+    opacity: 1;
+    transform: translate(-50%, 0) scale(1);
+    pointer-events: auto;
+  }
+  .np-gift.is-jack-out .np-gift__jack {
+    opacity: 0;
+    transform: translate(-50%, -40%) scale(0.6);
+    transition: transform 420ms ease-in, opacity 380ms ease 80ms;
+  }
+  /* the card's contents wait underneath while she dances */
+  :global(html.js) .np-gift.is-jack .np-gift__body > :not(.np-gift__icon) { opacity: 0.12; }
+  .np-gift__body > * { transition: opacity 400ms ease; }
+  .np-gift__video {
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    margin-top: 1rem;
+    border-radius: 14px;
+    background: rgba(0, 0, 0, 0.35);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    object-fit: cover;
+  }
+  .np-gift__video--soon {
+    display: grid;
+    place-items: center;
+    grid-auto-flow: column;
+    gap: 0.4rem;
+    justify-content: center;
+    align-items: center;
+    color: #b8c0ea;
+    font-size: 0.9rem;
+    border-style: dashed;
+  }
   @keyframes np-jiggle {
     0%, 100% { transform: none; }
     15% { transform: rotate(-4deg) scale(1.04); }
@@ -1846,7 +1918,7 @@ const bulbs = Array.from({ length: PER_SWAG * 2 }, (_, i) => {
     p3d['lineup-mom']?.idle(PARENT_IDLE, 'wave');
     for (const k of ['panel-dad', 'panel-mom', 'tv-dad', 'tv-mom']) p3d[k]?.idle(PARENT_IDLE);
     for (const [k, pl] of Object.entries(p3d)) {
-      if (!['popup', 'walk', 'hero', 'tvhitter'].includes(k)) on(pl.box, 'click', () => pl.react(randomReaction()));
+      if (!['popup', 'walk', 'hero', 'tvhitter'].includes(k) && !k.startsWith('gift-')) on(pl.box, 'click', () => pl.react(randomReaction()));
     }
     // the hero monkey: waves hello, then dances, blows hearts and takes a bow;
     // tapping her (the "Ho ho ho!" button) gets a laugh, flip, jump or heart
@@ -1904,14 +1976,26 @@ const bulbs = Array.from({ length: PER_SWAG * 2 }, (_, i) => {
         walker.box.style.left = '50%';
         walker.box.style.transform = 'translateX(-50%)';
       } else {
-        let x = -walker.box.offsetWidth, last = 0, rafW = 0;
+        // halfway across she stops, turns to us and shows off a move, then walks on
+        const SHOWS: [string, number][] = [['dance1', 2], ['flip', 1], ['dance3', 1], ['cheer', 1], ['dance2', 1], ['laugh', 1]];
+        let show = (Math.random() * SHOWS.length) | 0;
+        let x = -walker.box.offsetWidth, last = 0, rafW = 0, shown = false, posing = false;
         const step = (now: number) => {
           const dt = last ? Math.min(0.05, (now - last) / 1000) : 0;
           last = now;
-          x += WALK_SPEED * walker.pxPerMetre * dt;
-          if (x > strip.clientWidth + 20) x = -walker.box.offsetWidth - 40;
-          walker.box.style.transform = `translateX(${x}px)`;
           rafW = requestAnimationFrame(step);
+          if (posing) return;
+          x += WALK_SPEED * walker.pxPerMetre * dt;
+          if (!shown && x + walker.box.offsetWidth / 2 >= strip.clientWidth / 2) {
+            shown = posing = true;
+            const [move, loops] = SHOWS[show++ % SHOWS.length];
+            walker.play(move, {
+              loops,
+              onDone: () => { walker.play('walk', { loops: Infinity }); posing = false; },
+            });
+          }
+          if (x > strip.clientWidth + 20) { x = -walker.box.offsetWidth - 40; shown = false; }
+          walker.box.style.transform = `translateX(${x}px)`;
         };
         const wio = new IntersectionObserver(([e]) => {
           cancelAnimationFrame(rafW);
@@ -2018,6 +2102,32 @@ const bulbs = Array.from({ length: PER_SWAG * 2 }, (_, i) => {
     gifts.forEach((g) => {
       if (!g.classList.contains('is-open')) parts(g).body.inert = true;
     });
+    // Paisley's presents: she springs out of the box, dances, then hops away to
+    // reveal the gift (and starts its little video). Tap her to skip ahead.
+    const jackOut = (g: HTMLElement) => {
+      const box = g.querySelector<HTMLElement>('.np-gift__jack');
+      const pl = box && p3d[box.dataset.npP3d!];
+      const vid = g.querySelector<HTMLVideoElement>('[data-np-giftvideo]');
+      const reveal = () => vid?.play().catch(() => {});
+      if (!pl || reduce) { reveal(); return false; }
+      let done = false;
+      const finish = () => {
+        if (done) return;
+        done = true;
+        g.classList.add('is-jack-out');
+        window.setTimeout(() => g.classList.remove('is-jack', 'is-jack-out'), 450);
+        reveal();
+      };
+      const delay = Number(g.style.getPropertyValue('--i') || 0) * 140 + 250; // as the paper flies off
+      window.setTimeout(() => {
+        g.classList.add('is-jack');
+        const c = centerOf(g);
+        burst(c.x, c.y, 50, 0.8);
+        pl.play('jump', { onDone: () => pl.play('dance1', { loops: 2, onDone: finish }) });
+      }, delay);
+      on(box!, 'click', finish);
+      return true;
+    };
     const unwrap = (g: HTMLElement, celebrate = true) => {
       if (g.classList.contains('is-open')) return;
       const { wrap, body } = parts(g);
@@ -2030,8 +2140,9 @@ const bulbs = Array.from({ length: PER_SWAG * 2 }, (_, i) => {
         body.tabIndex = -1;
         body.focus({ preventScroll: true });
       }
+      const jacked = jackOut(g);
       if (celebrate) {
-        pop('cheer');
+        if (!jacked) pop('cheer');
         const delay = Number(getComputedStyle(g).getPropertyValue('--i') || 0) * 140;
         window.setTimeout(() => {
           const c = centerOf(g);
@@ -2106,7 +2217,7 @@ const bulbs = Array.from({ length: PER_SWAG * 2 }, (_, i) => {
           g.style.setProperty('--i', String(n));
           unwrap(g);
         });
-        pop('flip');
+        if (!panel?.querySelector('.np-gift--jack')) pop('flip'); // Paisley's own list: she's already out dancing
       });
     });
 
@@ -2210,7 +2321,7 @@ const bulbs = Array.from({ length: PER_SWAG * 2 }, (_, i) => {
           pick.classList.add('is-jiggle');
           const c = centerOf(pick);
           burst(c.x, c.y, 120, 1.3);
-          pop('laugh');
+          if (!pick.classList.contains('np-gift--jack')) pop('laugh');
         }, reduce ? 0 : 550);
       });
     });

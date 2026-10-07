@@ -25,7 +25,13 @@ export interface WishItem {
   note?: string;
   /** Size / colour / spec chips. */
   details?: string[];
+  /** Empty until the link arrives (the card shows "Link coming soon"). */
   links: WishLink[];
+  /** Paisley's gifts: a short clip of her with the gift, shown once it's opened
+   *  (e.g. '/north-pole/paisley-gifts/1.mp4'; keep each a few MB). */
+  video?: string;
+  /** Optional still for the clip, e.g. '/north-pole/paisley-gifts/1.webp'. */
+  poster?: string;
 }
 
 export interface WishPerson {
@@ -218,7 +224,15 @@ export const wishlists: WishPerson[] = [
     sprite: '/north-pole/sprites/paisley.png',
     // Cut from the owner's 6-frame sheet of Paisley standing, jumping + cheering.
     photoSprite: { src: '/north-pole/sprites/paisley-photo.webp', frames: 6, aspect: 203 / 300 },
-    items: [],
+    // Six placeholder presents. When she opens one she jumps out of it and
+    // dances. To fill one in: set its title/icon/note, add a link, and drop
+    // her clip into public/north-pole/paisley-gifts/ and set `video`.
+    items: Array.from({ length: 6 }, (_, n) => ({
+      title: `Surprise #${n + 1}`,
+      icon: '🎁',
+      note: 'Paisley’s pick is on its way from the North Pole.',
+      links: [],
+    })),
   },
 ];
 

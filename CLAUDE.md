@@ -173,10 +173,9 @@ docs live in `README.md`.)
   (Dad / Mom / Paisley) in `src/pages/north-pole.astro`, data in
   `src/data/wishlist.ts`. **Deliberately unlinked:** no nav/footer/⌘K/sitemap
   entry, and `noindex` (via BaseLayout's `noindex` prop). Tabs are labeled
-  "Paisley's Dad" / "Paisley's Mom" / "Paisley". Dad's + Mom's lists filled in
+  "Paisley's Dad" / "Paisley's Mom" / "Paisley". Dad's + Mom's lists filled in; **Paisley has 6 placeholder presents** ("Surprise #1-6", no links yet → "Link coming soon"). Her presents are jack-in-the-boxes: on open, a 3D Paisley (`.np-gift__jack`, `data-np-p3d=gift-N`) springs out (jump), dances (dance1 ×2), hops away (tap = skip), then the card shows her clip (`item.video`/`poster` in wishlist.ts → `[data-np-giftvideo]`, muted loop autoplay + controls; until set: "Paisley's video coming soon"). Owner will supply a link + short video per gift (drop clips in `public/north-pole/paisley-gifts/`). The bottom snow-strip walker stops mid-strip each lap for a show move (dance1/flip/dance3/cheer/dance2/laugh, rotating) then walks on
   (Mom's + Grunt Style links are owner-supplied `share.google` short links —
-  couldn't resolve them here, egress blocked); Paisley's shows a "letter on its
-  way" placeholder until items are added. Festive FX: canvas snow (wind follows
+  couldn't resolve them here, egress blocked); Festive FX: canvas snow (wind follows
   the pointer), twinkle-light string, sleigh fly-by, live Christmas countdown,
   swinging name-tag tabs, presents that stay wrapped **until clicked** (contents
   `inert` while wrapped; "Unwrap them all" + "Surprise me" buttons), confetti on
