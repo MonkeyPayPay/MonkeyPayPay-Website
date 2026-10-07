@@ -97,9 +97,14 @@ export const wishlists: WishPerson[] = [
       {
         title: 'Amberjack “The Regent” dress shoe',
         icon: '👞',
-        note: 'Billed as the world’s most comfortable dress shoe. Black, size 12, regular width.',
+        note: 'Billed as the world’s most comfortable dress shoe. Obsidian (black), size 12, regular width.',
         details: ['Black', 'Size 12', 'Regular width'],
-        links: [{ label: 'Amberjack', href: 'https://share.google/1c6jAJl1OZSZ6zFzx' }],
+        links: [
+          {
+            label: 'Amberjack',
+            href: 'https://www.amberjack.shop/products/the-regent-obsidian?variant=47831689691368',
+          },
+        ],
       },
       {
         title: 'Grunt Style American Flag shirt',
