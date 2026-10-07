@@ -107,6 +107,18 @@ export const wishlists: WishPerson[] = [
         ],
       },
       {
+        title: 'Wrangler long-sleeve twill snap shirt',
+        icon: '🤠',
+        note: 'The solid twill pearl-snap, in black. Size Large Tall (LT).',
+        details: ['Black', 'LT (Large Tall)'],
+        links: [
+          {
+            label: 'Wrangler',
+            href: 'https://www.wrangler.com/shop/long-sleeve-twill-solid-snapblackregl-MS70819%3AREG%3AL.html',
+          },
+        ],
+      },
+      {
         title: 'Grunt Style American Flag shirt',
         icon: '🇺🇸',
         note: 'The patriotic flag tee, in white and in black.',
