@@ -4,6 +4,8 @@
 // sitemap, and it's noindex. Data lives in src/data/wishlist.ts.
 import '@fontsource/pacifico';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import Scenery from '../components/north-pole/Scenery.astro';
+import Sleigh from '../components/north-pole/Sleigh.astro';
 import { wishlists, familyVideo } from '../data/wishlist';
 
 // Each person's sprite: an 8-bit strip, or an animated photo strip if they have one.
@@ -70,9 +72,9 @@ const bulbs = Array.from({ length: PER_SWAG * 2 }, (_, i) => {
         }
       </div>
 
-      <div class="np-sleigh" aria-hidden="true">
-        <span class="np-sleigh__team">🦌🦌🦌<span class="np-sleigh__sled">🛷</span></span>
-      </div>
+      <Scenery />
+      <Sleigh />
+      <div class="np-shoot" data-np-shoot aria-hidden="true"></div>
 
       <div class="container np-hero__inner">
         <div class="np-hero__copy">
@@ -96,7 +98,7 @@ const bulbs = Array.from({ length: PER_SWAG * 2 }, (_, i) => {
         </div>
 
         <button class="np-mascot" type="button" data-np-mascot aria-label="Tap the monkey for a little holiday magic">
-          <span class="np-mascot__glow" aria-hidden="true" />
+          <span class="np-moon" data-np-moon aria-hidden="true"><i /><i /><i /></span>
           <span class="np-p3d np-p3d--hero" data-np-p3d="hero" data-who="monkey" aria-hidden="true"><canvas /></span>
           <span class="np-mascot__hohoho" aria-hidden="true">Ho ho ho!</span>
         </button>
@@ -125,7 +127,6 @@ const bulbs = Array.from({ length: PER_SWAG * 2 }, (_, i) => {
         }
       </div>
 
-      <div class="np-drifts" aria-hidden="true" />
     </section>
 
     <!-- ===== Lists ===== -->
@@ -437,9 +438,11 @@ const bulbs = Array.from({ length: PER_SWAG * 2 }, (_, i) => {
 
   /* ---------- Hero ---------- */
   .np-hero {
+    position: relative;
     padding-top: clamp(4.5rem, 10vw, 7rem);
-    padding-bottom: clamp(4rem, 9vw, 7rem);
+    padding-bottom: clamp(1.75rem, 3.5vw, 3rem);
   }
+  .np-hero__inner { position: relative; z-index: 2; }
   .np-hero__inner {
     display: grid;
     grid-template-columns: 1.3fr 1fr;
@@ -586,41 +589,6 @@ const bulbs = Array.from({ length: PER_SWAG * 2 }, (_, i) => {
     50% { opacity: 0.35; filter: brightness(0.7); box-shadow: 0 0 4px 0 var(--c); }
   }
 
-  /* sleigh fly-by */
-  .np-sleigh {
-    position: absolute;
-    top: clamp(70px, 12vw, 110px);
-    left: 0;
-    width: 100%;
-    pointer-events: none;
-    overflow: hidden;
-    height: 60px;
-  }
-  .np-sleigh__team {
-    position: absolute;
-    left: 100%;
-    font-size: clamp(1.3rem, 2.4vw, 1.9rem);
-    white-space: nowrap;
-    filter: drop-shadow(0 0 10px rgba(255, 215, 106, 0.55));
-    animation: np-fly 16s linear infinite;
-    animation-delay: 2s;
-  }
-  .np-sleigh__team::after {
-    content: '✦ ✧ ✦ ✧';
-    margin-left: 0.3em;
-    font-size: 0.6em;
-    color: var(--np-gold);
-    letter-spacing: 0.3em;
-    opacity: 0.85;
-  }
-  .np-sleigh__sled { display: inline-block; transform: scaleX(-1); }
-  @keyframes np-fly {
-    0% { transform: translate(0, 18px); }
-    10% { transform: translate(-30vw, 0); }
-    20% { transform: translate(-60vw, 14px); }
-    32%, 100% { transform: translate(calc(-100vw - 100%), -6px); }
-  }
-
   /* mascot */
   .np-mascot {
     position: relative;
@@ -634,16 +602,58 @@ const bulbs = Array.from({ length: PER_SWAG * 2 }, (_, i) => {
     color: inherit;
     -webkit-tap-highlight-color: transparent;
   }
-  .np-mascot__glow {
+  /* a big moon rising behind the monkey */
+  .np-moon {
     position: absolute;
-    width: 120%;
+    top: -4%;
+    left: 50%;
+    width: 112%;
     aspect-ratio: 1;
+    margin-left: -56%;
     border-radius: 50%;
-    background: radial-gradient(circle, rgba(255, 215, 106, 0.28), transparent 62%);
-    animation: np-breathe 4s ease-in-out infinite;
+    overflow: hidden;
+    background:
+      radial-gradient(circle at 30% 34%, rgba(160, 140, 100, 0.22) 0 8%, transparent 9%),
+      radial-gradient(circle at 64% 26%, rgba(160, 140, 100, 0.16) 0 5%, transparent 6%),
+      radial-gradient(circle at 58% 64%, rgba(160, 140, 100, 0.18) 0 11%, transparent 12%),
+      radial-gradient(circle at 24% 70%, rgba(160, 140, 100, 0.12) 0 4%, transparent 5%),
+      radial-gradient(circle at 38% 36%, #fffdf2, #f6ecc9 52%, #dccd9f 100%);
+    box-shadow: inset -18px -22px 50px rgba(120, 100, 60, 0.28), 0 0 40px 6px rgba(255, 240, 200, 0.25);
+    opacity: 0.94;
+    translate: 0 var(--moon-y, 0px);
   }
-  @keyframes np-breathe {
-    50% { transform: scale(1.08); opacity: 0.7; }
+  /* its halo: a soft gradient (not a giant box-shadow, which bands) */
+  .np-mascot::before {
+    content: '';
+    position: absolute;
+    top: -4%;
+    left: 50%;
+    width: 112%;
+    aspect-ratio: 1;
+    margin-left: -56%;
+    border-radius: 50%;
+    scale: 2.3;
+    translate: 0 var(--moon-y, 0px);
+    background: radial-gradient(closest-side, rgba(255, 236, 190, 0.22), rgba(255, 226, 160, 0.08) 55%, transparent);
+    pointer-events: none;
+    animation: np-breathe 6s ease-in-out infinite;
+  }
+  @keyframes np-breathe { 50% { opacity: 0.7; } }
+  /* wisps of cloud drifting across it */
+  .np-moon i {
+    position: absolute;
+    height: 9%;
+    border-radius: 999px;
+    background: linear-gradient(90deg, transparent, rgba(120, 136, 190, 0.32) 30%, rgba(120, 136, 190, 0.22) 70%, transparent);
+    filter: blur(6px);
+    animation: np-cloud 26s linear infinite;
+  }
+  .np-moon i:nth-child(1) { top: 58%; width: 70%; animation-delay: -6s; }
+  .np-moon i:nth-child(2) { top: 72%; width: 50%; animation-duration: 34s; animation-delay: -20s; }
+  .np-moon i:nth-child(3) { top: 30%; width: 40%; opacity: 0.6; animation-duration: 40s; animation-delay: -12s; }
+  @keyframes np-cloud {
+    from { left: -80%; }
+    to { left: 130%; }
   }
   /* the 3D MonkeyPayPay mascot (her rigged model, see scripts/north-pole-3d) */
   .np-p3d.np-p3d--hero {
@@ -668,20 +678,6 @@ const bulbs = Array.from({ length: PER_SWAG * 2 }, (_, i) => {
   .np-mascot.is-cheering .np-mascot__hohoho {
     opacity: 1;
     transform: translateY(0) scale(1) rotate(-6deg);
-  }
-
-  /* snow drifts at the bottom of the hero */
-  .np-drifts {
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: -1px;
-    height: 70px;
-    background:
-      radial-gradient(60% 120% at 15% 100%, #e9eefc 49%, transparent 50%),
-      radial-gradient(50% 100% at 55% 100%, #dfe6fb 49%, transparent 50%),
-      radial-gradient(55% 130% at 92% 100%, #e9eefc 49%, transparent 50%);
-    opacity: 0.08;
   }
 
   /* ---------- Name tags (tabs) ---------- */
@@ -1687,7 +1683,6 @@ const bulbs = Array.from({ length: PER_SWAG * 2 }, (_, i) => {
       animation: none !important;
       transition: none !important;
     }
-    .np-sleigh { display: none; }
   }
 
   /* ---------- Compact wrapped presents (they grow into the full card when opened) ---------- */
@@ -1791,6 +1786,63 @@ const bulbs = Array.from({ length: PER_SWAG * 2 }, (_, i) => {
     background: rgba(233, 238, 252, 0.07);
     border-radius: 50% 50% 0 0 / 100% 100% 0 0;
   }
+
+  /* ---------- Art pass: shooting stars, grounded family, present sheen ---------- */
+  .np-shoot {
+    position: absolute;
+    inset: 0 0 40% 0;
+    z-index: 1;
+    pointer-events: none;
+    overflow: hidden;
+  }
+  .np-shoot :global(i) {
+    position: absolute;
+    width: clamp(90px, 12vw, 170px);
+    height: 2px;
+    border-radius: 2px;
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.9) 85%, #fff);
+    filter: drop-shadow(0 0 6px rgba(190, 220, 255, 0.9));
+    transform-origin: 100% 50%;
+    animation: np-shoot 1s ease-out forwards;
+  }
+  @keyframes np-shoot {
+    from { transform: rotate(var(--a)) translateX(0) scaleX(0.2); opacity: 0; }
+    20% { opacity: 1; }
+    to { transform: rotate(var(--a)) translateX(var(--dist)) scaleX(1); opacity: 0; }
+  }
+
+  /* the family stands in the snow: soft contact shadows under their feet */
+  .np-family .np-p3d { isolation: isolate; }
+  .np-family .np-p3d::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: -6px;
+    width: 70%;
+    height: 12px;
+    margin-left: -35%;
+    border-radius: 50%;
+    background: radial-gradient(closest-side, rgba(4, 8, 26, 0.6), transparent);
+    z-index: -1;
+  }
+
+  /* light catches the wrapping paper now and then */
+  :global(html.js) .np-gift:not(.is-open) .np-gift__wrap::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 22px;
+    pointer-events: none;
+    background: linear-gradient(115deg, transparent 35%, rgba(255, 255, 255, 0.28) 48%, transparent 60%);
+    background-size: 260% 100%;
+    background-position: 130% 0;
+    animation: np-sheen 7s ease-in-out infinite;
+    animation-delay: calc(var(--i) * 0.6s + 1s);
+  }
+  @keyframes np-sheen {
+    0%, 70% { background-position: 130% 0; }
+    90%, 100% { background-position: -30% 0; }
+  }
 </style>
 
 <script>
@@ -1850,6 +1902,29 @@ const bulbs = Array.from({ length: PER_SWAG * 2 }, (_, i) => {
     let wind = 0;
     let windTarget = 0;
 
+    // a few big, soft, out-of-focus flakes drift past in front of everything
+    interface Bokeh { x: number; y: number; r: number; vy: number; phase: number; a: number; }
+    const makeBokeh = (anyY: boolean): Bokeh => ({
+      x: Math.random() * W,
+      y: anyY ? Math.random() * H : -40,
+      r: 7 + Math.random() * 9,
+      vy: 0.9 + Math.random() * 0.8,
+      phase: Math.random() * Math.PI * 2,
+      a: 0.12 + Math.random() * 0.14,
+    });
+    let bokeh: Bokeh[] = [];
+    const soft = document.createElement('canvas');
+    soft.width = soft.height = 64;
+    {
+      const g = soft.getContext('2d')!;
+      const grad = g.createRadialGradient(32, 32, 0, 32, 32, 32);
+      grad.addColorStop(0, 'rgba(255,255,255,1)');
+      grad.addColorStop(0.45, 'rgba(255,255,255,0.55)');
+      grad.addColorStop(1, 'rgba(255,255,255,0)');
+      g.fillStyle = grad;
+      g.fillRect(0, 0, 64, 64);
+    }
+
     const makeFlake = (anyY: boolean): Flake => ({
       x: Math.random() * W,
       y: anyY ? Math.random() * H : -10,
@@ -1873,6 +1948,9 @@ const bulbs = Array.from({ length: PER_SWAG * 2 }, (_, i) => {
       const target = reduce ? 0 : Math.round(Math.min(160, (W * H) / 9000));
       while (flakes.length < target) flakes.push(makeFlake(true));
       flakes.length = target;
+      const nBokeh = reduce ? 0 : Math.round(Math.min(9, W / 160));
+      while (bokeh.length < nBokeh) bokeh.push(makeBokeh(true));
+      bokeh.length = nBokeh;
     };
     resize();
     on(window, 'resize', resize);
@@ -1936,6 +2014,16 @@ const bulbs = Array.from({ length: PER_SWAG * 2 }, (_, i) => {
       sctx.globalAlpha = 1;
 
       fctx.clearRect(0, 0, W, H);
+      for (const b of bokeh) {
+        b.y += b.vy;
+        b.x += Math.sin(t * 0.008 + b.phase) * 0.5 + wind * 1.2;
+        if (b.y > H + 40) Object.assign(b, makeBokeh(false));
+        if (b.x > W + 40) b.x = -40;
+        else if (b.x < -40) b.x = W + 40;
+        fctx.globalAlpha = b.a;
+        fctx.drawImage(soft, b.x - b.r * 2, b.y - b.r * 2, b.r * 4, b.r * 4);
+      }
+      fctx.globalAlpha = 1;
       for (let i = bits.length - 1; i >= 0; i--) {
         const b = bits[i];
         b.vy += 0.22;
@@ -1975,6 +2063,44 @@ const bulbs = Array.from({ length: PER_SWAG * 2 }, (_, i) => {
       const r = el.getBoundingClientRect();
       return { x: r.left + r.width / 2, y: r.top + r.height / 2 };
     };
+
+    /* ---------------- Sky: parallax scenery + shooting stars ---------------- */
+    const heroEl = root.querySelector<HTMLElement>('.np-hero');
+    const layers = Array.from(root.querySelectorAll<SVGGElement>('[data-np-layer]'));
+    const moon = root.querySelector<HTMLElement>('[data-np-moon]');
+    if (heroEl && !reduce) {
+      let ticking = false;
+      const drift = () => {
+        ticking = false;
+        const y = Math.min(window.scrollY, heroEl.offsetHeight);
+        // the scene's SVG units are ~1px at desktop, so this is roughly px
+        layers.forEach((l) => l.setAttribute('transform', `translate(0 ${(y * Number(l.dataset.npLayer) * 0.6).toFixed(1)})`));
+        moon?.parentElement?.style.setProperty('--moon-y', `${(y * 0.18).toFixed(1)}px`);
+      };
+      on(window, 'scroll', () => {
+        if (!ticking) { ticking = true; requestAnimationFrame(drift); }
+      }, { passive: true });
+      drift();
+
+      const shoot = root.querySelector<HTMLElement>('[data-np-shoot]');
+      let st = 0;
+      const nextStar = () => {
+        st = window.setTimeout(() => {
+          if (shoot && !document.hidden && window.scrollY < heroEl.offsetHeight) {
+            const s = document.createElement('i');
+            s.style.left = `${15 + Math.random() * 75}%`;
+            s.style.top = `${5 + Math.random() * 45}%`;
+            s.style.setProperty('--a', `${150 + Math.random() * 25}deg`);
+            s.style.setProperty('--dist', `${180 + Math.random() * 220}px`);
+            s.addEventListener('animationend', () => s.remove());
+            shoot.appendChild(s);
+          }
+          nextStar();
+        }, 5000 + Math.random() * 9000);
+      };
+      nextStar();
+      disposers.push(() => clearTimeout(st));
+    }
 
     /* ---------------- Countdown ---------------- */
     const countEl = root.querySelector<HTMLElement>('[data-np-count]');

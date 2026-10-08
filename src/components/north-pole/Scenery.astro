@@ -1,0 +1,205 @@
+---
+// Moonlit backdrop for the wish-list hero (/north-pole only): far snowy peaks,
+// a pine-covered ridge with a little cabin (warm windows, chimney smoke), and
+// the snowbank the family stands on. Pure SVG, drawn from a few seeded
+// functions so the trees land in the same place every build. The page script
+// drifts the layers at different speeds on scroll (data-np-layer = speed).
+
+const W = 1600;
+const H = 460;
+
+// tiny seeded random, so the forest is the same every build
+let seed = 11;
+const rnd = () => ((seed = (seed * 16807) % 2147483647) / 2147483647);
+
+const midY = (x: number) => 312 + 13 * Math.sin(x / 190) + 7 * Math.sin(x / 67 + 1);
+const nearY = (x: number) => 372 + 9 * Math.sin(x / 240 + 2) + 5 * Math.sin(x / 90);
+const ridge = (f: (x: number) => number) => {
+  let d = `M0 ${H} L0 ${f(0).toFixed(1)}`;
+  for (let x = 20; x <= W; x += 20) d += ` L${x} ${f(x).toFixed(1)}`;
+  return `${d} L${W} ${H} Z`;
+};
+const midPath = ridge(midY);
+const nearPath = ridge(nearY);
+const nearRim = nearPath.replace(/^M0 \d+ L/, 'M').replace(/ L1600 460 Z$/, '');
+
+// a pine: three stacked tiers + a dusting of snow on each
+const pine = (x: number, base: number, h: number) => {
+  const w = h * 0.42;
+  const tiers = [0, 0.3, 0.56].map((t, i) => {
+    const top = base - h + t * h * 0.9;
+    const bot = top + h * (0.5 - i * 0.04);
+    const half = w * (1 - i * 0.22);
+    return { top, bot, half };
+  });
+  const body = tiers
+    .map(({ top, bot, half }) => `M${x} ${top.toFixed(1)} L${(x + half).toFixed(1)} ${bot.toFixed(1)} L${(x - half).toFixed(1)} ${bot.toFixed(1)}Z`)
+    .join('');
+  const snow = tiers
+    .map(({ top, half }) => `M${x} ${top.toFixed(1)} l${(half * 0.34).toFixed(1)} ${(h * 0.11).toFixed(1)} l${(-half * 0.34).toFixed(1)} ${(-h * 0.03).toFixed(1)} l${(-half * 0.34).toFixed(1)} ${(h * 0.03).toFixed(1)}Z`)
+    .join('');
+  return { body, snow, trunk: `M${(x - h * 0.04).toFixed(1)} ${base - h * 0.06} h${(h * 0.08).toFixed(1)} v${(h * 0.08).toFixed(1)} h${(-h * 0.08).toFixed(1)}Z` };
+};
+
+const CABIN_X = 1230;
+const midTrees: ReturnType<typeof pine>[] = [];
+for (let x = 10; x < W; x += 18 + rnd() * 34) {
+  if (Math.abs(x - CABIN_X - 40) < 95) continue; // leave a clearing for the cabin
+  if (rnd() < 0.18) continue; // gaps in the forest
+  midTrees.push(pine(x, midY(x) + 4, 26 + rnd() * 38));
+}
+const nearTrees = [
+  pine(40, nearY(40) + 6, 120),
+  pine(118, nearY(118) + 6, 84),
+  pine(1505, nearY(1505) + 6, 104),
+  pine(1572, nearY(1572) + 6, 138),
+];
+const cabinBase = midY(CABIN_X + 40) + 2;
+// glints in the snow
+const glints = Array.from({ length: 26 }, () => {
+  const x = 60 + rnd() * (W - 120);
+  return { x: x.toFixed(0), y: (nearY(x) + 10 + rnd() * 70).toFixed(0), d: (rnd() * 4).toFixed(2), r: (0.8 + rnd() * 1.4).toFixed(1) };
+});
+---
+
+<div class="np-scene" aria-hidden="true">
+  <svg viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="xMidYMax slice">
+    <defs>
+      <linearGradient id="np-far" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#243163" />
+        <stop offset="1" stop-color="#141c44" />
+      </linearGradient>
+      <linearGradient id="np-snowbank" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#c8d3f6" stop-opacity="0.42" />
+        <stop offset="0.35" stop-color="#9fb0e3" stop-opacity="0.2" />
+        <stop offset="1" stop-color="#0e1636" stop-opacity="0" />
+      </linearGradient>
+      <radialGradient id="np-window" cx="0.5" cy="0.5" r="0.5">
+        <stop offset="0" stop-color="#ffe7a0" />
+        <stop offset="1" stop-color="#ffb347" />
+      </radialGradient>
+      <radialGradient id="np-cabin-glow" cx="0.5" cy="0.5" r="0.5">
+        <stop offset="0" stop-color="#ffc861" stop-opacity="0.45" />
+        <stop offset="1" stop-color="#ffc861" stop-opacity="0" />
+      </radialGradient>
+    </defs>
+
+    <!-- far peaks with moonlit snowcaps -->
+    <g class="np-scene__layer" data-np-layer="0.22">
+      <path
+        fill="url(#np-far)"
+        d="M0 300 L120 232 L210 268 L330 188 L450 258 L560 214 L700 278 L820 198 L940 254 L1060 182 L1180 248 L1300 204 L1420 262 L1520 218 L1600 248 V460 H0Z"
+      />
+      <path
+        fill="#c9d4f5"
+        opacity="0.28"
+        d="M120 232 l-26 15 l12 -2 l8 7 l10 -8 l12 4Z M330 188 l-34 22 l14 -3 l10 9 l12 -10 l16 6Z M820 198 l-32 20 l14 -2 l9 8 l12 -9 l14 5Z M1060 182 l-36 23 l15 -3 l10 9 l13 -10 l16 6Z M1300 204 l-30 19 l13 -2 l9 8 l11 -9 l14 5Z"
+      />
+    </g>
+
+    <!-- pine ridge + the cabin -->
+    <g class="np-scene__layer" data-np-layer="0.12">
+      <path fill="#121b44" d={midPath} />
+      <ellipse class="np-scene__cabinglow" cx={CABIN_X + 40} cy={cabinBase - 24} rx="120" ry="60" fill="url(#np-cabin-glow)" />
+      <g class="np-scene__cabin" transform={`translate(${CABIN_X} ${cabinBase - 50})`}>
+        <rect x="58" y="-6" width="10" height="22" fill="#0b1230" />
+        <g class="np-scene__smoke" fill="#c9d4f5">
+          <circle cx="63" cy="-10" r="6" />
+          <circle cx="63" cy="-10" r="7" />
+          <circle cx="63" cy="-10" r="8" />
+        </g>
+        <rect x="6" y="18" width="70" height="34" fill="#0d1534" />
+        <path d="M0 20 L41 -8 L82 20 Z" fill="#0b1230" />
+        <path d="M0 20 L41 -8 L82 20 L76 20 L41 -2 L6 20 Z" fill="#dfe6fb" opacity="0.55" />
+        <rect class="np-scene__win" x="16" y="27" width="14" height="12" rx="1.5" fill="url(#np-window)" />
+        <rect class="np-scene__win np-scene__win--2" x="52" y="27" width="14" height="12" rx="1.5" fill="url(#np-window)" />
+        <path d="M23 27 v12 M16 33 h14 M59 27 v12 M52 33 h14" stroke="#0d1534" stroke-width="1.6" />
+        <rect x="35" y="32" width="12" height="20" rx="1" fill="#2a1b14" />
+      </g>
+      <g fill="#0a112c">
+        {midTrees.map((t) => <path d={t.body} />)}
+      </g>
+      <g fill="#c9d4f5" opacity="0.32">
+        {midTrees.map((t) => <path d={t.snow} />)}
+      </g>
+    </g>
+
+    <!-- the snowbank the family stands on -->
+    <g class="np-scene__layer" data-np-layer="0">
+      <path fill="#0e1636" d={nearPath} />
+      <path fill="url(#np-snowbank)" d={nearPath} />
+      <path d={nearRim} fill="none" stroke="#eef2ff" stroke-opacity="0.45" stroke-width="2" />
+      <g fill="#070c22">
+        {nearTrees.map((t) => <path d={t.body + t.trunk} />)}
+      </g>
+      <g fill="#e3e9fb" opacity="0.5">
+        {nearTrees.map((t) => <path d={t.snow} />)}
+      </g>
+      <g fill="#fff">
+        {glints.map((g) => <circle class="np-scene__glint" cx={g.x} cy={g.y} r={g.r} style={`--d:${g.d}s`} />)}
+      </g>
+    </g>
+  </svg>
+</div>
+
+<style>
+  .np-scene {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: clamp(300px, 34vw, 460px);
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
+  .np-scene svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+  .np-scene__layer { will-change: transform; }
+
+  /* the cabin is home: windows flicker like a fire's going */
+  .np-scene__win { animation: np-flicker 3.2s ease-in-out infinite; }
+  .np-scene__win--2 { animation-delay: -1.4s; }
+  @keyframes np-flicker {
+    0%, 100% { opacity: 1; }
+    40% { opacity: 0.82; }
+    55% { opacity: 0.95; }
+    70% { opacity: 0.78; }
+  }
+  .np-scene__cabinglow { animation: np-flicker 3.2s ease-in-out infinite; }
+
+  /* chimney smoke: three puffs rising and fading, staggered */
+  .np-scene__smoke { filter: blur(2.5px); }
+  .np-scene__smoke circle {
+    transform-box: fill-box;
+    transform-origin: center;
+    opacity: 0;
+    animation: np-smoke 6s ease-out infinite;
+  }
+  .np-scene__smoke circle:nth-child(2) { animation-delay: -2s; }
+  .np-scene__smoke circle:nth-child(3) { animation-delay: -4s; }
+  @keyframes np-smoke {
+    0% { opacity: 0; transform: translate(0, 0) scale(0.6); }
+    15% { opacity: 0.22; }
+    100% { opacity: 0; transform: translate(30px, -64px) scale(2.1); }
+  }
+
+  /* moonlight glinting off the snow */
+  .np-scene__glint {
+    opacity: 0.1;
+    animation: np-glint 4s ease-in-out infinite;
+    animation-delay: var(--d);
+  }
+  @keyframes np-glint {
+    0%, 70%, 100% { opacity: 0.1; }
+    80% { opacity: 0.9; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .np-scene * { animation: none !important; }
+    .np-scene__smoke circle { opacity: 0.2; }
+  }
+</style>
