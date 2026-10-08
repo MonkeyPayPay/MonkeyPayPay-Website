@@ -2017,6 +2017,55 @@ const bulbs = Array.from({ length: PER_SWAG * 2 }, (_, i) => {
   @media (prefers-reduced-motion: reduce) {
     .np-aurora i { animation: none !important; }
   }
+
+  /* ---------- Pass 3: entrance, flip countdown, scroll reveals ---------- */
+  /* the hero arrives in order: tag, title, script, words, countdown; the moon rises */
+  :global(html.js) .np-hero__copy > * { animation: np-rise 900ms cubic-bezier(0.22, 1, 0.36, 1) both; }
+  :global(html.js) .np-hero__copy > :nth-child(1) { animation-delay: 80ms; }
+  :global(html.js) .np-hero__copy > :nth-child(2) { animation-delay: 200ms; }
+  :global(html.js) .np-hero__copy > :nth-child(3) { animation-delay: 380ms; }
+  :global(html.js) .np-hero__copy > :nth-child(4) { animation-delay: 520ms; }
+  @keyframes np-rise {
+    from { opacity: 0; transform: translateY(26px); filter: blur(6px); }
+  }
+  :global(html.js) .np-title__script { animation: np-script-in 1.1s cubic-bezier(0.22, 1, 0.36, 1) 420ms both, np-shimmer 6s linear 1.5s infinite; }
+  @keyframes np-script-in {
+    from { opacity: 0; transform: translateY(18px) rotate(-4deg) scale(0.9); clip-path: inset(0 100% 0 0); }
+    to { clip-path: inset(0 -10% 0 0); }
+  }
+  :global(html.js) .np-moon { animation: np-moonrise 1.6s cubic-bezier(0.22, 1, 0.36, 1) 150ms both; }
+  @keyframes np-moonrise {
+    from { opacity: 0; transform: translateY(60px) scale(0.85); }
+  }
+
+  /* countdown digits flip like a departures board */
+  .np-count__cell { perspective: 300px; }
+  .np-count__cell b.is-tick { animation: np-flip 460ms cubic-bezier(0.3, 1.4, 0.5, 1); transform-origin: 50% 60%; }
+  @keyframes np-flip {
+    0% { transform: rotateX(-95deg); opacity: 0.2; }
+    100% { transform: rotateX(0); opacity: 1; }
+  }
+
+  /* sections float up as they scroll into view */
+  :global(html.js) .np-reveal { opacity: 0; transform: translateY(36px); transition: opacity 800ms ease, transform 900ms cubic-bezier(0.22, 1, 0.36, 1); }
+  :global(html.js) .np-reveal.is-in { opacity: 1; transform: none; }
+
+  /* the big buttons get a moving glint */
+  .np-surprise { position: relative; overflow: hidden; }
+  .np-surprise::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(110deg, transparent 35%, rgba(255, 255, 255, 0.35) 50%, transparent 65%);
+    transform: translateX(-120%);
+    transition: transform 700ms ease;
+    pointer-events: none;
+  }
+  .np-surprise:hover::after { transform: translateX(120%); }
+
+  @media (prefers-reduced-motion: reduce) {
+    :global(html.js) .np-reveal { opacity: 1; transform: none; transition: none; }
+  }
 </style>
 
 <script>
@@ -2070,7 +2119,7 @@ const bulbs = Array.from({ length: PER_SWAG * 2 }, (_, i) => {
     let dpr = 1;
 
     interface Flake { x: number; y: number; r: number; vy: number; phase: number; sway: number; a: number; }
-    interface Bit { x: number; y: number; vx: number; vy: number; rot: number; vr: number; w: number; h: number; c: string; life: number; star: boolean; }
+    interface Bit { x: number; y: number; vx: number; vy: number; rot: number; vr: number; w: number; h: number; c: string; life: number; star: boolean; float?: boolean; }
     let flakes: Flake[] = [];
     const bits: Bit[] = [];
     let wind = 0;
@@ -2200,7 +2249,10 @@ const bulbs = Array.from({ length: PER_SWAG * 2 }, (_, i) => {
       fctx.globalAlpha = 1;
       for (let i = bits.length - 1; i >= 0; i--) {
         const b = bits[i];
-        b.vy += 0.22;
+        if (b.float) {
+          b.vy += 0.015;
+          b.life -= 0.02; // sparkles fade fast
+        } else b.vy += 0.22;
         b.vx *= 0.985;
         b.vy *= 0.985;
         b.x += b.vx;
@@ -2274,6 +2326,52 @@ const bulbs = Array.from({ length: PER_SWAG * 2 }, (_, i) => {
       };
       nextStar();
       disposers.push(() => clearTimeout(st));
+    }
+
+    /* a trail of gold sparkles follows the pointer / finger */
+    if (!reduce) {
+      let lx = -99, ly = -99, lt = 0;
+      on(window, 'pointermove', ((e: PointerEvent) => {
+        const now = performance.now();
+        if (now - lt < 28 || Math.hypot(e.clientX - lx, e.clientY - ly) < 10) return;
+        lt = now;
+        lx = e.clientX;
+        ly = e.clientY;
+        for (let i = 0; i < 2; i++) {
+          bits.push({
+            x: e.clientX + (Math.random() - 0.5) * 8,
+            y: e.clientY + (Math.random() - 0.5) * 8,
+            vx: (Math.random() - 0.5) * 0.8,
+            vy: Math.random() * 0.6 + 0.2,
+            rot: Math.random() * Math.PI,
+            vr: (Math.random() - 0.5) * 0.2,
+            w: Math.random() * 5 + 4,
+            h: 0,
+            c: Math.random() < 0.7 ? '#ffe9a3' : '#ffffff',
+            life: 0.9,
+            star: true,
+            float: true,
+          });
+        }
+        if (bits.length > 600) bits.splice(0, bits.length - 600);
+        kick();
+      }) as EventListener, { passive: true });
+    }
+
+    /* sections float up as they come into view */
+    const reveals = Array.from(root.querySelectorAll<HTMLElement>('.np-tags, .np-panel__bar, .np-video > *, .np-walk'));
+    if (!reduce && 'IntersectionObserver' in window) {
+      reveals.forEach((el) => el.classList.add('np-reveal'));
+      const rio = new IntersectionObserver((es) => {
+        es.forEach((e) => {
+          if (e.isIntersecting) {
+            e.target.classList.add('is-in');
+            rio.unobserve(e.target);
+          }
+        });
+      }, { rootMargin: '0px 0px -8% 0px' });
+      reveals.forEach((el) => rio.observe(el));
+      disposers.push(() => rio.disconnect());
     }
 
     /* light string: a chase runs along it every so often */
