@@ -42,6 +42,7 @@ const bulbs = Array.from({ length: PER_SWAG * 2 }, (_, i) => {
     y: 4 * 26 * t * (1 - t), // px of sag (parabola)
     color: BULB_COLORS[i % BULB_COLORS.length],
     delay: ((i * 0.37) % 2.2).toFixed(2),
+    k: i,
   };
 });
 ---
@@ -66,12 +67,13 @@ const bulbs = Array.from({ length: PER_SWAG * 2 }, (_, i) => {
           bulbs.map((b) => (
             <span
               class="np-bulb"
-              style={`left:${b.x}%;top:${b.y}px;--c:${b.color};--d:${b.delay}s`}
+              style={`left:${b.x}%;top:${b.y}px;--c:${b.color};--d:${b.delay}s;--k:${b.k}`}
             />
           ))
         }
       </div>
 
+      <div class="np-aurora" aria-hidden="true"><i /><i /><i /></div>
       <Scenery />
       <Sleigh />
       <div class="np-shoot" data-np-shoot aria-hidden="true"></div>
@@ -1924,6 +1926,97 @@ const bulbs = Array.from({ length: PER_SWAG * 2 }, (_, i) => {
     :global(html.js) .np-gift:not(.is-open) .np-gift__wrap { transition: transform 260ms cubic-bezier(0.34, 1.56, 0.64, 1), filter 260ms ease; }
     :global(html.js) .np-gift:not(.is-open):hover .np-gift__wrap { filter: drop-shadow(0 18px 22px rgba(0, 0, 0, 0.45)) brightness(1.06); }
   }
+
+  /* ---------- Pass 2: aurora, lights, TV glow, footprints ---------- */
+  /* northern lights rippling high over the North Pole */
+  .np-aurora {
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: min(70%, 760px);
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
+    mix-blend-mode: screen;
+    opacity: 0.62;
+    -webkit-mask: linear-gradient(180deg, transparent 4%, #000 26%, #000 55%, transparent 92%);
+    mask: linear-gradient(180deg, transparent 4%, #000 26%, #000 55%, transparent 92%);
+  }
+  .np-aurora i {
+    position: absolute;
+    left: -25%;
+    width: 150%;
+    height: 34%;
+    border-radius: 50%;
+    filter: blur(28px);
+    background: linear-gradient(90deg, transparent 4%, rgba(62, 224, 143, 0.42) 26%, rgba(77, 210, 255, 0.34) 50%, rgba(160, 110, 255, 0.34) 72%, transparent 94%);
+    animation: np-aurora 19s ease-in-out infinite alternate;
+  }
+  .np-aurora i:nth-child(1) { top: 14%; }
+  .np-aurora i:nth-child(2) { top: 30%; height: 24%; opacity: 0.7; animation-duration: 25s; animation-delay: -8s; background: linear-gradient(90deg, transparent 8%, rgba(160, 110, 255, 0.3) 30%, rgba(62, 224, 143, 0.38) 60%, transparent 90%); }
+  /* the curtain folds: thin vertical rays that shimmer sideways */
+  .np-aurora i:nth-child(3) {
+    top: 8%;
+    height: 46%;
+    filter: blur(3px);
+    opacity: 0.55;
+    background: repeating-linear-gradient(90deg, transparent 0 18px, rgba(140, 255, 210, 0.32) 18px 21px, transparent 21px 34px);
+    -webkit-mask: radial-gradient(60% 50% at 50% 55%, #000, transparent 75%);
+    mask: radial-gradient(60% 50% at 50% 55%, #000, transparent 75%);
+    animation: np-rays-drift 14s linear infinite, np-aurora 21s ease-in-out infinite alternate;
+  }
+  @keyframes np-aurora {
+    0% { transform: translateX(-6%) skewY(-7deg) scaleY(0.8); }
+    50% { transform: translateX(3%) skewY(4deg) scaleY(1.2); }
+    100% { transform: translateX(8%) skewY(-3deg) scaleY(0.95); }
+  }
+  @keyframes np-rays-drift { to { background-position: 340px 0; } }
+
+  /* the light string: glass glints, and every so often a chase runs along it */
+  .np-bulb::after {
+    content: '';
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 3px;
+    height: 6px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.75);
+  }
+  .np-lights.is-chase .np-bulb { animation: np-chase 1.1s ease-out both; animation-delay: calc(var(--k) * 70ms); }
+  @keyframes np-chase {
+    0% { opacity: 0.25; filter: brightness(0.6); }
+    30% { opacity: 1; filter: brightness(1.8); transform: scale(1.35); box-shadow: 0 0 16px 5px var(--c), 0 0 40px 12px var(--c); }
+    100% { opacity: 1; filter: brightness(1.1); transform: scale(1); }
+  }
+
+  /* the TV lights up the room while the family video plays */
+  .np-video:has(.np-tvplay.is-playing) .np-tv { animation: np-tv-glow 6s ease-in-out infinite; }
+  @keyframes np-tv-glow {
+    0%, 100% { box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.25), inset 0 -6px 0 rgba(0, 0, 0, 0.25), 0 30px 60px -24px rgba(0, 0, 0, 0.85), 0 0 90px 10px rgba(255, 196, 120, 0.22); }
+    33% { box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.25), inset 0 -6px 0 rgba(0, 0, 0, 0.25), 0 30px 60px -24px rgba(0, 0, 0, 0.85), 0 0 110px 18px rgba(120, 180, 255, 0.22); }
+    66% { box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.25), inset 0 -6px 0 rgba(0, 0, 0, 0.25), 0 30px 60px -24px rgba(0, 0, 0, 0.85), 0 0 100px 14px rgba(255, 120, 140, 0.2); }
+  }
+
+  /* little footprints Paisley leaves in the snow as she walks */
+  .np-walk :global(.np-print) {
+    position: absolute;
+    bottom: 8px;
+    width: 7px;
+    height: 4px;
+    border-radius: 50%;
+    background: rgba(8, 14, 40, 0.55);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.4), 0 1px 0 rgba(233, 238, 252, 0.25);
+    pointer-events: none;
+    animation: np-print 5.5s ease-in forwards;
+  }
+  .np-walk :global(.np-print.is-r) { bottom: 4px; }
+  @keyframes np-print {
+    0%, 60% { opacity: 1; }
+    100% { opacity: 0; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .np-aurora i { animation: none !important; }
+  }
 </style>
 
 <script>
@@ -2183,6 +2276,19 @@ const bulbs = Array.from({ length: PER_SWAG * 2 }, (_, i) => {
       disposers.push(() => clearTimeout(st));
     }
 
+    /* light string: a chase runs along it every so often */
+    const lights = root.querySelector<HTMLElement>('.np-lights');
+    if (lights && !reduce) {
+      const chase = window.setInterval(() => {
+        if (document.hidden || window.scrollY > 600) return;
+        lights.classList.remove('is-chase');
+        void lights.offsetWidth;
+        lights.classList.add('is-chase');
+        window.setTimeout(() => lights.classList.remove('is-chase'), 2600);
+      }, 11000);
+      disposers.push(() => clearInterval(chase));
+    }
+
     /* ---------------- Countdown ---------------- */
     const countEl = root.querySelector<HTMLElement>('[data-np-count]');
     if (countEl) {
@@ -2321,21 +2427,37 @@ const bulbs = Array.from({ length: PER_SWAG * 2 }, (_, i) => {
         const SHOWS: [string, number][] = [['dance1', 2], ['flip', 1], ['dance3', 1], ['cheer', 1], ['dance2', 1], ['laugh', 1]];
         let show = (Math.random() * SHOWS.length) | 0;
         let x = -walker.box.offsetWidth, last = 0, rafW = 0, shown = false, posing = false;
+        let lastPrint = -1e9, stepN = 0;
         const step = (now: number) => {
           const dt = last ? Math.min(0.05, (now - last) / 1000) : 0;
           last = now;
           rafW = requestAnimationFrame(step);
           if (posing) return;
           x += WALK_SPEED * walker.pxPerMetre * dt;
+          // a footprint each step (~0.28 m), left and right feet staggered
+          const foot = x + walker.box.offsetWidth * 0.5;
+          if (foot - lastPrint > 0.28 * walker.pxPerMetre && foot > 0 && foot < strip.clientWidth) {
+            lastPrint = foot;
+            const pr = document.createElement('span');
+            pr.className = `np-print${(stepN++ & 1) ? ' is-r' : ''}`;
+            pr.style.left = `${foot - 4}px`;
+            pr.addEventListener('animationend', () => pr.remove());
+            strip.appendChild(pr);
+          }
           if (!shown && x + walker.box.offsetWidth / 2 >= strip.clientWidth / 2) {
             shown = posing = true;
+            const puff = () => {
+              const r = walker.box.getBoundingClientRect();
+              burst(r.left + r.width / 2, r.bottom - 6, 18, 0.35, ['#ffffff', '#e9eefc', '#cdd7f7'], true);
+            };
+            puff();
             const [move, loops] = SHOWS[show++ % SHOWS.length];
             walker.play(move, {
               loops,
-              onDone: () => { walker.play('walk', { loops: Infinity }); posing = false; },
+              onDone: () => { puff(); walker.play('walk', { loops: Infinity }); posing = false; },
             });
           }
-          if (x > strip.clientWidth + 20) { x = -walker.box.offsetWidth - 40; shown = false; }
+          if (x > strip.clientWidth + 20) { x = -walker.box.offsetWidth - 40; shown = false; lastPrint = -1e9; }
           walker.box.style.transform = `translateX(${x}px)`;
         };
         const wio = new IntersectionObserver(([e]) => {
