@@ -209,7 +209,7 @@ const bulbs = Array.from({ length: PER_SWAG * 2 }, (_, i) => {
                 </p>
                 <ul class="np-gifts" role="list">
                   {p.items.map((item, n) => (
-                    <li class:list={['np-gift', { 'np-gift--jack': p.id === 'paisley' }]} style={`--i:${n}`} data-np-gift>
+                    <li class:list={['np-gift', { 'np-gift--jack': p.id === 'paisley' }]} style={`--i:${n};--n:${n}`} data-np-gift>
                       {p.id === 'paisley' && (
                         /* she jumps out of the box and dances when it's opened */
                         <span class="np-p3d np-gift__jack" data-np-p3d={`gift-${n}`} data-who="paisley" aria-hidden="true">
@@ -1843,6 +1843,87 @@ const bulbs = Array.from({ length: PER_SWAG * 2 }, (_, i) => {
     0%, 70% { background-position: 130% 0; }
     90%, 100% { background-position: -30% 0; }
   }
+
+  /* ---------- Pass 1: presents + name tags VFX ---------- */
+  /* opening a present: rays of light burst out behind the card */
+  .np-gift { isolation: isolate; }
+  .np-gift::before {
+    content: '';
+    position: absolute;
+    inset: -28%;
+    z-index: -1;
+    border-radius: 50%;
+    pointer-events: none;
+    opacity: 0;
+    background:
+      radial-gradient(closest-side, color-mix(in oklab, var(--ribbon) 55%, #fff) , transparent 70%),
+      repeating-conic-gradient(from 0deg, rgba(255, 233, 163, 0.5) 0deg 6deg, transparent 6deg 22deg);
+    mask: radial-gradient(closest-side, #000 30%, transparent 100%);
+    -webkit-mask: radial-gradient(closest-side, #000 30%, transparent 100%);
+  }
+  .np-gift.is-revealing::before { animation: np-rays 1.5s ease-out; }
+  @keyframes np-rays {
+    0% { opacity: 0; transform: scale(0.4) rotate(0deg); }
+    25% { opacity: 0.9; }
+    100% { opacity: 0; transform: scale(1.15) rotate(50deg); }
+  }
+
+  /* a locked present gets a padlock that pops up while it shakes */
+  .np.is-locked .np-gift.is-jiggle::after {
+    content: '🔒';
+    position: absolute;
+    left: 50%;
+    top: 40%;
+    z-index: 4;
+    font-size: clamp(2.6rem, 5vw, 3.6rem);
+    filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.5));
+    pointer-events: none;
+    animation: np-padlock 800ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  }
+  @keyframes np-padlock {
+    0% { transform: translate(-50%, -30%) scale(0.2); opacity: 0; }
+    30% { transform: translate(-50%, -60%) scale(1.15); opacity: 1; }
+    70% { transform: translate(-50%, -60%) scale(1) rotate(-8deg); opacity: 1; }
+    100% { transform: translate(-50%, -90%) scale(0.9); opacity: 0; }
+  }
+
+  /* switching name tags: the presents tumble in one after another */
+  .np-panel.is-entering .np-gift {
+    animation: np-gift-in 560ms cubic-bezier(0.34, 1.4, 0.64, 1) both;
+    animation-delay: calc(var(--n, 0) * 55ms);
+  }
+  @keyframes np-gift-in {
+    from { opacity: 0; transform: translateY(26px) scale(0.86) rotate(-3deg); }
+  }
+
+  /* the chosen tag glows and a little star twinkles on it */
+  .np-tag[aria-selected='true'] .np-tag__card::after {
+    content: '✦';
+    position: absolute;
+    top: 0.35rem;
+    right: 0.55rem;
+    font-size: 0.9rem;
+    color: var(--ribbon);
+    animation: np-tag-star 1.8s ease-in-out infinite;
+  }
+  @keyframes np-tag-star {
+    0%, 100% { transform: scale(0.7) rotate(0); opacity: 0.6; }
+    50% { transform: scale(1.25) rotate(90deg); opacity: 1; }
+  }
+  .np-tag[aria-selected='true'] .np-tag__card {
+    background-image: linear-gradient(115deg, transparent 40%, rgba(255, 255, 255, 0.55) 50%, transparent 60%);
+    background-size: 300% 100%;
+    animation: np-tag-shine 4s ease-in-out infinite;
+  }
+  @keyframes np-tag-shine {
+    0%, 60% { background-position: 120% 0; }
+    100% { background-position: -40% 0; }
+  }
+  /* wrapped presents lift a little under the finger / pointer */
+  @media (hover: hover) {
+    :global(html.js) .np-gift:not(.is-open) .np-gift__wrap { transition: transform 260ms cubic-bezier(0.34, 1.56, 0.64, 1), filter 260ms ease; }
+    :global(html.js) .np-gift:not(.is-open):hover .np-gift__wrap { filter: drop-shadow(0 18px 22px rgba(0, 0, 0, 0.45)) brightness(1.06); }
+  }
 </style>
 
 <script>
@@ -1959,7 +2040,7 @@ const bulbs = Array.from({ length: PER_SWAG * 2 }, (_, i) => {
       windTarget = ((e.clientX / W) - 0.5) * 2.2;
     }) as EventListener, { passive: true });
 
-    const burst = (x: number, y: number, count = 70, spread = 1) => {
+    const burst = (x: number, y: number, count = 70, spread = 1, palette: string[] = FESTIVE, shreds = false) => {
       if (reduce) return;
       for (let i = 0; i < count; i++) {
         const ang = Math.random() * Math.PI * 2;
@@ -1970,11 +2051,11 @@ const bulbs = Array.from({ length: PER_SWAG * 2 }, (_, i) => {
           vy: Math.sin(ang) * sp - 4,
           rot: Math.random() * Math.PI,
           vr: (Math.random() - 0.5) * 0.4,
-          w: Math.random() * 6 + 4,
-          h: Math.random() * 4 + 3,
-          c: FESTIVE[(Math.random() * FESTIVE.length) | 0],
+          w: shreds ? Math.random() * 10 + 6 : Math.random() * 6 + 4,
+          h: shreds ? Math.random() * 3 + 2 : Math.random() * 4 + 3,
+          c: palette[(Math.random() * palette.length) | 0],
           life: 1,
-          star: Math.random() < 0.25,
+          star: !shreds && Math.random() < 0.25,
         });
       }
       kick();
@@ -2413,6 +2494,22 @@ const bulbs = Array.from({ length: PER_SWAG * 2 }, (_, i) => {
         body.focus({ preventScroll: true });
       }
       const jacked = jackOut(g);
+      // light bursts out and shreds of this present's own paper + ribbon fly
+      g.classList.remove('is-revealing');
+      void g.offsetWidth;
+      g.classList.add('is-revealing');
+      window.setTimeout(() => g.classList.remove('is-revealing'), 1600);
+      {
+        const cs = getComputedStyle(g);
+        const paper = [cs.getPropertyValue('--ribbon'), cs.getPropertyValue('--rib-a'), cs.getPropertyValue('--rib-b'), '#ffffff']
+          .map((c) => c.trim())
+          .filter(Boolean);
+        const d = Number(cs.getPropertyValue('--i') || 0) * 140;
+        window.setTimeout(() => {
+          const c = centerOf(g);
+          burst(c.x, c.y - 10, 46, 1.1, paper, true);
+        }, d + 60);
+      }
       if (celebrate) {
         if (!jacked) pop('cheer');
         const delay = Number(getComputedStyle(g).getPropertyValue('--i') || 0) * 140;
@@ -2550,7 +2647,16 @@ const bulbs = Array.from({ length: PER_SWAG * 2 }, (_, i) => {
         tb.tabIndex = sel ? 0 : -1;
         if (sel && focus) tb.focus();
       });
-      panels.forEach((p) => (p.hidden = p.dataset.npPanel !== id));
+      panels.forEach((p) => {
+        const was = p.hidden;
+        p.hidden = p.dataset.npPanel !== id;
+        if (was && !p.hidden && !reduce) {
+          p.classList.remove('is-entering');
+          void p.offsetWidth;
+          p.classList.add('is-entering');
+          window.setTimeout(() => p.classList.remove('is-entering'), 1100);
+        }
+      });
       wave(root.querySelector<HTMLElement>(`[data-np-panel="${id}"] [data-np-panel-sprite]`));
       // opening her tab: she jumps, cheers, then dances
       if (id === 'paisley') p3d.panel?.react('jump', () => p3d.panel?.react('cheer'));
