@@ -30,6 +30,8 @@ export interface WishItem {
   /** Paisley's gifts: a short clip of her with the gift, shown once it's opened
    *  (e.g. '/north-pole/paisley-gifts/1.mp4'; keep each a few MB). */
   video?: string;
+  /** Optional WebM fallback for the clip (browsers without H.264). */
+  videoWebm?: string;
   /** Optional still for the clip, e.g. '/north-pole/paisley-gifts/1.webp'. */
   poster?: string;
 }
@@ -227,12 +229,23 @@ export const wishlists: WishPerson[] = [
     // Six placeholder presents. When she opens one she jumps out of it and
     // dances. To fill one in: set its title/icon/note, add a link, and drop
     // her clip into public/north-pole/paisley-gifts/ and set `video`.
-    items: Array.from({ length: 6 }, (_, n) => ({
-      title: `Surprise #${n + 1}`,
-      icon: '🎁',
-      note: 'Paisley’s pick is on its way from the North Pole.',
-      links: [],
-    })),
+    items: [
+      {
+        title: 'Play kitchen',
+        icon: '🍳',
+        note: 'Chef Paisley’s own kitchen. Dusty is already her best customer.',
+        links: [{ label: 'Amazon', href: 'https://a.co/d/049O5V5u' }],
+        video: '/north-pole/paisley-gifts/1.mp4',
+        videoWebm: '/north-pole/paisley-gifts/1.webm',
+        poster: '/north-pole/paisley-gifts/1.webp',
+      },
+      ...Array.from({ length: 5 }, (_, n) => ({
+        title: `Surprise #${n + 2}`,
+        icon: '🎁',
+        note: 'Paisley’s pick is on its way from the North Pole.',
+        links: [] as WishLink[],
+      })),
+    ],
   },
 ];
 

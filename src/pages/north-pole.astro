@@ -251,8 +251,7 @@ const bulbs = Array.from({ length: PER_SWAG * 2 }, (_, i) => {
                         {p.id === 'paisley' && (
                           item.video ? (
                             <video
-                              class="np-gift__video"
-                              src={item.video}
+                              class="np-gift__video np-gift__video--clip"
                               poster={item.poster}
                               muted
                               loop
@@ -260,7 +259,10 @@ const bulbs = Array.from({ length: PER_SWAG * 2 }, (_, i) => {
                               controls
                               preload="none"
                               data-np-giftvideo
-                            />
+                            >
+                              <source src={item.video} type="video/mp4" />
+                              {item.videoWebm && <source src={item.videoWebm} type="video/webm" />}
+                            </video>
                           ) : (
                             <div class="np-gift__video np-gift__video--soon">
                               <span aria-hidden="true">🎬</span> Paisley’s video coming soon
@@ -874,6 +876,8 @@ const bulbs = Array.from({ length: PER_SWAG * 2 }, (_, i) => {
     border: 1px solid rgba(255, 255, 255, 0.1);
     object-fit: cover;
   }
+  /* her real clips keep their own shape (square, portrait…) instead of a 16:9 crop */
+  .np-gift__video--clip { aspect-ratio: auto; height: auto; max-height: 70vh; object-fit: contain; }
   .np-gift__video--soon {
     display: grid;
     place-items: center;
