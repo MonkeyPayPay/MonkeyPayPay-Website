@@ -231,9 +231,10 @@ export const wishlists: WishPerson[] = [
     // her clip into public/north-pole/paisley-gifts/ and set `video`.
     items: [
       {
-        title: 'Play kitchen',
+        title: 'KidKraft Ultimate Corner Play Kitchen',
         icon: '🍳',
-        note: 'Chef Paisley’s own kitchen. Dusty is already her best customer.',
+        note: 'Chef Paisley’s own kitchen, with a fridge, oven, washer and a corner layout. Dusty is already her best customer.',
+        details: ['White', 'Wooden', 'Lights & sounds'],
         links: [{ label: 'Amazon', href: 'https://a.co/d/049O5V5u' }],
         video: '/north-pole/paisley-gifts/1.mp4',
         videoWebm: '/north-pole/paisley-gifts/1.webm',
