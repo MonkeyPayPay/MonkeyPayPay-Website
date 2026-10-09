@@ -397,12 +397,12 @@ const bulbs = Array.from({ length: PER_SWAG * 2 }, (_, i) => {
       <span class="np-popup__say" data-np-say />
       <span class="np-p3d np-p3d--popup" data-np-p3d="popup"><canvas /></span>
     </button>
-    <!-- Sound: tap effects (on by default, remembered) + opt-in Christmas music -->
+    <!-- Sound: tap effects + Christmas music (both on by default, choices remembered) -->
     <div class="np-sound" role="group" aria-label="Sound">
       <button class="np-sound__btn" type="button" data-np-sfx aria-pressed="true" aria-label="Sound effects on">
         <span aria-hidden="true">🔔</span>
       </button>
-      <button class="np-sound__btn" type="button" data-np-music aria-pressed="false" aria-label="Play Christmas music">
+      <button class="np-sound__btn" type="button" data-np-music aria-pressed="true" aria-label="Stop the Christmas music">
         <span aria-hidden="true">🎵</span>
       </button>
     </div>
@@ -2094,7 +2094,7 @@ const bulbs = Array.from({ length: PER_SWAG * 2 }, (_, i) => {
       disposers.push(() => t.removeEventListener(type, fn, opts));
     };
 
-    /* ---------------- Sound: 🔔 tap effects + 🎵 opt-in music ---------------- */
+    /* ---------------- Sound: 🔔 tap effects + 🎵 music (on by default) ---------------- */
     const sfxBtn = root.querySelector<HTMLButtonElement>('[data-np-sfx]');
     const musicBtn = root.querySelector<HTMLButtonElement>('[data-np-music]');
     const syncSound = () => {
@@ -2110,6 +2110,14 @@ const bulbs = Array.from({ length: PER_SWAG * 2 }, (_, i) => {
       sound.play('jingle', 0.5);
     });
     if (musicBtn) on(musicBtn, 'click', () => { sound.toggleMusic(); syncSound(); });
+    // music starts right away where the browser allows it, otherwise on the first
+    // tap/click/key anywhere (the 🎵 button handles its own taps)
+    sound.startMusic();
+    const firstGesture = (e: Event) => {
+      if (musicBtn && musicBtn.contains(e.target as Node)) return;
+      sound.startMusic();
+    };
+    for (const type of ['pointerup', 'touchend', 'keydown']) on(document, type, firstGesture, { once: true, capture: true });
     // the first touch anywhere wakes the audio up, so the first effect isn't late
     on(root, 'pointerdown', () => sound.preload(), { once: true });
     disposers.push(() => sound.stopMusic());

@@ -1,9 +1,10 @@
-// Sound for the wish-list page (/north-pole only): little tap effects + an
-// opt-in Christmas music loop. The effects are the ElevenLabs stems from
+// Sound for the wish-list page (/north-pole only): little tap effects + a
+// Christmas music loop (on by default). The effects are the ElevenLabs stems from
 // scripts/north-pole-audio, trimmed into public/north-pole/sfx/.
 //
-// Nothing ever plays on its own: effects only answer a tap, and the music only
-// starts when someone presses the 🎵 button. The 🔔 choice is remembered.
+// Effects only answer a tap. The music is on by default and starts with the
+// visitor's first tap (browsers block sound before that); 🎵 turns it off, and
+// both the 🔔 and 🎵 choices are remembered.
 
 const BASE = '/north-pole/sfx/';
 export type Sfx = 'rip' | 'jingle' | 'hohoho' | 'uhoh';
@@ -75,24 +76,49 @@ export function play(name: Sfx, volume = 0.8, delayMs = 0) {
   });
 }
 
-/* ---------- Background music (opt-in) ---------- */
+/* ---------- Background music (on by default; a "no" is remembered) ---------- */
+// Browsers won't start sound until the visitor taps/clicks, so the page calls
+// startMusic() on load (works where allowed) and again on the first tap.
+const MUSIC_KEY = 'np.music';
 let music: HTMLAudioElement | null = null;
-let wanted = false; // the visitor turned it on
+let wanted = (() => {
+  try {
+    return localStorage.getItem(MUSIC_KEY) !== '0';
+  } catch {
+    return true;
+  }
+})();
 let held = false; // paused while the family video plays
 
-const sync = () => {
-  if (!music) return;
-  if (wanted && !held) music.play().catch(() => {});
-  else music.pause();
-};
-export const musicOn = () => wanted;
-export function toggleMusic(): boolean {
+const audio = () => {
   if (!music) {
     music = new Audio(`${BASE}music.mp3`);
     music.loop = true;
-    music.volume = 0.45;
+    music.volume = 0.4;
+  }
+  return music;
+};
+const sync = () => {
+  if (wanted && !held) audio().play().catch(() => {});
+  else music?.pause();
+};
+export const musicOn = () => wanted;
+/** Start the music if it's wanted (call on load and on the first tap). */
+export function startMusic() {
+  if (wanted && !held && (!music || music.paused)) sync();
+}
+export function toggleMusic(): boolean {
+  // still waiting for the first tap? then this tap just starts it
+  if (wanted && !held && (!music || music.paused)) {
+    sync();
+    return wanted;
   }
   wanted = !wanted;
+  try {
+    localStorage.setItem(MUSIC_KEY, wanted ? '1' : '0');
+  } catch {
+    /* private mode: fine */
+  }
   sync();
   return wanted;
 }
@@ -102,7 +128,6 @@ export function holdMusic(hold: boolean) {
   sync();
 }
 export function stopMusic() {
-  wanted = false;
   held = false;
   music?.pause();
 }
