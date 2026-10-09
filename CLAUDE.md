@@ -236,7 +236,7 @@ docs live in `README.md`.)
   Black Friday" banner (`[data-np-lockline]`) shows days left; hints read
   "Opens Black Friday" (`.np.is-locked`). Client-side only (contents are in
   the HTML, `inert` while wrapped) — fine for family fun, not real secrecy.
-  Verified with Playwright's clock: Nov 26 23:59 locked, Nov 27 00:01 opens.
+  Verified with Playwright's clock: Nov 26 23:59 locked, Nov 27 00:01 opens. **Owner test link:** `/north-pole?peek` skips the lock (client-side, unlinked).
   **Family video — LIVE.** Owner's silent 720p clips joined back to back in
   story order: Mom+Dad → Paisley+Dusty (the dog) → Paisley+Dusty opening the
   present in her room → Paisley caught by Mom+Dad → Santa's sleigh +

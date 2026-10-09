@@ -2750,7 +2750,9 @@ const bulbs = Array.from({ length: PER_SWAG * 2 }, (_, i) => {
       return new Date(y, 10, thanksgiving + 1); // midnight, the viewer's local time
     };
     const unlockAt = blackFriday(new Date().getFullYear());
-    const isLocked = () => Date.now() < unlockAt.getTime();
+    // owner's test link: /north-pole?peek opens everything early (not linked anywhere)
+    const peek = new URLSearchParams(location.search).has('peek');
+    const isLocked = () => !peek && Date.now() < unlockAt.getTime();
     const jiggle = (g: HTMLElement) => {
       g.classList.remove('is-jiggle');
       void g.offsetWidth;
