@@ -840,12 +840,13 @@ const bulbs = Array.from({ length: PER_SWAG * 2 }, (_, i) => {
     perspective: 900px;
   }
   .np-gift.is-jiggle { animation: np-jiggle 800ms ease; }
+  .np-gift { scroll-margin-top: 84px; } /* clears the sticky nav when an opened gift is scrolled to */
   /* Paisley's presents: she springs out of the box and dances, then hops away */
   .np-gift .np-gift__jack {
     --p3d-h: clamp(130px, 34vw, 180px);
     position: absolute;
     left: 50%;
-    bottom: 12%;
+    top: 0.75rem; /* near the top, so she's on screen even when the opened card is tall */
     z-index: 3;
     opacity: 0;
     transform: translate(-50%, 30%) scale(0.2);
@@ -2692,6 +2693,8 @@ const bulbs = Array.from({ length: PER_SWAG * 2 }, (_, i) => {
         const c = centerOf(g);
         burst(c.x, c.y, 50, 0.8);
         pl.play('jump', { onDone: () => pl.play('dance1', { loops: 2, onDone: finish }) });
+        // the player pauses while off-screen; never leave the gift stuck behind her
+        window.setTimeout(finish, 12000);
       }, delay);
       on(box!, 'click', finish);
       return true;
@@ -2801,6 +2804,13 @@ const bulbs = Array.from({ length: PER_SWAG * 2 }, (_, i) => {
         g.style.setProperty('--i', '0');
         sound.play('rip');
         unwrap(g);
+        // on phones the opened card grows and can shift down a row: keep it in view
+        window.setTimeout(() => {
+          const r = g.getBoundingClientRect();
+          if (r.top < 70 || r.top > window.innerHeight * 0.55) {
+            g.scrollIntoView({ block: 'start', behavior: reduce ? 'auto' : 'smooth' });
+          }
+        }, 90);
       });
     });
     root.querySelectorAll<HTMLElement>('[data-np-unwrap-all]').forEach((btn) => {
