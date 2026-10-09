@@ -275,8 +275,18 @@ export const wishlists: WishPerson[] = [
         videoWebm: '/north-pole/paisley-gifts/4.webm',
         poster: '/north-pole/paisley-gifts/4.webp',
       },
-      ...Array.from({ length: 2 }, (_, n) => ({
-        title: `Surprise #${n + 5}`,
+      {
+        title: 'A trip to Pretend City with Grandma & Grandpa',
+        icon: '🏙️',
+        note: 'A day at Pretend City Children’s Museum with Grandma and Grandpa. A whole little town just her size.',
+        details: ['Pretend City', 'With Grandma & Grandpa'],
+        links: [{ label: 'Pretend City tickets', href: 'https://www.pretendcity.org/how-to-purchase-tickets/' }],
+        video: '/north-pole/paisley-gifts/5.mp4',
+        videoWebm: '/north-pole/paisley-gifts/5.webm',
+        poster: '/north-pole/paisley-gifts/5.webp',
+      },
+      ...Array.from({ length: 1 }, (_, n) => ({
+        title: `Surprise #${n + 6}`,
         icon: '🎁',
         note: 'Paisley’s pick is on its way from the North Pole.',
         links: [] as WishLink[],
