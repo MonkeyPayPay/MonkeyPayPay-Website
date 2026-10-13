@@ -7,7 +7,7 @@
 // both the 🔔 and 🎵 choices are remembered.
 
 const BASE = '/north-pole/sfx/';
-export type Sfx = 'rip' | 'jingle' | 'hohoho' | 'uhoh';
+export type Sfx = 'rip' | 'jingle' | 'hohoho' | 'uhoh' | 'sleigh';
 const KEY = 'np.sfx';
 
 let ctx: AudioContext | null = null;
@@ -58,8 +58,11 @@ function load(name: Sfx) {
 /** Warm every effect so the first tap isn't late. */
 export function preload() {
   unlock();
-  (['rip', 'jingle', 'hohoho', 'uhoh'] as Sfx[]).forEach(load);
+  (['rip', 'jingle', 'hohoho', 'uhoh', 'sleigh'] as Sfx[]).forEach(load);
 }
+
+/** True once audio is running (after the visitor's first tap): safe for ambient cues. */
+export const ready = () => !!ctx && ctx.state === 'running';
 
 export function play(name: Sfx, volume = 0.8, delayMs = 0) {
   if (!enabled) return;
