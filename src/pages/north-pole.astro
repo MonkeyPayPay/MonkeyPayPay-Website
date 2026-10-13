@@ -346,6 +346,11 @@ const bulbs = Array.from({ length: PER_SWAG * 2 }, (_, i) => {
                 <button class="np-tvplay__mute" type="button" data-np-tvmute aria-pressed="false" aria-label="Mute the video">
                   <span aria-hidden="true">🔊</span>
                 </button>
+                <button class="np-tvplay__mute np-tvplay__full" type="button" data-np-tvfull aria-label="Watch full screen">
+                  <svg viewBox="0 0 24 24" aria-hidden="true" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" /></svg>
+                </button>
+                <span class="np-tvplay__paused" data-np-tvpaused hidden><span aria-hidden="true">❚❚</span> Paused · tap to keep watching</span>
+                <span class="np-tvplay__bar" aria-hidden="true"><i data-np-tvbar /></span>
               </div>
             ) : familyVideo.youtubeId ? (
               <iframe
@@ -2110,6 +2115,55 @@ const bulbs = Array.from({ length: PER_SWAG * 2 }, (_, i) => {
   /* family visitors aren't signed in to the rest of the site: keep the footer to a sign-off */
   :global(#main:has([data-np]) + .footer .footer__col--legal),
   :global(#main:has([data-np]) + .footer .footer__sitelinks) { display: none; }
+
+  /* ---------- Audit round 3: TV progress, pause + full screen ---------- */
+  .np-tvplay__full { right: calc(3% + 3.3rem); }
+  .np-tvplay__bar {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 3;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.14);
+    opacity: 0;
+    transition: opacity 300ms ease;
+    pointer-events: none;
+  }
+  .np-tvplay__bar i {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, #ff4d5e, var(--np-gold));
+    transform: scaleX(var(--p, 0));
+    transform-origin: 0 50%;
+    transition: transform 260ms linear;
+  }
+  .np-tvplay.is-playing .np-tvplay__bar { opacity: 1; }
+  .np-tvplay__paused {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    z-index: 3;
+    padding: 0.55rem 1.1rem;
+    border-radius: 999px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    white-space: nowrap;
+    color: #fff;
+    background: rgba(5, 7, 15, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(6px);
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    animation: np-hint-in 300ms ease both;
+  }
+  .np-tvplay__paused[hidden] { display: none; }
+  .np-tvplay:fullscreen { display: grid; place-items: center; background: #000; }
+  .np-tvplay:fullscreen .np-tv__media { width: 100%; height: 100%; object-fit: contain; }
+  @media (max-width: 760px) {
+    .np-tvplay__full { right: calc(3% + 3.2rem); }
+    .np-tvplay__paused { font-size: 0.82rem; padding: 0.45rem 0.9rem; }
+  }
 </style>
 
 <script>
@@ -2148,6 +2202,11 @@ const bulbs = Array.from({ length: PER_SWAG * 2 }, (_, i) => {
     };
     const musicHint = root.querySelector<HTMLElement>('[data-np-music-hint]');
     let hintDone = false;
+    // the hint is a nudge, not a fixture: it bows out after a few seconds or once you scroll on
+    const retireHint = () => { if (!hintDone) { hintDone = true; syncSound(); } };
+    const hintT = window.setTimeout(retireHint, 7000);
+    disposers.push(() => clearTimeout(hintT));
+    on(window, 'scroll', () => { if (window.scrollY > 700) retireHint(); }, { passive: true });
     disposers.push(sound.onMusicChange(() => {
       if (sound.musicPlaying()) hintDone = true;
       syncSound();
@@ -2711,7 +2770,26 @@ const bulbs = Array.from({ length: PER_SWAG * 2 }, (_, i) => {
       on(again, 'click', () => { tvPlay.classList.remove('is-ended'); start(); });
       // tap the picture to pause / resume
       on(video, 'click', () => { if (tvPlay.classList.contains('is-playing')) video.paused ? video.play() : video.pause(); });
+      // progress bar, a clear "paused" note, and a full-screen button
+      const bar = tvPlay.querySelector<HTMLElement>('[data-np-tvbar]');
+      const pausedNote = tvPlay.querySelector<HTMLElement>('[data-np-tvpaused]');
+      on(video, 'timeupdate', () => {
+        if (bar && video.duration) bar.style.setProperty('--p', String(video.currentTime / video.duration));
+      });
+      on(video, 'pause', () => {
+        if (pausedNote) pausedNote.hidden = !(showing && !video.ended);
+      });
+      on(video, 'play', () => { if (pausedNote) pausedNote.hidden = true; });
+      const fullBtn = tvPlay.querySelector<HTMLButtonElement>('[data-np-tvfull]');
+      if (fullBtn) on(fullBtn, 'click', () => {
+        const v = video as HTMLVideoElement & { webkitEnterFullscreen?: () => void };
+        if (document.fullscreenElement) { document.exitFullscreen().catch(() => {}); return; }
+        if (!showing) start(); // first tap on ⤢ also starts the show
+        if (tvPlay.requestFullscreen) tvPlay.requestFullscreen().catch(() => v.webkitEnterFullscreen?.());
+        else v.webkitEnterFullscreen?.(); // iPhone: native player
+      });
       on(video, 'ended', () => {
+        if (pausedNote) pausedNote.hidden = true;
         sound.holdMusic(false);
         tvPlay.classList.remove('is-playing');
         tvPlay.classList.add('is-ended');
