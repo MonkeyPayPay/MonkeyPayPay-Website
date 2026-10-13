@@ -72,15 +72,25 @@ export function play(name: Sfx, volume = 0.8, delayMs = 0) {
     src.buffer = buf;
     src.playbackRate.value = 0.94 + Math.random() * 0.12; // no two rips quite alike
     src.connect(gain).connect(ctx.destination);
-    src.start(ctx.currentTime + delayMs / 1000);
+    const at = ctx.currentTime + delayMs / 1000;
+    src.start(at);
+    // dip the music under the effect so it cuts through, then bring it back
+    if (playing && musicGain) {
+      musicGain.gain.cancelScheduledValues(at);
+      musicGain.gain.setValueAtTime(musicGain.gain.value, at);
+      musicGain.gain.linearRampToValueAtTime(MUSIC_VOL * 0.45, at + 0.06);
+      musicGain.gain.linearRampToValueAtTime(MUSIC_VOL, at + Math.min(buf.duration, 1.6) + 0.5);
+    }
   });
 }
 
 /* ---------- Background music (on by default; a "no" is remembered) ---------- */
-// Browsers won't start sound until the visitor taps/clicks, so the page calls
-// startMusic() on load (works where allowed) and again on the first tap.
+// Played through Web Audio so it loops with no gap (music.mp3 is pre-built as a
+// seamless loop; the decoder's silent padding is trimmed off both ends) and
+// fades in/out instead of cutting. Browsers won't start sound until the visitor
+// taps/clicks, so the page calls startMusic() on load and on the first tap.
 const MUSIC_KEY = 'np.music';
-let music: HTMLAudioElement | null = null;
+const MUSIC_VOL = 0.42;
 let wanted = (() => {
   try {
     return localStorage.getItem(MUSIC_KEY) !== '0';
@@ -88,29 +98,98 @@ let wanted = (() => {
     return true;
   }
 })();
-let held = false; // paused while the family video plays
+let held = false; // ducked out while the family video plays
+let away = false; // the tab is in the background
+let musicBuf: Promise<AudioBuffer | null> | null = null;
+let musicSrc: AudioBufferSourceNode | null = null;
+let musicGain: GainNode | null = null;
+let playing = false;
+const listeners = new Set<() => void>();
+const changed = () => listeners.forEach((f) => f());
+/** Called whenever the music starts/stops (to update the 🎵 button). */
+export const onMusicChange = (f: () => void) => {
+  listeners.add(f);
+  return () => listeners.delete(f);
+};
 
-const audio = () => {
-  if (!music) {
-    music = new Audio(`${BASE}music.mp3`);
-    music.loop = true;
-    music.volume = 0.4;
+const loadMusic = () => {
+  if (!musicBuf && ctx) {
+    const c = ctx;
+    musicBuf = fetch(`${BASE}music.mp3`)
+      .then((r) => r.arrayBuffer())
+      .then((b) => new Promise<AudioBuffer>((res, rej) => c.decodeAudioData(b, res, rej)))
+      .catch(() => null);
   }
-  return music;
+  return musicBuf ?? Promise.resolve(null);
+};
+// skip the near-silent samples MP3 encoders pad onto each end
+const loopPoints = (buf: AudioBuffer) => {
+  const d = buf.getChannelData(0);
+  let a = 0;
+  let b = d.length - 1;
+  while (a < 4096 && Math.abs(d[a]) < 1e-4) a++;
+  while (b > d.length - 4096 && Math.abs(d[b]) < 1e-4) b--;
+  return [a / buf.sampleRate, (b + 1) / buf.sampleRate];
+};
+const fadeTo = (v: number, secs: number) => {
+  if (!ctx || !musicGain) return;
+  const t = ctx.currentTime;
+  musicGain.gain.cancelScheduledValues(t);
+  musicGain.gain.setValueAtTime(musicGain.gain.value, t);
+  musicGain.gain.linearRampToValueAtTime(v, t + secs);
 };
 const sync = () => {
-  if (wanted && !held) audio().play().catch(() => {});
-  else music?.pause();
+  const want = wanted && !held && !away;
+  if (!want) {
+    if (playing) {
+      playing = false;
+      fadeTo(0, 0.7);
+      changed();
+    }
+    return;
+  }
+  unlock();
+  if (!ctx || ctx.state !== 'running') return; // still waiting for a tap
+  if (musicSrc) {
+    if (!playing) {
+      playing = true;
+      fadeTo(MUSIC_VOL, 1.2);
+      changed();
+    }
+    return;
+  }
+  playing = true;
+  changed();
+  loadMusic().then((buf) => {
+    if (!buf || !ctx || musicSrc) return;
+    const [ls, le] = loopPoints(buf);
+    musicGain = ctx.createGain();
+    musicGain.gain.value = 0;
+    musicGain.connect(ctx.destination);
+    musicSrc = ctx.createBufferSource();
+    musicSrc.buffer = buf;
+    musicSrc.loop = true;
+    musicSrc.loopStart = ls;
+    musicSrc.loopEnd = le;
+    musicSrc.connect(musicGain);
+    musicSrc.start(0, ls);
+    if (playing) fadeTo(MUSIC_VOL, 1.6);
+  });
 };
 export const musicOn = () => wanted;
+/** True once the music is actually audible (not just switched on). */
+export const musicPlaying = () => playing;
 /** Start the music if it's wanted (call on load and on the first tap). */
 export function startMusic() {
-  if (wanted && !held && (!music || music.paused)) sync();
+  unlock();
+  // the context only runs after a gesture, and resume() settles a moment later
+  if (ctx && ctx.state !== 'running') ctx.resume().then(sync, () => {});
+  else sync();
 }
 export function toggleMusic(): boolean {
   // still waiting for the first tap? then this tap just starts it
-  if (wanted && !held && (!music || music.paused)) {
-    sync();
+  if (wanted && !held && !playing) {
+    startMusic();
     return wanted;
   }
   wanted = !wanted;
@@ -119,15 +198,39 @@ export function toggleMusic(): boolean {
   } catch {
     /* private mode: fine */
   }
-  sync();
+  startMusic();
+  if (!wanted) sync();
+  changed();
   return wanted;
 }
-/** Hush the music while something else (the family video) has the floor. */
+/** Duck the music out while something else (the family video) has the floor. */
 export function holdMusic(hold: boolean) {
   held = hold;
   sync();
 }
+/** Fade the music out while the tab is in the background, back in on return. */
+export function pageHidden(hidden: boolean) {
+  away = hidden;
+  sync();
+}
 export function stopMusic() {
   held = false;
-  music?.pause();
+  playing = false;
+  try {
+    musicSrc?.stop();
+  } catch {
+    /* already stopped */
+  }
+  musicSrc = null;
+  musicGain = null;
+  listeners.clear();
+}
+
+/* ---------- Haptics: a little buzz on phones that support it (Android) ---------- */
+export function buzz(pattern: number | number[]) {
+  try {
+    if (enabled && 'vibrate' in navigator) navigator.vibrate(pattern);
+  } catch {
+    /* not supported */
+  }
 }

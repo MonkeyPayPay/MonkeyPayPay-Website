@@ -402,9 +402,10 @@ const bulbs = Array.from({ length: PER_SWAG * 2 }, (_, i) => {
       <button class="np-sound__btn" type="button" data-np-sfx aria-pressed="true" aria-label="Sound effects on">
         <span aria-hidden="true">🔔</span>
       </button>
-      <button class="np-sound__btn" type="button" data-np-music aria-pressed="true" aria-label="Stop the Christmas music">
+      <button class="np-sound__btn" type="button" data-np-music data-state="waiting" aria-pressed="true" aria-label="Stop the Christmas music">
         <span aria-hidden="true">🎵</span>
       </button>
+      <span class="np-sound__hint" data-np-music-hint aria-hidden="true">Tap anywhere for music ♪</span>
     </div>
     <p class="screen-reader-text" aria-live="polite" data-np-announce></p>
   </div>
@@ -1678,7 +1679,7 @@ const bulbs = Array.from({ length: PER_SWAG * 2 }, (_, i) => {
     .np-p3d--walk { --p3d-h: 96px; }
     .np-p3d.np-tvhitter { --p3d-h: 100px; left: -6px; }
     .np-tvplay__again { top: 3%; padding: 0.4rem 0.85rem; font-size: 0.8rem; }
-    .np-tvplay__mute { width: 2.3rem; height: 2.3rem; font-size: 1.05rem; top: 3%; }
+    .np-tvplay__mute { width: 2.75rem; height: 2.75rem; font-size: 1.1rem; top: 3%; }
     .np-count__cell { min-width: 3.9rem; }
   }
 
@@ -1770,14 +1771,14 @@ const bulbs = Array.from({ length: PER_SWAG * 2 }, (_, i) => {
   .np-sound__btn:hover { transform: translateY(-2px); }
   .np-sound__btn:focus-visible { outline: 3px solid var(--np-gold); outline-offset: 3px; }
   .np-sound__btn[aria-pressed='false'] span { opacity: 0.45; filter: grayscale(1); }
-  .np-sound__btn[data-np-music][aria-pressed='true'] {
+  .np-sound__btn[data-np-music][data-state='playing'] {
     border-color: var(--np-gold);
     background: rgba(255, 215, 106, 0.18);
     animation: np-music-bob 1.2s ease-in-out infinite;
   }
   @keyframes np-music-bob { 50% { transform: translateY(-3px) rotate(-6deg); } }
   @media (prefers-reduced-motion: reduce) {
-    .np-sound__btn[data-np-music][aria-pressed='true'] { animation: none; }
+    .np-sound__btn[data-np-music][data-state='playing'] { animation: none; }
   }
 
   /* No dead band before the footer on this page: a snowbank runs into it */
@@ -1933,7 +1934,9 @@ const bulbs = Array.from({ length: PER_SWAG * 2 }, (_, i) => {
   }
 
   /* ---------- Pass 2: aurora, lights, TV glow, footprints ---------- */
-  /* northern lights rippling high over the North Pole */
+  /* northern lights rippling high over the North Pole.
+     Soft gradients only (no blur filters / blend modes) and transform-only
+     motion, so it stays smooth on older phones. */
   .np-aurora {
     position: absolute;
     inset: 0 0 auto 0;
@@ -1941,8 +1944,7 @@ const bulbs = Array.from({ length: PER_SWAG * 2 }, (_, i) => {
     z-index: 0;
     pointer-events: none;
     overflow: hidden;
-    mix-blend-mode: screen;
-    opacity: 0.62;
+    opacity: 0.7;
     -webkit-mask: linear-gradient(180deg, transparent 4%, #000 26%, #000 55%, transparent 92%);
     mask: linear-gradient(180deg, transparent 4%, #000 26%, #000 55%, transparent 92%);
   }
@@ -1950,31 +1952,40 @@ const bulbs = Array.from({ length: PER_SWAG * 2 }, (_, i) => {
     position: absolute;
     left: -25%;
     width: 150%;
-    height: 34%;
-    border-radius: 50%;
-    filter: blur(28px);
-    background: linear-gradient(90deg, transparent 4%, rgba(62, 224, 143, 0.42) 26%, rgba(77, 210, 255, 0.34) 50%, rgba(160, 110, 255, 0.34) 72%, transparent 94%);
+    height: 40%;
+    will-change: transform;
+    background:
+      radial-gradient(28% 50% at 28% 50%, rgba(62, 224, 143, 0.34), transparent 70%),
+      radial-gradient(30% 46% at 52% 50%, rgba(77, 210, 255, 0.26), transparent 70%),
+      radial-gradient(26% 50% at 74% 50%, rgba(160, 110, 255, 0.26), transparent 70%);
     animation: np-aurora 19s ease-in-out infinite alternate;
   }
-  .np-aurora i:nth-child(1) { top: 14%; }
-  .np-aurora i:nth-child(2) { top: 30%; height: 24%; opacity: 0.7; animation-duration: 25s; animation-delay: -8s; background: linear-gradient(90deg, transparent 8%, rgba(160, 110, 255, 0.3) 30%, rgba(62, 224, 143, 0.38) 60%, transparent 90%); }
-  /* the curtain folds: thin vertical rays that shimmer sideways */
+  .np-aurora i:nth-child(1) { top: 10%; }
+  .np-aurora i:nth-child(2) {
+    top: 28%;
+    height: 30%;
+    opacity: 0.75;
+    animation-duration: 25s;
+    animation-delay: -8s;
+    background:
+      radial-gradient(30% 50% at 34% 50%, rgba(160, 110, 255, 0.24), transparent 70%),
+      radial-gradient(32% 50% at 62% 50%, rgba(62, 224, 143, 0.3), transparent 70%);
+  }
+  /* the curtain folds: soft vertical rays */
   .np-aurora i:nth-child(3) {
-    top: 8%;
-    height: 46%;
-    filter: blur(3px);
-    opacity: 0.55;
-    background: repeating-linear-gradient(90deg, transparent 0 18px, rgba(140, 255, 210, 0.32) 18px 21px, transparent 21px 34px);
-    -webkit-mask: radial-gradient(60% 50% at 50% 55%, #000, transparent 75%);
-    mask: radial-gradient(60% 50% at 50% 55%, #000, transparent 75%);
-    animation: np-rays-drift 14s linear infinite, np-aurora 21s ease-in-out infinite alternate;
+    top: 6%;
+    height: 50%;
+    opacity: 0.5;
+    background: repeating-linear-gradient(90deg, transparent 0 15px, rgba(140, 255, 210, 0.2) 19px, transparent 24px 34px);
+    -webkit-mask: radial-gradient(55% 50% at 50% 55%, #000, transparent 75%);
+    mask: radial-gradient(55% 50% at 50% 55%, #000, transparent 75%);
+    animation-duration: 21s;
   }
   @keyframes np-aurora {
     0% { transform: translateX(-6%) skewY(-7deg) scaleY(0.8); }
     50% { transform: translateX(3%) skewY(4deg) scaleY(1.2); }
     100% { transform: translateX(8%) skewY(-3deg) scaleY(0.95); }
   }
-  @keyframes np-rays-drift { to { background-position: 340px 0; } }
 
   /* the light string: glass glints, and every so often a chase runs along it */
   .np-bulb::after {
@@ -2071,6 +2082,34 @@ const bulbs = Array.from({ length: PER_SWAG * 2 }, (_, i) => {
   @media (prefers-reduced-motion: reduce) {
     :global(html.js) .np-reveal { opacity: 1; transform: none; transition: none; }
   }
+
+  /* ---------- Audit pass: music hint, haptics-era polish, family-only footer ---------- */
+  .np-sound { align-items: center; }
+  .np-sound__btn[data-np-music][data-state='waiting'] { border-color: rgba(255, 215, 106, 0.6); animation: np-music-wait 2.2s ease-out infinite; }
+  @keyframes np-music-wait {
+    0% { box-shadow: 0 0 0 0 rgba(255, 215, 106, 0.45); }
+    80%, 100% { box-shadow: 0 0 0 12px rgba(255, 215, 106, 0); }
+  }
+  .np-sound__hint {
+    padding: 0.4rem 0.75rem;
+    border-radius: 999px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    white-space: nowrap;
+    color: var(--np-ink);
+    background: #fff8e1;
+    box-shadow: 0 8px 20px -10px rgba(0, 0, 0, 0.7);
+    animation: np-hint-in 600ms cubic-bezier(0.34, 1.56, 0.64, 1) 1.2s both;
+    pointer-events: none;
+  }
+  .np-sound__hint[hidden] { display: none; }
+  @keyframes np-hint-in { from { opacity: 0; transform: translateX(-8px) scale(0.9); } }
+  @media (prefers-reduced-motion: reduce) {
+    .np-sound__btn[data-np-music][data-state='waiting'], .np-sound__hint { animation: none; }
+  }
+  /* family visitors aren't signed in to the rest of the site: keep the footer to a sign-off */
+  :global(#main:has([data-np]) + .footer .footer__col--legal),
+  :global(#main:has([data-np]) + .footer .footer__sitelinks) { display: none; }
 </style>
 
 <script>
@@ -2102,7 +2141,17 @@ const bulbs = Array.from({ length: PER_SWAG * 2 }, (_, i) => {
       sfxBtn?.setAttribute('aria-label', sound.soundOn() ? 'Sound effects on' : 'Sound effects off');
       musicBtn?.setAttribute('aria-pressed', String(sound.musicOn()));
       musicBtn?.setAttribute('aria-label', sound.musicOn() ? 'Stop the Christmas music' : 'Play Christmas music');
+      // playing = bobs; on but waiting for the first tap = gentle pulse + a hint
+      const state = !sound.musicOn() ? 'off' : sound.musicPlaying() ? 'playing' : hintDone ? 'paused' : 'waiting';
+      if (musicBtn) musicBtn.dataset.state = state;
+      if (musicHint) musicHint.hidden = state !== 'waiting' || hintDone;
     };
+    const musicHint = root.querySelector<HTMLElement>('[data-np-music-hint]');
+    let hintDone = false;
+    disposers.push(sound.onMusicChange(() => {
+      if (sound.musicPlaying()) hintDone = true;
+      syncSound();
+    }) as unknown as () => void);
     syncSound();
     if (sfxBtn) on(sfxBtn, 'click', () => {
       sound.setSound(!sound.soundOn());
@@ -2112,11 +2161,13 @@ const bulbs = Array.from({ length: PER_SWAG * 2 }, (_, i) => {
     if (musicBtn) on(musicBtn, 'click', () => { sound.toggleMusic(); syncSound(); });
     // music starts right away where the browser allows it, otherwise on the first
     // tap/click/key anywhere (the 🎵 button handles its own taps)
-    sound.startMusic();
+    // (no AudioContext before a gesture: browsers just log a warning)
+    if ((navigator as Navigator & { userActivation?: { hasBeenActive: boolean } }).userActivation?.hasBeenActive) sound.startMusic();
     const firstGesture = (e: Event) => {
       if (musicBtn && musicBtn.contains(e.target as Node)) return;
       sound.startMusic();
     };
+    on(document, 'visibilitychange', () => sound.pageHidden(document.hidden));
     for (const type of ['pointerup', 'touchend', 'keydown']) on(document, type, firstGesture, { once: true, capture: true });
     // the first touch anywhere wakes the audio up, so the first effect isn't late
     on(root, 'pointerdown', () => sound.preload(), { once: true });
@@ -2622,6 +2673,7 @@ const bulbs = Array.from({ length: PER_SWAG * 2 }, (_, i) => {
         });
       };
       const bonk = () => {
+        sound.buzz(45);
         tvPlay.classList.remove('is-bonk');
         tvFrame?.classList.remove('is-shake');
         void tvPlay.offsetWidth;
@@ -2698,6 +2750,7 @@ const bulbs = Array.from({ length: PER_SWAG * 2 }, (_, i) => {
       window.setTimeout(() => {
         g.classList.add('is-jack');
         sound.play('jingle', 0.55);
+        sound.buzz([10, 30, 10]);
         const c = centerOf(g);
         burst(c.x, c.y, 50, 0.8);
         pl.play('jump', { onDone: () => pl.play('dance1', { loops: 2, onDone: finish }) });
@@ -2780,6 +2833,7 @@ const bulbs = Array.from({ length: PER_SWAG * 2 }, (_, i) => {
       shake.forEach((g, n) => window.setTimeout(() => jiggle(g), n * 90));
       pop('nono', NO_NO[(Math.random() * NO_NO.length) | 0]);
       sound.play('uhoh', 0.7);
+      sound.buzz([30, 40, 30]);
       if (announce) {
         announce.textContent = '';
         announce.textContent = `No peeking! Presents unlock on Black Friday.`;
@@ -2811,6 +2865,7 @@ const bulbs = Array.from({ length: PER_SWAG * 2 }, (_, i) => {
         if (isLocked()) { scold([g]); return; }
         g.style.setProperty('--i', '0');
         sound.play('rip');
+        sound.buzz(18);
         unwrap(g);
         // on phones the opened card grows and can shift down a row: keep it in view
         window.setTimeout(() => {
@@ -2834,6 +2889,7 @@ const bulbs = Array.from({ length: PER_SWAG * 2 }, (_, i) => {
           unwrap(g);
           if (n < 4) sound.play('rip', 0.6, n * 140); // a flurry, not a wall of noise
         });
+        if (closed.length) sound.buzz([15, 40, 15, 40, 15]);
         if (!panel?.querySelector('.np-gift--jack')) pop('flip'); // Paisley's own list: she's already out dancing
       });
     });
@@ -2878,6 +2934,7 @@ const bulbs = Array.from({ length: PER_SWAG * 2 }, (_, i) => {
         const p = e.clientX || e.clientY ? { x: e.clientX, y: e.clientY } : centerOf(a);
         burst(p.x, p.y, 60, 0.9);
         pop('jump');
+        sound.buzz(12);
       }) as EventListener);
     });
 
@@ -2913,6 +2970,7 @@ const bulbs = Array.from({ length: PER_SWAG * 2 }, (_, i) => {
         select(tb.dataset.npTab!);
         if (!wasSelected) {
           sound.play('jingle', 0.3);
+          sound.buzz(8);
           const c = centerOf(tb);
           burst(c.x, c.y, 40, 0.7);
         }
@@ -2942,7 +3000,7 @@ const bulbs = Array.from({ length: PER_SWAG * 2 }, (_, i) => {
         window.setTimeout(() => {
           if (isLocked()) { scold([pick]); return; }
           pick.style.setProperty('--i', '0');
-          if (!pick.classList.contains('is-open')) sound.play('rip');
+          if (!pick.classList.contains('is-open')) { sound.play('rip'); sound.buzz(20); }
           unwrap(pick, false);
           pick.classList.remove('is-jiggle');
           void pick.offsetWidth;
