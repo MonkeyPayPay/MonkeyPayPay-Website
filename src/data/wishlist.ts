@@ -137,7 +137,6 @@ export const wishlists: WishPerson[] = [
             label: 'Dell',
             href: 'https://www.dell.com/en-us/shop/monitors/apd/dell-ultrasharp-40-curved-thunderbolt-hub-monitor-u4025qw/u4025qw_monitor/-',
           },
-          { label: 'Amazon', href: 'https://www.amazon.com/dp/B0D1TX35MQ' },
           {
             label: 'Micro Center',
             href: 'https://www.microcenter.com/product/678791/dell-u4025qw-397-5k-wqhd-(5120-x-2160)-120hz-wide-curved-screen-monitor',
