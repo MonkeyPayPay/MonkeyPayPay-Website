@@ -165,7 +165,7 @@ docs live in `README.md`.)
   auto-builds and deploys. The owner reviews via the Vercel preview/production URL.
 - **Owner is non-technical** ("Claude drives, I review"). Keep guidance concrete;
   prefer doing the work and pushing over asking them to edit code.
-- Build check: `npm run build` (must stay green; currently 42 pages, 0 vulns).
+- Build check: `npm run build` (must stay green; currently 42 pages, 0 vulns). Nov 20 2026: `npm audit fix` cleared 11 advisories (astro 7.4.13, vite 8.3.8, sharp 0.35.5, zod 4.6.7 + transitive devalue/js-yaml/nanoid/postcss/smol-toml/source-map-js/svgo) — lockfile only, no package.json range changes; all 42 pages' visible text identical before/after. Known pre-existing bug (not from the update): clicking an app screenshot opens the raw image instead of the Lightbox — likely the ClientRouter's link handler runs before the lightbox's document click listener (fix: register the lightbox listener in the capture phase).
 - The WordPress theme this started as is preserved in git history at commit
   `258612b` (superseded by the Astro rebuild).
 
