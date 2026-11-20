@@ -182,10 +182,16 @@ export const wishlists: WishPerson[] = [
     photoSprite: { src: '/north-pole/sprites/mom-photo.webp', frames: 6, aspect: 214 / 300, height: 56 },
     items: [
       {
-        title: 'Target gift card',
-        icon: '🎯',
-        note: 'Any amount, for whatever she wants.',
-        links: [{ label: 'Target', href: 'https://share.google/tbdksKbYzdBOzW30h' }],
+        title: 'Converse Chuck 70 low-tops',
+        icon: '👟',
+        note: 'Chuck 70 Canvas low-top in white/garnet/egret. Women’s size 7, standard width.',
+        details: ['White / Garnet / Egret', 'Women’s 7', 'Standard width'],
+        links: [
+          {
+            label: 'Converse',
+            href: 'https://www.converse.com/shop/p/chuck-70-canvas-unisex-low-top-shoe/162065C_050.html?pid=162062MP&dwvar_162062MP_size=050&dwvar_162062MP_color=white%2Fgarnet%2Fegret&dwvar_162062MP_width=standard&styleNo=A09557F',
+          },
+        ],
       },
       {
         title: 'Nails',
@@ -199,22 +205,18 @@ export const wishlists: WishPerson[] = [
         ],
       },
       {
-        title: 'MacBook Pro',
-        icon: '💻',
-        links: [{ label: 'Apple', href: 'https://share.google/GuZAtZ5nopRknjoAm' }],
-      },
-      {
         title: 'New iPhone',
         icon: '📱',
-        note: 'iPhone 18 Pro Max.',
-        details: ['256GB', 'Silver'],
-        links: [{ label: 'Apple', href: 'https://share.google/u7zpsbVbjgEu9A6Mv' }],
+        note: 'iPhone 18 Pro in black, 512GB.',
+        details: ['iPhone 18 Pro', '512GB', 'Black'],
+        links: [{ label: 'Apple', href: 'https://www.apple.com/shop/buy-iphone' }],
       },
       {
-        title: 'Coffee',
-        icon: '☕',
-        note: 'A Coffee Bean & Tea Leaf eGift card.',
-        links: [{ label: 'Coffee Bean & Tea Leaf', href: 'https://share.google/Z3hYARLjt8N7tOuql' }],
+        title: 'Oura Ring 5',
+        icon: '💍',
+        note: 'The Oura Ring 5 in Deep Rose, with the 1-year membership. Comes with a sizing kit to find her fit first.',
+        details: ['Deep Rose', '1-year membership', 'Sizing kit included'],
+        links: [{ label: 'Oura', href: 'https://ouraring.com/' }],
       },
     ],
   },
