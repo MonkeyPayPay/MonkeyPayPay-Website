@@ -170,6 +170,13 @@ export const wishlists: WishPerson[] = [
           { label: 'Amazon', href: 'https://www.amazon.com/dp/B0FC5X4F8G' },
         ],
       },
+      {
+        title: 'Eight Sleep Pod 6 + Base',
+        icon: '🛏️',
+        note: 'The Pod 6 cooling cover in California King, with the adjustable Base, the standard Leg Kit and a year of Autopilot (Enhanced).',
+        details: ['Cali King', 'Pod 6', 'Base', 'Leg Kit (standard)', 'Autopilot (Enhanced), yearly'],
+        links: [{ label: 'Eight Sleep', href: 'https://www.eightsleep.com/' }],
+      },
     ],
   },
   {

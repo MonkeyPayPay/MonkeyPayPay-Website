@@ -48,13 +48,16 @@
       const trigger = target.closest<HTMLElement>('[data-zoom] a, a[data-zoom]');
       if (trigger) {
         e.preventDefault();
+        e.stopPropagation();
         const pic = trigger.querySelector('img');
         const href = trigger.getAttribute('href') || pic?.getAttribute('src') || '';
         open(href, pic?.getAttribute('alt') || '', trigger.getAttribute('data-caption') || '');
         return;
       }
       if (target.closest('[data-lightbox-close]') || target === boxEl()) close();
-    });
+      // capture phase: the ClientRouter also listens for link clicks on document and
+      // would otherwise navigate to the raw image before this handler could stop it
+    }, true);
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') close();
     });
